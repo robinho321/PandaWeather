@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina5_5" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="EHf-IW-A2E">
+            <objects>
+                <viewController id="01J-lp-oVM" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Llm-lL-Icb"/>
+                        <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jvs-lz-vIt">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pandaDog" translatesAutoresizingMaskIntoConstraints="NO" id="jza-6r-OPa">
+                                        <rect key="frame" x="91.666666666666686" y="207.66666666666669" width="230" height="230.00000000000006"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="230" id="8Xw-2O-0gT"/>
+                                            <constraint firstAttribute="height" constant="230" id="lwS-pa-NFt"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Panda Puppy Weather" textAlignment="center" lineBreakMode="middleTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="GJd-Yh-RWb">
+                                        <rect key="frame" x="61.666666666666657" y="441" width="291" height="84"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="84" id="10o-6V-sD8"/>
+                                            <constraint firstAttribute="width" constant="291" id="fbJ-Py-O46"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="35"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="0.99648036333914525" blue="0.96871738017046882" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="GJd-Yh-RWb" firstAttribute="centerY" secondItem="Jvs-lz-vIt" secondAttribute="centerY" constant="115" id="Xut-y3-1Lk"/>
+                                    <constraint firstItem="jza-6r-OPa" firstAttribute="centerY" secondItem="Jvs-lz-vIt" secondAttribute="centerY" constant="-45" id="dgC-xO-phc"/>
+                                    <constraint firstItem="jza-6r-OPa" firstAttribute="centerX" secondItem="Jvs-lz-vIt" secondAttribute="centerX" id="rXb-1t-Hiv"/>
+                                    <constraint firstItem="GJd-Yh-RWb" firstAttribute="centerX" secondItem="Jvs-lz-vIt" secondAttribute="centerX" id="s54-cz-36N"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="Jvs-lz-vIt" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="8mg-5a-Dxs"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="Jvs-lz-vIt" secondAttribute="bottom" id="n0Q-pn-7HB"/>
+                            <constraint firstItem="Jvs-lz-vIt" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="t3C-Ow-LcX"/>
+                            <constraint firstAttribute="trailing" secondItem="Jvs-lz-vIt" secondAttribute="trailing" id="yY3-Dp-qVb"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="52" y="374.66266866566718"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="pandaDog" width="1024" height="1024"/>
+    </resources>
+</document>
