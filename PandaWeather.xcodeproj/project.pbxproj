@@ -19,7 +19,12 @@
 		8374E1021D9AB18E00E7A0B7 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8374E1011D9AB18E00E7A0B7 /* libsqlite3.tbd */; };
 		8374E1041D9AB24200E7A0B7 /* libstdc++.6.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8374E1031D9AB24200E7A0B7 /* libstdc++.6.tbd */; };
 		A90AAC8F1F3FDC470077243C /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A90AAC8E1F3FDC470077243C /* MapKit.framework */; };
+		A90C82141F9D928B00BDC104 /* PandaImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90C82131F9D928B00BDC104 /* PandaImages.swift */; };
+		A90C82161F9D933700BDC104 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90C82151F9D933700BDC104 /* CoreDataStack.swift */; };
+		A90C82181F9D934E00BDC104 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90C82171F9D934D00BDC104 /* SwiftyJSON.swift */; };
 		A916C1231F4FDB080057A09C /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A916C1221F4FDB080057A09C /* SettingsTableViewController.swift */; };
+		A91ACE501F9437A40082401A /* PandaWeather.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A91ACE4E1F9437A40082401A /* PandaWeather.xcdatamodeld */; };
+		A91ACE521F9438980082401A /* PandaImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91ACE511F9438980082401A /* PandaImage.swift */; };
 		A9A97E671F5543360046B1AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9A97E661F5543360046B1AD /* Assets.xcassets */; };
 		A9E357D61F550D1200F9EDA8 /* termsAndConditionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E357D51F550D1200F9EDA8 /* termsAndConditionsViewController.swift */; };
 /* End PBXBuildFile section */
@@ -41,7 +46,12 @@
 		8374E1011D9AB18E00E7A0B7 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		8374E1031D9AB24200E7A0B7 /* libstdc++.6.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.tbd"; path = "usr/lib/libstdc++.6.tbd"; sourceTree = SDKROOT; };
 		A90AAC8E1F3FDC470077243C /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		A90C82131F9D928B00BDC104 /* PandaImages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PandaImages.swift; path = ../../../PandaImages.swift; sourceTree = "<group>"; };
+		A90C82151F9D933700BDC104 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataStack.swift; path = ../../../CoreDataStack.swift; sourceTree = "<group>"; };
+		A90C82171F9D934D00BDC104 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyJSON.swift; path = ../../../SwiftyJSON.swift; sourceTree = "<group>"; };
 		A916C1221F4FDB080057A09C /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
+		A91ACE4F1F9437A40082401A /* PandaWeather.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PandaWeather.xcdatamodel; sourceTree = "<group>"; };
+		A91ACE511F9438980082401A /* PandaImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PandaImage.swift; sourceTree = "<group>"; };
 		A9A97E661F5543360046B1AD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A9E357D51F550D1200F9EDA8 /* termsAndConditionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = termsAndConditionsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -102,6 +112,11 @@
 				814C3AC61B69877600E307BB /* Main.storyboard */,
 				A916C1221F4FDB080057A09C /* SettingsTableViewController.swift */,
 				A9E357D51F550D1200F9EDA8 /* termsAndConditionsViewController.swift */,
+				A91ACE4E1F9437A40082401A /* PandaWeather.xcdatamodeld */,
+				A90C82131F9D928B00BDC104 /* PandaImages.swift */,
+				A91ACE511F9438980082401A /* PandaImage.swift */,
+				A90C82171F9D934D00BDC104 /* SwiftyJSON.swift */,
+				A90C82151F9D933700BDC104 /* CoreDataStack.swift */,
 			);
 			path = ParseStarterProject;
 			sourceTree = "<group>";
@@ -288,9 +303,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9E357D61F550D1200F9EDA8 /* termsAndConditionsViewController.swift in Sources */,
+				A91ACE501F9437A40082401A /* PandaWeather.xcdatamodeld in Sources */,
 				A916C1231F4FDB080057A09C /* SettingsTableViewController.swift in Sources */,
 				81BA814D1A49DA1800E65899 /* ViewController.swift in Sources */,
+				A91ACE521F9438980082401A /* PandaImage.swift in Sources */,
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,
+				A90C82181F9D934E00BDC104 /* SwiftyJSON.swift in Sources */,
+				A90C82141F9D928B00BDC104 /* PandaImages.swift in Sources */,
+				A90C82161F9D933700BDC104 /* CoreDataStack.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -458,6 +478,19 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		A91ACE4E1F9437A40082401A /* PandaWeather.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A91ACE4F1F9437A40082401A /* PandaWeather.xcdatamodel */,
+			);
+			currentVersion = A91ACE4F1F9437A40082401A /* PandaWeather.xcdatamodel */;
+			path = PandaWeather.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 81BA813D1A49DA1800E65899 /* Project object */;
 }

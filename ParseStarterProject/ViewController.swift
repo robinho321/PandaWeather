@@ -368,7 +368,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
 //        let theStringValue = String(temperature)
         let theCondition = condition
         
-        print("theValue: " + "\(theValue)")
+        print("theValue: " + "\(String(describing: theValue))")
         print("condition: " + "\(theCondition)")
         
         // Temperature is nil
@@ -729,7 +729,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         CLGeocoder().geocodeAddressString(address, completionHandler: { (placemarks, error) in
             if error != nil {
                 //need to add an error message
-                print(error)
+                print(error!)
                 return
             }
             if placemarks!.count > 0 {
