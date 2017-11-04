@@ -12,6 +12,7 @@ import UIKit
 import Parse
 import CoreLocation
 import AddressBookUI
+import CoreData
 
 class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDelegate, SettingsTableViewControllerDelegate {
     
@@ -79,6 +80,18 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
     }
     @IBAction func setCurrentLocation(_ sender: UIButton) {
         self.getTemperature()
+        
+        var CoreData = fetchCoreImage("nice")
+        let diceRoll = Int(arc4random_uniform(UInt32(CoreData!.count)))
+//        let coreNiceImage = CoreData![Int(arc4random_uniform(UInt32(CoreData.count)))]
+        let pandaImg:PandaImage = CoreData?[diceRoll] as! PandaImage
+//        let pandaNiceWeather = CoreData?[0].value(forKey: "type")
+        //Fetch the data
+        if (CoreData?[diceRoll].value(forKey: "image") != nil)
+        {
+            dogImageView.image = UIImage(data: (CoreData?[diceRoll].value(forKey: "image") as? Data)!)
+        }
+
     }
     
     @IBOutlet weak var searchButtonView: UIButton!
@@ -92,24 +105,27 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         //ignoring user
         UIApplication.shared.beginIgnoringInteractionEvents()
         
-        //Spinner Activity indicator
-        let activityIndicator = UIActivityIndicatorView()
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
-        activityIndicator.center = self.view.center
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.startAnimating()
-        
-        self.view.addSubview(activityIndicator)
-        
         //Hide search bar
         searchBar.resignFirstResponder()
         dismiss(animated: true, completion: nil)
         
+        //Spinner Activity indicator
+        let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        
+        activityIndicator.startAnimating()
+        
+        self.view.addSubview(activityIndicator)
+        
         //Create the search request
         let address = searchBar.text
         self.forwardGeocoding(address: "\(address!)")
-        activityIndicator.stopAnimating()
         UIApplication.shared.endIgnoringInteractionEvents()
+        
+        //stop activity indicator -- spinner never shows up... fix later
+        activityIndicator.stopAnimating()
     }
     
     
@@ -119,7 +135,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         
         whiteBackgroundWeatherView.isHidden = true
 
-        self.showSpinnerOverlay()
+        //self.showSpinnerOverlay()
         
         self.walkMeLabel.alpha = 0
         
@@ -145,22 +161,44 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         
     }
     
-    func showSpinnerOverlay() {
-        let alert = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .alert)
+    //How to call the data You will have to change it to have your data
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-        let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
-        loadingIndicator.hidesWhenStopped = true
-        loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
-        loadingIndicator.startAnimating();
+            }
+    
+    //The function to pull the data from the table. Change it to your values
+    func fetchCoreImage(_ type: String) ->[NSManagedObject]? {
+        //1
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let managedContext = appDelegate.managedObjectContext!
+        //2
+        let fetchRequest = NSFetchRequest<PandaImage>(entityName:"PandaImage")
+        let resultPredicate2 = NSPredicate(format: "type = %@", type)
+        let compound = NSCompoundPredicate(andPredicateWithSubpredicates:[resultPredicate2])
+        fetchRequest.predicate = compound
+        let fetchedResult = try! managedContext.fetch(fetchRequest) as NSArray
+        return fetchedResult as? [NSManagedObject]
         
-        alert.view.addSubview(loadingIndicator)
-        self.present(alert, animated: true, completion: nil)
-        self.dismiss(animated: false, completion: nil)
     }
+    
+    //this func currently not being used
+//    func showSpinnerOverlay() {
+//        let alert = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .alert)
+//
+//        let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
+//        loadingIndicator.hidesWhenStopped = true
+//        loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+//        loadingIndicator.startAnimating();
+//
+//        alert.view.addSubview(loadingIndicator)
+//        self.present(alert, animated: true, completion: nil)
+//        self.dismiss(animated: false, completion: nil)
+//    }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if locationHasBeenFound == false {
-            self.showSpinnerOverlay()
+            //self.showSpinnerOverlay() -- removed this because now have the spinner on the SplashScreenViewController
             self.whiteBackgroundWeatherView.isHidden = false
             self.getTemperature()
             locationHasBeenFound = true

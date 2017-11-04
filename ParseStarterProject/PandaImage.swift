@@ -12,10 +12,10 @@ import UIKit
 
 class PandaImage : NSManagedObject
 {
-    @NSManaged var id : NSNumber?
-    @NSManaged var type : NSString!
-    @NSManaged var active : Bool
-    @NSManaged var image : NSData
+    @NSManaged var id: NSNumber?
+    @NSManaged var type: NSString!
+    @NSManaged var active: Bool
+    @NSManaged var image: NSData
     
     override func awakeFromInsert()
     {
