@@ -57,6 +57,7 @@ func PandaImagesCollect(){
         //print("****** response data = \(responseString!)")
         
         //var err: NSError?
+        
         var json: NSArray!
         do {
             json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions()) as? NSArray
@@ -136,6 +137,12 @@ func PandaImagesCollect(){
                     print("Could not save \(String(describing: error)), \(String(describing: error?.userInfo))")
                 }
             }
+            //Finishes loading all images
+            
+            //Loads the Main View Controller
+            DispatchQueue.main.async(execute: {
+                NotificationCenter.default.post(name: Notification.Name(rawValue: "timesUpdated"), object: nil, userInfo: nil)
+            });
             
         } catch {
             print(error)
