@@ -10,11 +10,17 @@ import UIKit
 import CoreData
 
 class AdminImageTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
-    @IBOutlet weak var menuButton: UIBarButtonItem!
-    var teams = [NSManagedObject]()
+    
+    @IBAction func statusSwitch(_ sender: UISwitch) {
+        
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 300
     }
     
     override func didReceiveMemoryWarning() {
@@ -36,6 +42,14 @@ class AdminImageTableViewController: UITableViewController, NSFetchedResultsCont
         return 0
     }
     
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if (indexPath.row == 0) {
+            return 150
+        } else {
+        return 150
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath)
         -> UITableViewCell {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ImageCell", for: indexPath)
@@ -49,7 +63,7 @@ class AdminImageTableViewController: UITableViewController, NSFetchedResultsCont
             return cell
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
-        let team = fetchedResultsController.object(at: indexPath)
+//        let team = fetchedResultsController.object(at: indexPath)
 //        TeamSelectedRow = (team.value(forKey: "id") as? Int)!
         
     }
@@ -66,9 +80,9 @@ class AdminImageTableViewController: UITableViewController, NSFetchedResultsCont
         }
         self.tableView.reloadData()
         
-        DispatchQueue.main.async(execute: {
-            NotificationCenter.default.post(name: Notification.Name(rawValue: "passwordUpdated"), object: nil, userInfo: nil)
-        });
+//        DispatchQueue.main.async(execute: {
+//            NotificationCenter.default.post(name: Notification.Name(rawValue: "passwordUpdated"), object: nil, userInfo: nil)
+//        });
         
     }
     func handleRefresh(_ refreshControl: UIRefreshControl) {
@@ -81,16 +95,18 @@ class AdminImageTableViewController: UITableViewController, NSFetchedResultsCont
         let moc = appDelegate.managedObjectContext
         let FetchRequest = NSFetchRequest<PandaImage>(entityName: "PandaImage")
         let primarySortDescriptor = NSSortDescriptor(key: "type", ascending: true)
-//        let resultPredicate1 = NSPredicate(format: "active = %@", "active")
-//        let compound = NSCompoundPredicate(andPredicateWithSubpredicates:[resultPredicate1])
-//        FetchRequest.predicate = compound
+        let resultPredicate1 = NSPredicate(format: "active = %@", "active")
+        let compound = NSCompoundPredicate(andPredicateWithSubpredicates:[resultPredicate1])
+        FetchRequest.predicate = compound
         FetchRequest.sortDescriptors = [primarySortDescriptor]
         let frc = NSFetchedResultsController(
             fetchRequest: FetchRequest,
             managedObjectContext: moc!,
-            sectionNameKeyPath: "active",
+            sectionNameKeyPath: "type",
             cacheName: nil)
         return frc
     }()
+    
+    
     
 }

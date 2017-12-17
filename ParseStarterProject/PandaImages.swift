@@ -95,7 +95,7 @@ func PandaImagesCollect(){
                 }
                 
                 panda.setValue(type, forKey: "type")
-                panda.setValue(type, forKey: "active")
+                panda.setValue(status, forKey: "active")
                 
                 let imagew = "http://danslacave.com/PANDA/includes/pages/image_upload/uploads/" + imagefile!
                 #if UNITY_IPHONE

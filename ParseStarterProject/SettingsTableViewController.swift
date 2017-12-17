@@ -28,6 +28,8 @@ class SettingsTableViewController: UITableViewController, MFMailComposeViewContr
     @IBOutlet weak var contactUsImageView: UIImageView!
     @IBOutlet weak var termsLabel: UILabel!
     @IBOutlet weak var termsImageView: UIImageView!
+    @IBOutlet weak var adminLabel: UILabel!
+    @IBOutlet weak var adminImageView: UIImageView!
     @IBAction func closeButton(_ sender: UIBarButtonItem) {
 
         self.delegate?.didClose(controller: self)
@@ -50,6 +52,9 @@ class SettingsTableViewController: UITableViewController, MFMailComposeViewContr
         
         termsLabel.text! = "Terms and Conditions"
         termsImageView.image! = #imageLiteral(resourceName: "orangedot")
+        
+        adminLabel.text! = "Admin"
+        adminImageView.image! = #imageLiteral(resourceName: "adminlock")
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
