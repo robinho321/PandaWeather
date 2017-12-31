@@ -80,17 +80,6 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
     }
     @IBAction func setCurrentLocation(_ sender: UIButton) {
         self.getTemperature()
-        
-//        var coreNiceImages = fetchCoreImage("nice")
-//        let randomNiceImage = Int(arc4random_uniform(UInt32(coreNiceImages!.count)))
-//        let coreNiceImage = CoreData![Int(arc4random_uniform(UInt32(CoreData.count)))]
-//        let pandaImg:PandaImage = coreNiceImages?[randomNiceImage] as! PandaImage
-//        let pandaNiceWeather = CoreData?[0].value(forKey: "type")
-        //Fetch the data
-//        if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-//        {
-//            dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
-//        }
 
     }
     

@@ -33,12 +33,15 @@ class AdminAddImage: UIViewController, UIImagePickerControllerDelegate, UINaviga
             }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]){
-                let IMAGEResize = resizeImage(image: (info[UIImagePickerControllerOriginalImage] as? UIImage)!,newWidth: 124)
-                PandaImage.image = IMAGEResize
+//                let IMAGEResize = resizeImage(image: (info[UIImagePickerControllerOriginalImage] as? UIImage)!,newWidth: 204)
+                let image = info[UIImagePickerControllerOriginalImage] as? UIImage
+                PandaImage.image = image
                 UploadImage = "Yes"
                 self.dismiss(animated: true, completion: nil)
             }
 
+    
+    //server interaction - image upload
     @IBAction func request(_ sender: AnyObject) {
                 //errorLog.text = ""
                 if type.text == ""{
@@ -88,6 +91,8 @@ class AdminAddImage: UIViewController, UIImagePickerControllerDelegate, UINaviga
                         _ = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
                         //print("****** response data = \(responseString!)")
         
+                        //
+                        
 //                        let json = try! JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSArray
 //                        for appDict in json! {
 //

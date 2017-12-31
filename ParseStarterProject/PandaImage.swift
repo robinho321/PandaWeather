@@ -16,6 +16,7 @@ class PandaImage : NSManagedObject
     @NSManaged var type: NSString!
     @NSManaged var active: Bool
     @NSManaged var image: NSData
+    @NSManaged var fake: NSString!
     
     override func awakeFromInsert()
     {

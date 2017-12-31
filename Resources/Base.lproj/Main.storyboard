@@ -888,6 +888,7 @@
                                     <outlet property="ImageNameLabel" destination="TA6-zK-ddD" id="liu-JJ-Duz"/>
                                     <outlet property="PandaImage" destination="Wik-hH-vhO" id="pvx-SH-qqR"/>
                                     <outlet property="WeatherTypeLabel" destination="44g-zf-nxk" id="9zx-M1-A30"/>
+                                    <outlet property="switchLabel" destination="S76-DF-03f" id="5jI-ZF-HJ8"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

@@ -11,6 +11,7 @@ class ImageCell: UITableViewCell {
     @IBOutlet weak var ImageNameLabel: UILabel!
     @IBOutlet weak var WeatherTypeLabel: UILabel!
     @IBOutlet weak var PandaImage: UIImageView!
+    @IBOutlet weak var switchLabel: UISwitch!
     
     override func awakeFromNib() {
         super.awakeFromNib()

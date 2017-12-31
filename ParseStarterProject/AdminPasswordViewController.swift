@@ -14,7 +14,7 @@ class AdminPasswordViewController: UIViewController {
     @IBOutlet weak var passwordLabel: UILabel!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBAction func confirmPassword(_ sender: UIButton) {
-        if passwordTextField.text == "robinho" {
+        if passwordTextField.text == "robbie123" {
             self.performSegue(withIdentifier: "openAdminImageTable", sender: self)
         }
             else {
