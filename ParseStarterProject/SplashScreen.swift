@@ -15,6 +15,8 @@ class SplashScreenViewController: UIViewController {
         override func viewDidLoad() {
             super.viewDidLoad()
             
+            var pictureDate = ""
+            
             let activityIndicator = UIActivityIndicatorView()
 
             //Spinner Activity indicator
@@ -26,8 +28,40 @@ class SplashScreenViewController: UIViewController {
             
             self.view.addSubview(activityIndicator)
             
+            //Fetch date and store in Core Data table
+            var results = Date()!
+            if results.count > 0 {
+                let dates = results[0]
+                
+                pictureDate = ((dates as AnyObject).value(forKey: "pandaImageDate")as? String)!
+                if ((dates as AnyObject).value(forKey: "pandaImageDate") == nil) {
+                    pictureDate = ""
+                } else {
+                    pictureDate = ((dates as AnyObject).value(forKey: "pandaImageDate")as? String)!
+                }
+            } else {
+                var error: NSError?
+                var panda: SyncDate
+                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                let managedContext = appDelegate.managedObjectContext!
+                let privateMOC = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+                privateMOC.parent = managedContext
+                let entity =  NSEntityDescription.entity(forEntityName: "SyncDate", in: privateMOC)
+                panda = (NSManagedObject(entity: entity!, insertInto:privateMOC) as AnyObject) as! SyncDate
+                panda.setValue("", forKey: "pandaImageDate")
+                
+                do {
+                    try privateMOC.save()
+                    //Update Field
+                } catch let error1 as NSError {
+                    error = error1
+                    print("Could not save \(String(describing: error)), \(String(describing: error?.userInfo))")
+                }
+            }
+            
+            
             //Call your core data fetch from PandaImages.swift
-            PandaImagesCollect()
+            PandaImagesCollect(pictureDate)
             NotificationCenter.default.addObserver(self, selector: #selector(SplashScreenViewController.loadMainViewController(_:)), name: NSNotification.Name(rawValue: "timesUpdated"), object: nil) //bookmark to call this function anywhere in code
             
         }

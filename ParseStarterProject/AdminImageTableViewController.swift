@@ -17,7 +17,6 @@ class AdminImageTableViewController: UITableViewController, NSFetchedResultsCont
             let UpdateUserURL = "http://danslacave.com/PANDA/jsonfiles/deactivateImage.php"
             let request = NSMutableURLRequest(url: URL(string: UpdateUserURL)!)
             request.httpMethod = "POST"
-            var PandaCore = PandaImagesCollect()
     
             let buttonRow = sender.tag
             let indexPath = IndexPath(row: buttonRow, section: 0)
@@ -70,7 +69,6 @@ class AdminImageTableViewController: UITableViewController, NSFetchedResultsCont
                                                 let compound = NSCompoundPredicate(andPredicateWithSubpredicates:[resultPredicate1])
                                                 request.predicate = compound
                                                 var error: NSError?
-                                                
                                                 
                                                 let fetchedResult:NSArray = try! managedContext.fetch(request) as NSArray
                                                 
@@ -135,6 +133,7 @@ class AdminImageTableViewController: UITableViewController, NSFetchedResultsCont
         
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 300
+    
     }
     
     override func didReceiveMemoryWarning() {

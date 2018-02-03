@@ -29,10 +29,11 @@
 		A93FB3D21FC23DB900E4D5B7 /* AdminImageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93FB3D11FC23DB900E4D5B7 /* AdminImageTableViewController.swift */; };
 		A93FB3D41FC23E8400E4D5B7 /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93FB3D31FC23E8400E4D5B7 /* ImageCell.swift */; };
 		A945C5881FE5E6730063DFAF /* AdminAddImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A945C5871FE5E6730063DFAF /* AdminAddImage.swift */; };
+		A9930F7B201506FB00E4D644 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9930F7A201506FB00E4D644 /* Date.swift */; };
+		A9A725C7202574D700326622 /* CustomizeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A725C6202574D700326622 /* CustomizeViewController.swift */; };
 		A9A97E671F5543360046B1AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9A97E661F5543360046B1AD /* Assets.xcassets */; };
 		A9C752C31FC248DD008002C5 /* AdminPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C752C21FC248DD008002C5 /* AdminPasswordViewController.swift */; };
 		A9E0A20C1FF94C3B00ECD178 /* SyncDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E0A20B1FF94C3B00ECD178 /* SyncDate.swift */; };
-		A9E0A20E1FF94F9500ECD178 /* SyncDateServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E0A20D1FF94F9500ECD178 /* SyncDateServer.swift */; };
 		A9E357D61F550D1200F9EDA8 /* termsAndConditionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E357D51F550D1200F9EDA8 /* termsAndConditionsViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -63,10 +64,11 @@
 		A93FB3D11FC23DB900E4D5B7 /* AdminImageTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminImageTableViewController.swift; sourceTree = "<group>"; };
 		A93FB3D31FC23E8400E4D5B7 /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
 		A945C5871FE5E6730063DFAF /* AdminAddImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminAddImage.swift; sourceTree = "<group>"; };
+		A9930F7A201506FB00E4D644 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		A9A725C6202574D700326622 /* CustomizeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizeViewController.swift; sourceTree = "<group>"; };
 		A9A97E661F5543360046B1AD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A9C752C21FC248DD008002C5 /* AdminPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminPasswordViewController.swift; sourceTree = "<group>"; };
 		A9E0A20B1FF94C3B00ECD178 /* SyncDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncDate.swift; sourceTree = "<group>"; };
-		A9E0A20D1FF94F9500ECD178 /* SyncDateServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncDateServer.swift; sourceTree = "<group>"; };
 		A9E357D51F550D1200F9EDA8 /* termsAndConditionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = termsAndConditionsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -124,12 +126,12 @@
 				81BA814A1A49DA1800E65899 /* AppDelegate.swift */,
 				A93FB3C91FAC214500E4D5B7 /* SplashScreen.swift */,
 				81BA814C1A49DA1800E65899 /* ViewController.swift */,
-				814C3AC61B69877600E307BB /* Main.storyboard */,
 				A916C1221F4FDB080057A09C /* SettingsTableViewController.swift */,
+				A9A725C6202574D700326622 /* CustomizeViewController.swift */,
 				A9E357D51F550D1200F9EDA8 /* termsAndConditionsViewController.swift */,
 				A91ACE4E1F9437A40082401A /* PandaWeather.xcdatamodeld */,
+				A9930F7A201506FB00E4D644 /* Date.swift */,
 				A9E0A20B1FF94C3B00ECD178 /* SyncDate.swift */,
-				A9E0A20D1FF94F9500ECD178 /* SyncDateServer.swift */,
 				A91ACE511F9438980082401A /* PandaImage.swift */,
 				A93FB3C31FAC202300E4D5B7 /* PandaImages.swift */,
 				A93FB3C51FAC204200E4D5B7 /* SwiftyJSON.swift */,
@@ -138,6 +140,7 @@
 				A93FB3D11FC23DB900E4D5B7 /* AdminImageTableViewController.swift */,
 				A945C5871FE5E6730063DFAF /* AdminAddImage.swift */,
 				A93FB3D31FC23E8400E4D5B7 /* ImageCell.swift */,
+				814C3AC61B69877600E307BB /* Main.storyboard */,
 			);
 			path = ParseStarterProject;
 			sourceTree = "<group>";
@@ -324,12 +327,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				A93FB3D21FC23DB900E4D5B7 /* AdminImageTableViewController.swift in Sources */,
-				A9E0A20E1FF94F9500ECD178 /* SyncDateServer.swift in Sources */,
 				A93FB3CA1FAC214500E4D5B7 /* SplashScreen.swift in Sources */,
 				A9E357D61F550D1200F9EDA8 /* termsAndConditionsViewController.swift in Sources */,
+				A9930F7B201506FB00E4D644 /* Date.swift in Sources */,
 				A91ACE501F9437A40082401A /* PandaWeather.xcdatamodeld in Sources */,
 				A916C1231F4FDB080057A09C /* SettingsTableViewController.swift in Sources */,
 				A93FB3C81FAC205900E4D5B7 /* CoreDataStack.swift in Sources */,
+				A9A725C7202574D700326622 /* CustomizeViewController.swift in Sources */,
 				81BA814D1A49DA1800E65899 /* ViewController.swift in Sources */,
 				A91ACE521F9438980082401A /* PandaImage.swift in Sources */,
 				A9C752C31FC248DD008002C5 /* AdminPasswordViewController.swift in Sources */,

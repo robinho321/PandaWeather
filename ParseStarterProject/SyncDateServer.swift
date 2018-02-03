@@ -16,7 +16,7 @@ func syncDateCollect(){
     request.httpMethod = "POST";
     let param = [
         "User"  : "Hello",
-        "date"    : "Hello"
+        "date"  : "Hello"
     ]
     func createBodyWithParameters(_ parameters: [String: String]?, boundary: String) -> Data {
         let body = NSMutableData();

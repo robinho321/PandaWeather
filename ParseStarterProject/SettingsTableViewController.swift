@@ -18,18 +18,18 @@ protocol SettingsTableViewControllerDelegate {
 class SettingsTableViewController: UITableViewController, MFMailComposeViewControllerDelegate {
     var delegate: SettingsTableViewControllerDelegate? = nil
     
+    @IBOutlet weak var customizePhotosLabel: UILabel!
+    @IBOutlet weak var customizePhotosImageView: UIImageView!
     @IBOutlet weak var rateOnAppStoreLabel: UILabel!
     @IBOutlet weak var rateAppStoreIconImageView: UIImageView!
     @IBOutlet weak var shareFacebookLabel: UILabel!
     @IBOutlet weak var shareFacebookImageView: UIImageView!
-    @IBOutlet weak var followInstagramLabel: UILabel!
-    @IBOutlet weak var followInstagramImageView: UIImageView!
     @IBOutlet weak var contactUsLabel: UILabel!
     @IBOutlet weak var contactUsImageView: UIImageView!
+    @IBOutlet weak var followInstagramLabel: UILabel!
+    @IBOutlet weak var followInstagramImageView: UIImageView!
     @IBOutlet weak var termsLabel: UILabel!
-    @IBOutlet weak var termsImageView: UIImageView!
     @IBOutlet weak var adminLabel: UILabel!
-    @IBOutlet weak var adminImageView: UIImageView!
     @IBAction func closeButton(_ sender: UIBarButtonItem) {
 
         self.delegate?.didClose(controller: self)
@@ -38,23 +38,24 @@ class SettingsTableViewController: UITableViewController, MFMailComposeViewContr
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        customizePhotosLabel.text! = "Customize Your Photos"
+        customizePhotosImageView.image! = #imageLiteral(resourceName: "002-pictures")
+        
         rateOnAppStoreLabel.text! = "Rate on the App Store"
         rateAppStoreIconImageView.image! = #imageLiteral(resourceName: "appStore")
         
         shareFacebookLabel.text! = "Share via Facebook"
         shareFacebookImageView.image! = #imageLiteral(resourceName: "facebook")
         
-        followInstagramLabel.text! = "Follow Pandapupgram"
-        followInstagramImageView.image! = #imageLiteral(resourceName: "faceCute")
-        
         contactUsLabel.text! = "Contact Us"
         contactUsImageView.image! = #imageLiteral(resourceName: "contactus")
         
+        followInstagramLabel.text! = "Follow Pandapupgram"
+        followInstagramImageView.image! = #imageLiteral(resourceName: "faceCute")
+        
         termsLabel.text! = "Terms and Conditions"
-        termsImageView.image! = #imageLiteral(resourceName: "orangedot")
         
         adminLabel.text! = "Admin"
-        adminImageView.image! = #imageLiteral(resourceName: "adminlock")
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -77,25 +78,33 @@ class SettingsTableViewController: UITableViewController, MFMailComposeViewContr
             self.tableView.deselectRow(at: index, animated: true)
         }
     
-        if indexPath.row == 0 {
-    self.rateOnTheAppStore()
+    if indexPath.section == 0 && indexPath.row == 0 {
+        self.customizeYourPhotos()
     }
 
-    else if indexPath.row == 1 {
-    self.shareViaFacebook()
-    }
-
-    else if indexPath.row == 2 {
-    self.followPandaPupGram()
-    }
-
-    else if indexPath.row == 3 {
-        self.contactUs()
+    else if indexPath.section == 1 && indexPath.row == 0 {
+        self.rateOnTheAppStore()
     }
         
-    else if indexPath.row == 4 {
-    self.termsAndConditions()
+    else if indexPath.section == 1 && indexPath.row == 1 {
+        self.shareViaFacebook()
     }
+
+    else if indexPath.section == 2 && indexPath.row == 0 {
+        self.contactUs()
+    }
+
+    else if indexPath.section == 3 && indexPath.row == 0 {
+        self.followPandaPupGram()
+    }
+        
+    else if indexPath.section == 4 && indexPath.row == 0 {
+        self.termsAndConditions()
+    }
+        
+    else if indexPath.section == 4 && indexPath.row == 1 {
+        self.openAdmin()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -170,7 +179,10 @@ class SettingsTableViewController: UITableViewController, MFMailComposeViewContr
 //            if segue.identifier == "closeSettings" {
 //    }
     // }
- 
+
+    func customizeYourPhotos() {
+        self.performSegue(withIdentifier: "showCustomize", sender: nil)
+    }
     
     func rateOnTheAppStore() {
         let url = URL(string: "https://itunes.apple.com/us/app/panda-puppy-weather/id1281833307?ls=1&mt=8")!
@@ -236,5 +248,9 @@ class SettingsTableViewController: UITableViewController, MFMailComposeViewContr
             print("Mail services are not available")
             return
         }
+    }
+    
+    func openAdmin() {
+        self.performSegue(withIdentifier: "openAdmin", sender: nil)
     }
 }

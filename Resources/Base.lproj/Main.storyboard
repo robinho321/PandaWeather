@@ -498,6 +498,14 @@
                                     <action selector="searchButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GPS-Z7-q3E"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GtF-2e-a9r">
+                                <rect key="frame" x="354" y="626" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="PTU-Pa-1mg"/>
+                                    <constraint firstAttribute="height" constant="40" id="PfD-qx-yHx"/>
+                                </constraints>
+                                <state key="normal" image="002-pictures"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -509,6 +517,7 @@
                                 <variation key="heightClass=regular-widthClass=regular" constant="70"/>
                             </constraint>
                             <constraint firstItem="kgo-gc-FZS" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Fxt-ru-b0g"/>
+                            <constraint firstAttribute="trailing" secondItem="GtF-2e-a9r" secondAttribute="trailing" constant="20" id="LCn-tF-fBE"/>
                             <constraint firstAttribute="trailing" secondItem="CKe-dT-p8k" secondAttribute="trailing" constant="20" id="Mue-R8-heW"/>
                             <constraint firstItem="zb3-oC-UbY" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="PUF-m3-osN"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="4LR-9d-dGM" secondAttribute="bottom" constant="39" id="PYR-cH-Ur0"/>
@@ -522,6 +531,7 @@
                                 <variation key="heightClass=regular-widthClass=regular" constant="15"/>
                             </constraint>
                             <constraint firstItem="CKe-dT-p8k" firstAttribute="leading" secondItem="4LR-9d-dGM" secondAttribute="trailing" constant="25" id="cYw-Dr-QYa"/>
+                            <constraint firstItem="CKe-dT-p8k" firstAttribute="top" secondItem="GtF-2e-a9r" secondAttribute="bottom" constant="8" id="nBe-oU-EKg"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="9BP-xj-Ld4" secondAttribute="bottom" constant="20" id="t6z-c4-pbw"/>
                             <constraint firstItem="9BP-xj-Ld4" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="x6J-u8-ovu"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="kgo-gc-FZS" secondAttribute="bottom" id="xyv-ZQ-pAr"/>
@@ -567,7 +577,25 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1064.0625" y="-64.453125"/>
+            <point key="canvasLocation" x="1063.768115942029" y="-65.217391304347828"/>
+        </scene>
+        <!--Customize View Controller-->
+        <scene sceneID="pZR-py-BjD">
+            <objects>
+                <viewController id="d7p-HI-TbI" customClass="CustomizeViewController" customModule="PandaWeather" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Rbk-nf-4Z9"/>
+                        <viewControllerLayoutGuide type="bottom" id="ECL-gb-9gG"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="P6f-1l-HS7">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QqH-Rf-pD5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2749" y="-773"/>
         </scene>
         <!--Settings-->
         <scene sceneID="kLK-xG-P3i">
@@ -578,7 +606,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
-                            <tableViewSection headerTitle="Settings" id="bwX-t9-13L">
+                            <tableViewSection headerTitle="Customize Background Photos" id="bwX-t9-13L">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="upv-iL-BWY" userLabel="Rate on the App Store">
                                         <rect key="frame" x="0.0" y="55.333333333333336" width="414" height="44"/>
@@ -587,7 +615,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rate on the App Store" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="opC-VJ-kEh">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Customize Your Photos" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="opC-VJ-kEh">
                                                     <rect key="frame" x="61" y="4" width="212" height="36"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="212" id="5eZ-Q6-s2f"/>
@@ -613,113 +641,201 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="3dd-24-Kpz" userLabel="Share via Facebook">
-                                        <rect key="frame" x="0.0" y="99.333333333333343" width="414" height="44"/>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Please help us spread the word" id="fMt-Vb-Ls2">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="0F0-DS-UcU" userLabel="Rate on the App Store">
+                                        <rect key="frame" x="0.0" y="155.33333333333334" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3dd-24-Kpz" id="6PC-lo-p8P">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0F0-DS-UcU" id="Udv-6Y-B93">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Share via Facebook" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y9j-2H-fEY">
-                                                    <rect key="frame" x="62" y="4" width="212" height="36"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rate on the App Store" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eg7-gb-EWY">
+                                                    <rect key="frame" x="61" y="4" width="212" height="36"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="212" id="K5n-mf-pox"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="appStore" translatesAutoresizingMaskIntoConstraints="NO" id="y4D-MU-Z11">
-                                                    <rect key="frame" x="22" y="6" width="31" height="31"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="appStore" translatesAutoresizingMaskIntoConstraints="NO" id="Fb0-f5-j9k">
+                                                    <rect key="frame" x="22" y="7" width="31" height="31"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="31" id="bGP-mS-L4l"/>
+                                                    </constraints>
                                                 </imageView>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="eg7-gb-EWY" secondAttribute="bottom" constant="4" id="5eI-ec-0aM"/>
+                                                <constraint firstItem="Fb0-f5-j9k" firstAttribute="top" secondItem="Udv-6Y-B93" secondAttribute="top" constant="7" id="5ga-5d-x7B"/>
+                                                <constraint firstItem="eg7-gb-EWY" firstAttribute="top" secondItem="Udv-6Y-B93" secondAttribute="top" constant="4" id="Cd3-op-90t"/>
+                                                <constraint firstItem="eg7-gb-EWY" firstAttribute="leading" secondItem="Fb0-f5-j9k" secondAttribute="trailing" constant="8" id="KcB-g4-57p"/>
+                                                <constraint firstAttribute="bottom" secondItem="Fb0-f5-j9k" secondAttribute="bottom" constant="6" id="YfI-O2-M3W"/>
+                                                <constraint firstItem="Fb0-f5-j9k" firstAttribute="leading" secondItem="Udv-6Y-B93" secondAttribute="leading" constant="22" id="fv3-2X-h8T"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="oK1-dw-yJD" userLabel="Follow Pandapupgram">
-                                        <rect key="frame" x="0.0" y="143.33333333333334" width="414" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="owM-Mc-hfS" userLabel="Rate on the App Store">
+                                        <rect key="frame" x="0.0" y="199.33333333333334" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oK1-dw-yJD" id="spU-bJ-EgS">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="owM-Mc-hfS" id="KeJ-Y1-Krn">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="appStore" translatesAutoresizingMaskIntoConstraints="NO" id="DUN-kJ-dbg">
-                                                    <rect key="frame" x="21" y="6" width="31" height="31"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Follow Pandapupgram" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O7L-EO-v4C">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Share via Facebook" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4bd-JW-kAv">
                                                     <rect key="frame" x="61" y="4" width="212" height="36"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="212" id="2Ii-cN-CnO"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="appStore" translatesAutoresizingMaskIntoConstraints="NO" id="3Xt-ik-C57">
+                                                    <rect key="frame" x="22" y="7" width="31" height="31"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="31" id="aTd-nQ-r1k"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="3Xt-ik-C57" firstAttribute="top" secondItem="KeJ-Y1-Krn" secondAttribute="top" constant="7" id="5QV-em-1LT"/>
+                                                <constraint firstItem="4bd-JW-kAv" firstAttribute="leading" secondItem="3Xt-ik-C57" secondAttribute="trailing" constant="8" id="EB4-41-2PF"/>
+                                                <constraint firstAttribute="bottom" secondItem="4bd-JW-kAv" secondAttribute="bottom" constant="4" id="TZk-Ac-EGr"/>
+                                                <constraint firstAttribute="bottom" secondItem="3Xt-ik-C57" secondAttribute="bottom" constant="6" id="Wy7-00-xTU"/>
+                                                <constraint firstItem="4bd-JW-kAv" firstAttribute="top" secondItem="KeJ-Y1-Krn" secondAttribute="top" constant="4" id="l6y-h4-WWk"/>
+                                                <constraint firstItem="3Xt-ik-C57" firstAttribute="leading" secondItem="KeJ-Y1-Krn" secondAttribute="leading" constant="22" id="lIt-h0-nLC"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="lvE-Wl-tLi" userLabel="Contact Us">
-                                        <rect key="frame" x="0.0" y="187.33333333333334" width="414" height="44"/>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="need help?" id="8ZU-x2-OXa">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Luu-Iq-awV" userLabel="Rate on the App Store">
+                                        <rect key="frame" x="0.0" y="299.33333333333337" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lvE-Wl-tLi" id="GEg-Qm-ePn">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Luu-Iq-awV" id="h2y-Ia-NmQ">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="appStore" translatesAutoresizingMaskIntoConstraints="NO" id="0XD-Tj-d3R">
-                                                    <rect key="frame" x="21" y="6" width="31" height="31"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Contact Us" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SBF-gy-msi">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Contact Us" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sen-AH-kfC">
                                                     <rect key="frame" x="61" y="4" width="212" height="36"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="212" id="XYK-Yb-Ug3"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="appStore" translatesAutoresizingMaskIntoConstraints="NO" id="NEO-tO-pez">
+                                                    <rect key="frame" x="22" y="7" width="31" height="31"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="31" id="PUd-DK-fUR"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="NEO-tO-pez" firstAttribute="leading" secondItem="h2y-Ia-NmQ" secondAttribute="leading" constant="22" id="YLn-5l-cX8"/>
+                                                <constraint firstItem="Sen-AH-kfC" firstAttribute="top" secondItem="h2y-Ia-NmQ" secondAttribute="top" constant="4" id="bum-1X-P0b"/>
+                                                <constraint firstAttribute="bottom" secondItem="Sen-AH-kfC" secondAttribute="bottom" constant="4" id="o99-ga-wZA"/>
+                                                <constraint firstAttribute="bottom" secondItem="NEO-tO-pez" secondAttribute="bottom" constant="6" id="tas-9b-Tft"/>
+                                                <constraint firstItem="NEO-tO-pez" firstAttribute="top" secondItem="h2y-Ia-NmQ" secondAttribute="top" constant="7" id="tas-tC-kGT"/>
+                                                <constraint firstItem="Sen-AH-kfC" firstAttribute="leading" secondItem="NEO-tO-pez" secondAttribute="trailing" constant="8" id="zjF-WJ-U1C"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="h49-8P-ooS" userLabel="Terms and Conditions">
-                                        <rect key="frame" x="0.0" y="231.33333333333334" width="414" height="44"/>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Who is that Cute Dog?!" id="NrX-QX-SiP">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Pus-0O-PhT" userLabel="Rate on the App Store">
+                                        <rect key="frame" x="0.0" y="399.33333333333337" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="h49-8P-ooS" id="n4l-6l-7gm">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Pus-0O-PhT" id="UA9-UO-lcl">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="appStore" translatesAutoresizingMaskIntoConstraints="NO" id="Mm8-Rb-nEO">
-                                                    <rect key="frame" x="21" y="6" width="31" height="31"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Terms and Conditions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YJN-jm-S7b">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Follow Panda on Instagram" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bz2-J9-fqG">
                                                     <rect key="frame" x="61" y="4" width="212" height="36"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="212" id="kHN-ZA-ISg"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="appStore" translatesAutoresizingMaskIntoConstraints="NO" id="L9E-2t-JE2">
+                                                    <rect key="frame" x="22" y="7" width="31" height="31"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="31" id="tqG-j7-u2a"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Bz2-J9-fqG" firstAttribute="leading" secondItem="L9E-2t-JE2" secondAttribute="trailing" constant="8" id="6ZK-33-lxm"/>
+                                                <constraint firstItem="L9E-2t-JE2" firstAttribute="leading" secondItem="UA9-UO-lcl" secondAttribute="leading" constant="22" id="HY4-AB-uB0"/>
+                                                <constraint firstItem="Bz2-J9-fqG" firstAttribute="top" secondItem="UA9-UO-lcl" secondAttribute="top" constant="4" id="Kgy-pb-EFk"/>
+                                                <constraint firstAttribute="bottom" secondItem="L9E-2t-JE2" secondAttribute="bottom" constant="6" id="c1Z-rh-qim"/>
+                                                <constraint firstItem="L9E-2t-JE2" firstAttribute="top" secondItem="UA9-UO-lcl" secondAttribute="top" constant="7" id="f2D-4G-z9a"/>
+                                                <constraint firstAttribute="bottom" secondItem="Bz2-J9-fqG" secondAttribute="bottom" constant="4" id="uQI-hd-5ke"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="sXk-B8-Tsa" userLabel="Admin">
-                                        <rect key="frame" x="0.0" y="275.33333333333337" width="414" height="44"/>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="" id="oK4-O1-cJK">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Owc-f9-MA9" userLabel="Rate on the App Store">
+                                        <rect key="frame" x="0.0" y="479.33333333333337" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sXk-B8-Tsa" id="qZJ-aL-7TW">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Owc-f9-MA9" id="o37-dW-AgE">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="appStore" translatesAutoresizingMaskIntoConstraints="NO" id="oDY-Gj-cdV">
-                                                    <rect key="frame" x="21" y="6" width="31" height="31"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Admin" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dUe-dj-lM5">
-                                                    <rect key="frame" x="61" y="4" width="212" height="36"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Terms and Conditions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cC1-VC-fZU">
+                                                    <rect key="frame" x="20" y="4" width="212" height="36"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="212" id="eLH-bH-u7S"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="cC1-VC-fZU" firstAttribute="top" secondItem="o37-dW-AgE" secondAttribute="top" constant="4" id="6Yg-Zx-9BX"/>
+                                                <constraint firstAttribute="bottom" secondItem="cC1-VC-fZU" secondAttribute="bottom" constant="3.6699999999999999" id="ELO-L1-eRb"/>
+                                                <constraint firstItem="cC1-VC-fZU" firstAttribute="leading" secondItem="o37-dW-AgE" secondAttribute="leading" constant="20" id="ePf-Rr-ix4"/>
+                                            </constraints>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="6Gy-Qt-kFk" kind="show" id="EKF-Hc-20O"/>
-                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="fBP-J8-q0w" userLabel="Rate on the App Store">
+                                        <rect key="frame" x="0.0" y="523.33333333333337" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fBP-J8-q0w" id="yAn-yG-vD7">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.666666666666664"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Admin" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nS8-2m-9Ac">
+                                                    <rect key="frame" x="20" y="4" width="212" height="36"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="212" id="gMI-bh-4FM"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="nS8-2m-9Ac" firstAttribute="top" secondItem="yAn-yG-vD7" secondAttribute="top" constant="4" id="T4V-cW-OWn"/>
+                                                <constraint firstItem="nS8-2m-9Ac" firstAttribute="leading" secondItem="yAn-yG-vD7" secondAttribute="leading" constant="20" id="cCM-lu-Fbu"/>
+                                                <constraint firstAttribute="bottom" secondItem="nS8-2m-9Ac" secondAttribute="bottom" constant="3.6699999999999999" id="eLC-zL-IGV"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -737,19 +853,21 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="adminImageView" destination="oDY-Gj-cdV" id="lo4-0h-T7L"/>
-                        <outlet property="adminLabel" destination="dUe-dj-lM5" id="IZ1-Kn-OoF"/>
-                        <outlet property="contactUsImageView" destination="0XD-Tj-d3R" id="VKr-Ua-ltR"/>
-                        <outlet property="contactUsLabel" destination="SBF-gy-msi" id="pTa-Xg-Pwj"/>
-                        <outlet property="followInstagramImageView" destination="DUN-kJ-dbg" id="XY8-oT-UYk"/>
-                        <outlet property="followInstagramLabel" destination="O7L-EO-v4C" id="RwF-sK-gGF"/>
-                        <outlet property="rateAppStoreIconImageView" destination="arg-Uh-A83" id="4gU-mI-7Ax"/>
-                        <outlet property="rateOnAppStoreLabel" destination="opC-VJ-kEh" id="bZy-lW-Zet"/>
-                        <outlet property="shareFacebookImageView" destination="y4D-MU-Z11" id="eHQ-aK-vvY"/>
-                        <outlet property="shareFacebookLabel" destination="Y9j-2H-fEY" id="Uq9-E2-XbC"/>
-                        <outlet property="termsImageView" destination="Mm8-Rb-nEO" id="i7T-J7-2dE"/>
-                        <outlet property="termsLabel" destination="YJN-jm-S7b" id="cim-fw-hjq"/>
+                        <outlet property="adminLabel" destination="nS8-2m-9Ac" id="mpy-U4-blY"/>
+                        <outlet property="contactUsImageView" destination="NEO-tO-pez" id="gMG-8k-bMT"/>
+                        <outlet property="contactUsLabel" destination="Sen-AH-kfC" id="cpV-6A-cLM"/>
+                        <outlet property="customizePhotosImageView" destination="arg-Uh-A83" id="nIK-Wt-ZRB"/>
+                        <outlet property="customizePhotosLabel" destination="opC-VJ-kEh" id="oU2-xo-ivF"/>
+                        <outlet property="followInstagramImageView" destination="L9E-2t-JE2" id="dpL-4q-2ZV"/>
+                        <outlet property="followInstagramLabel" destination="Bz2-J9-fqG" id="Crl-YI-ObT"/>
+                        <outlet property="rateAppStoreIconImageView" destination="Fb0-f5-j9k" id="ZUQ-om-1Wl"/>
+                        <outlet property="rateOnAppStoreLabel" destination="eg7-gb-EWY" id="kx3-FQ-yob"/>
+                        <outlet property="shareFacebookImageView" destination="3Xt-ik-C57" id="qSD-30-WYm"/>
+                        <outlet property="shareFacebookLabel" destination="4bd-JW-kAv" id="suI-TP-CBM"/>
+                        <outlet property="termsLabel" destination="cC1-VC-fZU" id="hgU-Qd-zD1"/>
                         <segue destination="95n-Cp-6KL" kind="showDetail" identifier="showTerms" action="showViewController:sender:" id="EHI-yH-YOv"/>
+                        <segue destination="6Gy-Qt-kFk" kind="show" identifier="openAdmin" id="6cP-iH-TYp"/>
+                        <segue destination="d7p-HI-TbI" kind="show" identifier="showCustomize" id="tTe-f0-9np"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3M7-td-y3f" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -955,7 +1073,6 @@
                                 <state key="normal" title="Save Image"/>
                                 <connections>
                                     <action selector="ImageSelectButton:" destination="8Qx-d3-pNL" eventType="touchUpInside" id="EKb-IY-4gk"/>
-                                    <action selector="ImageSelectButton:" destination="BHR-s6-X2R" eventType="touchUpInside" id="h65-qn-vOP"/>
                                     <action selector="request:" destination="BHR-s6-X2R" eventType="touchUpInside" id="aU5-sG-9nv"/>
                                 </connections>
                             </button>
@@ -1001,7 +1118,7 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="0j8-db-zfZ">
                                 <rect key="frame" x="20" y="20" width="374" height="716"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <string key="text">This iOS app and any related application information is intended to help users understand the weather in his/her current location.  This app, and the owner Robin Allemand, is not responsible and shall not be held liable for any damages caused by following or adhering to the information found on this app or any related mobile application. 
+                                <mutableString key="text">This iOS app and any related application information is intended to help users understand the weather in his/her current location.  This app, and the owner Robin Allemand, is not responsible and shall not be held liable for any damages caused by following or adhering to the information found on this app or any related mobile application. 
 
 This app and Robin Allemand are merely providing publicly available weather forecast data to weather enthusiasts. Any content users upload (regarding their personal profile pictures, etc.) is their own and this app/website and Robin Allemand are not responsible for false, misleading, or inappropriate information. 
 
@@ -1040,7 +1157,7 @@ Entire Agreement and Revisions
 These Terms of Use and any other legal notices on the App constitute the entire agreement between you and Robin Allemand with respect to the use of the App and the Materials. Robin Allemand reserves the right to revise these Terms of Use at any time and for any reason without notice or obligation to you.
 
 Severability
-If any provision of the Terms of Use is found to be invalid by any court of competent jurisdiction, the invalidity of such provision shall not affect the validity of the rest of the Agreement.</string>
+If any provision of the Terms of Use is found to be invalid by any court of competent jurisdiction, the invalidity of such provision shall not affect the validity of the rest of the Agreement.</mutableString>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -1136,6 +1253,7 @@ If any provision of the Terms of Use is found to be invalid by any court of comp
         </scene>
     </scenes>
     <resources>
+        <image name="002-pictures" width="128" height="128"/>
         <image name="appStore" width="128" height="128"/>
         <image name="cloudSunIcon" width="128" height="128"/>
         <image name="cloudy" width="525" height="403"/>

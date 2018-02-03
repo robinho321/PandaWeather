@@ -10,13 +10,14 @@ import UIKit
 import Foundation
 import CoreData
 
-func PandaImagesCollect(){
+func PandaImagesCollect(_ imageDate: String){
     let myUrl = URL(string: "http://danslacave.com/PANDA/jsonfiles/PANDAIMAGES.php");
     let request = NSMutableURLRequest(url:myUrl!);
     request.httpMethod = "POST";
+    let date = imageDate;
     let param = [
         "User"  : "Hello",
-        "date"    : "Hello"
+        "date"    : date
     ]
     func createBodyWithParameters(_ parameters: [String: String]?, boundary: String) -> Data {
         let body = NSMutableData();
@@ -58,10 +59,13 @@ func PandaImagesCollect(){
         
         //var err: NSError?
         
-        var json: NSArray!
-        do {
-            json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions()) as? NSArray
-            for appDict in json {
+        
+        
+        let json = try? JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSArray
+        
+        if let appArray = json {
+            //2
+            for appDict in appArray! {
                 //Fetch data
                 let ImageFetch:AnyObject = appDict as AnyObject
                 let id: Int? = ImageFetch.value(forKey: "id") as! Int?
@@ -73,6 +77,7 @@ func PandaImagesCollect(){
                 let managedContext = appDelegate.managedObjectContext!
                 let privateMOC = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
                 privateMOC.parent = managedContext
+                
                 //Filter the data
                 let request = NSFetchRequest<PandaImage>(entityName: "PandaImage")
                 
@@ -108,7 +113,7 @@ func PandaImagesCollect(){
                     print("Failed")
                 }
                 let data = try? Data(contentsOf: url!) //only loads if the entire webpage is just an image
-                if data == nil {} else {
+//                if data == nil {} else {
                     //let imagefile = UIImagePNGRepresentation(UIImage(data: data!)!)
                     if data == nil {} else {
                         let imageIndex  = imagefile?.characters.index((imagefile?.endIndex)!, offsetBy: -3)
@@ -125,7 +130,6 @@ func PandaImagesCollect(){
                             break;
                         }
                     }
-                }
                 do {
                     try privateMOC.save()
                     //Update Field
@@ -144,10 +148,44 @@ func PandaImagesCollect(){
                 NotificationCenter.default.post(name: Notification.Name(rawValue: "timesUpdated"), object: nil, userInfo: nil)
             });
             
-        } catch {
-            print(error)
-        } 
+        } else {
+            DispatchQueue.main.async(execute: {
+                NotificationCenter.default.post(name: Notification.Name(rawValue: "timesUpdated"), object: nil, userInfo: nil)
+            });
+        }
     })
+    //Anytime perform a fetch, want to add a date to the SyncDate table
+    saveImageDate()
+    
     task.resume()
 }
 
+
+func saveImageDate() {
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    let managedContext = appDelegate.managedObjectContext!
+    //1
+    let request = NSFetchRequest<SyncDate>(entityName: "SyncDate")
+    request.returnsObjectsAsFaults = false;
+    var error: NSError?
+    let fetchedResult5:NSArray = try! managedContext.fetch(request) as NSArray
+    
+    
+    let formatter = DateFormatter();
+    //formatter.dateFormat = "yyyy-MM-dd";
+    formatter.dateFormat = "yyyy-MM-dd HH:mm:ss";
+    func dateToString(_ date:Foundation.Date) -> String {
+        return formatter.string(from: date);
+    }
+    let Date = dateToString(Foundation.Date())
+    formatter.timeStyle = .short
+    if fetchedResult5.count > 0 {
+        (fetchedResult5[0] as AnyObject).setValue(Date, forKey: "pandaImageDate")
+        do {
+            try managedContext.save()
+        } catch let error1 as NSError {
+            error = error1
+            print("Could not save \(String(describing: error)), \(String(describing: error?.userInfo))")
+        }
+    }
+}

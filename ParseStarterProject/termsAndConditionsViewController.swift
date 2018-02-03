@@ -17,6 +17,10 @@ class termsAndConditionsViewController: UIViewController {
         super.viewDidLoad()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         navigationItem.title = "Terms and Conditions"
     }

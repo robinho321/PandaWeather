@@ -14,8 +14,14 @@ import CoreLocation
 import AddressBookUI
 import CoreData
 
-class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDelegate, SettingsTableViewControllerDelegate {
+class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDelegate, SettingsTableViewControllerDelegate
+/*, CustomizePhotosViewControllerDelegate*/ {
     
+//    func close() {
+//            self.dismiss(animated: true, completion: nil)
+//            print("\("Will is awesome")")
+//    }
+
     func didClose(controller: SettingsTableViewController) {
         self.dismiss(animated: true, completion: nil)
         print("\("Will is awesome")")
@@ -29,6 +35,13 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
             let settingsTVController: SettingsTableViewController = navigationController.viewControllers[0] as! SettingsTableViewController
             settingsTVController.delegate = self
         }
+        
+//        if segue.identifier == "openCustomizePhotos" {
+//            let navigationController: UINavigationController = segue.destination as! UINavigationController
+//            let customizePhotosTVController: CustomizePhotosViewController = navigationController.viewControllers[0] as! CustomizePhotosViewController
+//            customizePhotosTVController.delegate = self
+//        }
+        
     }
     
     var locationHasBeenFound = false
@@ -156,14 +169,16 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
             }
     
     //The function to pull the data from the table.
-    func fetchCoreImage(_ type: String) ->[NSManagedObject]? {
+    //Need to have it only fetch images that have "active" status!!
+    func fetchCoreImage(_ active: String, _ type: String) ->[NSManagedObject]? {
         //1
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext!
         //2
         let fetchRequest = NSFetchRequest<PandaImage>(entityName:"PandaImage")
+        let resultPredicate1 = NSPredicate(format: "active = %@", "active")
         let resultPredicate2 = NSPredicate(format: "type = %@", type)
-        let compound = NSCompoundPredicate(andPredicateWithSubpredicates:[resultPredicate2])
+        let compound = NSCompoundPredicate(andPredicateWithSubpredicates:[resultPredicate1, resultPredicate2])
         fetchRequest.predicate = compound
         let fetchedResult = try! managedContext.fetch(fetchRequest) as NSArray
         return fetchedResult as? [NSManagedObject]
@@ -259,29 +274,6 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                 })
     }
     
-    
-//        self.updateWalkMeLabel ()
-//        //needs to click to start animation because it needs to unhide it... why?
-//        if buttonIsSelected {
-//            UIView.animate(withDuration: 4, delay: 0, options: [.curveEaseOut],
-//                    animations: {
-//                        self.walkMeLabel.center.y -= self.view.bounds.midY
-//                        self.view.layoutIfNeeded()
-//            }, completion:
-//                { finished in
-//                    if finished {
-//                    self.walkMeLabel.isHidden = true
-//                    self.walkMeLabel.layer.removeAllAnimations()
-//                    self.walkMeLabel.frame.origin.y = 600.0
-//                    self.walkMeLabel.frame.origin.x = 80.0
-//                    }
-//            })
-//        }
-//        else {
-//            walkMeLabel.isHidden = true
-//        }
-//    }
-    
     func getWeatherIcon (theImageView: UIImageView, theCondition: String) {
         
         //partly cloud icon
@@ -301,7 +293,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
             theImageView.image! = #imageLiteral(resourceName: "nil") }
         else if theCondition.range(of: "") != nil {
             theImageView.image! = #imageLiteral(resourceName: "nil") }
-        else if theCondition.range(of: "Claire") != nil {
+        else if theCondition.range(of: "Clear") != nil {
             theImageView.image! = #imageLiteral(resourceName: "sunny") }
 
         //clear day icon
@@ -375,47 +367,34 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
     }
     
     func getImage(temperature: String, condition: String) {
-        
         //SNOW
-        var coreSnowImages = fetchCoreImage("snow")
+        var coreSnowImages = fetchCoreImage("active", "snow")
         let randomSnowImages = Int(arc4random_uniform(UInt32(coreSnowImages!.count)))
         
         //COLD
-        var coreColdImages = fetchCoreImage("cold")
+        var coreColdImages = fetchCoreImage("active", "cold")
         let randomColdImage = Int(arc4random_uniform(UInt32(coreColdImages!.count)))
         
         //RAIN
-        var coreRainImages = fetchCoreImage("rain")
+        var coreRainImages = fetchCoreImage("active", "rain")
         let randomRainImage = Int(arc4random_uniform(UInt32(coreRainImages!.count)))
         
         //NICE
-        var coreNiceImages = fetchCoreImage("nice")
+        var coreNiceImages = fetchCoreImage("active", "nice")
         let randomNiceImage = Int(arc4random_uniform(UInt32(coreNiceImages!.count)))
         
         //CLOUDY
-        var coreCloudyImages = fetchCoreImage("cloudy")
+        var coreCloudyImages = fetchCoreImage("active", "cloudy")
         let randomCloudyImage = Int(arc4random_uniform(UInt32(coreCloudyImages!.count)))
         
         //LIGHTNING
-        var coreLightningImages = fetchCoreImage("lightning")
+        var coreLightningImages = fetchCoreImage("active", "lightning")
         let randomLightningImage = Int(arc4random_uniform(UInt32(coreLightningImages!.count)))
         
-        //random images for 6 buckets - Snow, Cold, Rain, Nice, Cloudy and Lightning
-//        let pandaSnowWeatherImages = [#imageLiteral(resourceName: "IMG_8382")]
-//        let randomSnow = pandaSnowWeatherImages[Int(arc4random_uniform(UInt32(pandaSnowWeatherImages.count)))]
-//        let pandaColdWeatherImages = [#imageLiteral(resourceName: "faceCute"), #imageLiteral(resourceName: "onTheCouch"), #imageLiteral(resourceName: "peakingOut"), #imageLiteral(resourceName: "cold"), #imageLiteral(resourceName: "sleep"), #imageLiteral(resourceName: "ballInMouth"), #imageLiteral(resourceName: "inTheHall"), #imageLiteral(resourceName: "onTheBed"), #imageLiteral(resourceName: "pandaart"), #imageLiteral(resourceName: "sohappy"), #imageLiteral(resourceName: "sleepingagain"), #imageLiteral(resourceName: "toyscarpet"), #imageLiteral(resourceName: "sleepy"),#imageLiteral(resourceName: "pandapumpkin"),  #imageLiteral(resourceName: "pandapumpkin2")]
-//        let randomCold = pandaColdWeatherImages[Int(arc4random_uniform(UInt32(pandaColdWeatherImages.count)))]
-//        let pandaRainWeatherImages = [#imageLiteral(resourceName: "image2"), #imageLiteral(resourceName: "IMG_1680"), #imageLiteral(resourceName: "IMG_3485"), #imageLiteral(resourceName: "rain"), #imageLiteral(resourceName: "ballInMouth"), #imageLiteral(resourceName: "onTheBed"), #imageLiteral(resourceName: "pumpkin"),#imageLiteral(resourceName: "toyscarpet"), #imageLiteral(resourceName: "sohappy"), #imageLiteral(resourceName: "sleepingagain"),#imageLiteral(resourceName: "duskRain"),#imageLiteral(resourceName: "rainDog"),#imageLiteral(resourceName: "bluepanda")]
-//        let randomRain = pandaRainWeatherImages[Int(arc4random_uniform(UInt32(pandaRainWeatherImages.count)))]
-//        let pandaNiceWeatherImages = [#imageLiteral(resourceName: "duskOutside"), #imageLiteral(resourceName: "happyOnBench"), #imageLiteral(resourceName: "image6"), #imageLiteral(resourceName: "stick"), #imageLiteral(resourceName: "onTheMountain"), #imageLiteral(resourceName: "onTheMountain2"),#imageLiteral(resourceName: "balconyimage"),#imageLiteral(resourceName: "heatherfarm"), #imageLiteral(resourceName: "byTheTre"), #imageLiteral(resourceName: "civicPark"), #imageLiteral(resourceName: "niceDay"), #imageLiteral(resourceName: "sunnyDay"), #imageLiteral(resourceName: "inSFNice"), #imageLiteral(resourceName: "ontherocks"), #imageLiteral(resourceName: "onTheWaterwithLuvi"), #imageLiteral(resourceName: "pandapumpkin"),#imageLiteral(resourceName: "baseballpanda")]
-//        let randomNice = pandaNiceWeatherImages[Int(arc4random_uniform(UInt32(pandaNiceWeatherImages.count)))]
-//        let pandaCloudyWeatherImages = [#imageLiteral(resourceName: "image3"), #imageLiteral(resourceName: "IMG_1974"), #imageLiteral(resourceName: "IMG_3548"), #imageLiteral(resourceName: "onRedChair"), #imageLiteral(resourceName: "onTheTile"), #imageLiteral(resourceName: "treatrawhide"), #imageLiteral(resourceName: "ballInMouth"), #imageLiteral(resourceName: "inTheHall"), #imageLiteral(resourceName: "pumpkin"),#imageLiteral(resourceName: "toyscarpet"),#imageLiteral(resourceName: "sohappy"),#imageLiteral(resourceName: "legscrossed"), #imageLiteral(resourceName: "sleepy"), #imageLiteral(resourceName: "duskRain"), #imageLiteral(resourceName: "parkGreen"), #imageLiteral(resourceName: "pandapumpkin2"), #imageLiteral(resourceName: "slycloudy"),#imageLiteral(resourceName: "flowerpanda")]
-//        let randomCloudy = pandaCloudyWeatherImages[Int(arc4random_uniform(UInt32(pandaCloudyWeatherImages.count)))]
-//        let pandaLightningWeatherImages = [#imageLiteral(resourceName: "atTheDoor"), #imageLiteral(resourceName: "scared"), #imageLiteral(resourceName: "IMG_2068"), #imageLiteral(resourceName: "IMG_2798"), #imageLiteral(resourceName: "IMG_7199"), #imageLiteral(resourceName: "underDrawer"), #imageLiteral(resourceName: "soSmall"), #imageLiteral(resourceName: "pandaart"),#imageLiteral(resourceName: "sleepingagain")]
-//        let randomLightning = pandaLightningWeatherImages[Int(arc4random_uniform(UInt32(pandaLightningWeatherImages.count)))]
+        //should change these to switch 'condition' { case '': statement case '': statement }
         
+        //getImage func input Strings
         let theValue = Double(temperature)
-//        let theStringValue = String(temperature)
         let theCondition = condition
         
         print("theValue: " + "\(String(describing: theValue))")
@@ -863,7 +842,9 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                 conditionLabel.text! = condition
                 print("condition: \(condition)")
                 
-                let city = json["productionCenter"] as! String
+                let myLocation = json["location"] as! [String:Any]?
+                let city: String = myLocation?["areaDescription"] as! String
+//                let city = json["productionCenter"] as! String
                 cityLabel.text! = city
                 print("city: \(city)")
             
@@ -1053,7 +1034,11 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                         self.conditionLabel.text! = condition
                         print("condition: \(condition)")
                             
-                        let city = json["productionCenter"] as! String
+                        
+                        let myLocation = json["location"] as! [String:Any]?
+                        let city: String = myLocation?["areaDescription"] as! String
+//
+//                        let city = json["productionCenter"] as! String //location, areaDescription
                         self.cityLabel.text! = city
                         print("city: \(city)")
                         
@@ -1199,3 +1184,41 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
     }
     
 }
+
+
+//random images for 6 buckets - Snow, Cold, Rain, Nice, Cloudy and Lightning
+//        let pandaSnowWeatherImages = [#imageLiteral(resourceName: "IMG_8382")]
+//        let randomSnow = pandaSnowWeatherImages[Int(arc4random_uniform(UInt32(pandaSnowWeatherImages.count)))]
+//        let pandaColdWeatherImages = [#imageLiteral(resourceName: "faceCute"), #imageLiteral(resourceName: "onTheCouch"), #imageLiteral(resourceName: "peakingOut"), #imageLiteral(resourceName: "cold"), #imageLiteral(resourceName: "sleep"), #imageLiteral(resourceName: "ballInMouth"), #imageLiteral(resourceName: "inTheHall"), #imageLiteral(resourceName: "onTheBed"), #imageLiteral(resourceName: "pandaart"), #imageLiteral(resourceName: "sohappy"), #imageLiteral(resourceName: "sleepingagain"), #imageLiteral(resourceName: "toyscarpet"), #imageLiteral(resourceName: "sleepy"),#imageLiteral(resourceName: "pandapumpkin"),  #imageLiteral(resourceName: "pandapumpkin2")]
+//        let randomCold = pandaColdWeatherImages[Int(arc4random_uniform(UInt32(pandaColdWeatherImages.count)))]
+//        let pandaRainWeatherImages = [#imageLiteral(resourceName: "image2"), #imageLiteral(resourceName: "IMG_1680"), #imageLiteral(resourceName: "IMG_3485"), #imageLiteral(resourceName: "rain"), #imageLiteral(resourceName: "ballInMouth"), #imageLiteral(resourceName: "onTheBed"), #imageLiteral(resourceName: "pumpkin"),#imageLiteral(resourceName: "toyscarpet"), #imageLiteral(resourceName: "sohappy"), #imageLiteral(resourceName: "sleepingagain"),#imageLiteral(resourceName: "duskRain"),#imageLiteral(resourceName: "rainDog"),#imageLiteral(resourceName: "bluepanda")]
+//        let randomRain = pandaRainWeatherImages[Int(arc4random_uniform(UInt32(pandaRainWeatherImages.count)))]
+//        let pandaNiceWeatherImages = [#imageLiteral(resourceName: "duskOutside"), #imageLiteral(resourceName: "happyOnBench"), #imageLiteral(resourceName: "image6"), #imageLiteral(resourceName: "stick"), #imageLiteral(resourceName: "onTheMountain"), #imageLiteral(resourceName: "onTheMountain2"),#imageLiteral(resourceName: "balconyimage"),#imageLiteral(resourceName: "heatherfarm"), #imageLiteral(resourceName: "byTheTre"), #imageLiteral(resourceName: "civicPark"), #imageLiteral(resourceName: "niceDay"), #imageLiteral(resourceName: "sunnyDay"), #imageLiteral(resourceName: "inSFNice"), #imageLiteral(resourceName: "ontherocks"), #imageLiteral(resourceName: "onTheWaterwithLuvi"), #imageLiteral(resourceName: "pandapumpkin"),#imageLiteral(resourceName: "baseballpanda")]
+//        let randomNice = pandaNiceWeatherImages[Int(arc4random_uniform(UInt32(pandaNiceWeatherImages.count)))]
+//        let pandaCloudyWeatherImages = [#imageLiteral(resourceName: "image3"), #imageLiteral(resourceName: "IMG_1974"), #imageLiteral(resourceName: "IMG_3548"), #imageLiteral(resourceName: "onRedChair"), #imageLiteral(resourceName: "onTheTile"), #imageLiteral(resourceName: "treatrawhide"), #imageLiteral(resourceName: "ballInMouth"), #imageLiteral(resourceName: "inTheHall"), #imageLiteral(resourceName: "pumpkin"),#imageLiteral(resourceName: "toyscarpet"),#imageLiteral(resourceName: "sohappy"),#imageLiteral(resourceName: "legscrossed"), #imageLiteral(resourceName: "sleepy"), #imageLiteral(resourceName: "duskRain"), #imageLiteral(resourceName: "parkGreen"), #imageLiteral(resourceName: "pandapumpkin2"), #imageLiteral(resourceName: "slycloudy"),#imageLiteral(resourceName: "flowerpanda")]
+//        let randomCloudy = pandaCloudyWeatherImages[Int(arc4random_uniform(UInt32(pandaCloudyWeatherImages.count)))]
+//        let pandaLightningWeatherImages = [#imageLiteral(resourceName: "atTheDoor"), #imageLiteral(resourceName: "scared"), #imageLiteral(resourceName: "IMG_2068"), #imageLiteral(resourceName: "IMG_2798"), #imageLiteral(resourceName: "IMG_7199"), #imageLiteral(resourceName: "underDrawer"), #imageLiteral(resourceName: "soSmall"), #imageLiteral(resourceName: "pandaart"),#imageLiteral(resourceName: "sleepingagain")]
+//        let randomLightning = pandaLightningWeatherImages[Int(arc4random_uniform(UInt32(pandaLightningWeatherImages.count)))]
+
+
+//        self.updateWalkMeLabel ()
+//        //needs to click to start animation because it needs to unhide it... why?
+//        if buttonIsSelected {
+//            UIView.animate(withDuration: 4, delay: 0, options: [.curveEaseOut],
+//                    animations: {
+//                        self.walkMeLabel.center.y -= self.view.bounds.midY
+//                        self.view.layoutIfNeeded()
+//            }, completion:
+//                { finished in
+//                    if finished {
+//                    self.walkMeLabel.isHidden = true
+//                    self.walkMeLabel.layer.removeAllAnimations()
+//                    self.walkMeLabel.frame.origin.y = 600.0
+//                    self.walkMeLabel.frame.origin.x = 80.0
+//                    }
+//            })
+//        }
+//        else {
+//            walkMeLabel.isHidden = true
+//        }
+//    }

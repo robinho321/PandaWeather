@@ -6,11 +6,7 @@
 //  Copyright © 2017 Parse. All rights reserved.
 //
 
-import MapKit
 import UIKit
-import Parse
-import CoreLocation
-import AddressBookUI
 import CoreData
 import QuartzCore
 
@@ -54,7 +50,7 @@ class AdminAddImage: UIViewController, UIImagePickerControllerDelegate, UINaviga
                     let UpdateUserURL = "http://danslacave.com/PANDA/jsonfiles/addImage.php"
                     let request = NSMutableURLRequest(url: URL(string: UpdateUserURL)!)
                     request.httpMethod = "POST"
-                    var PandaCore = PandaImagesCollect()
+//                    var PandaCore = PandaImagesCollect()
 //                    $type = $_POST["type"];
                     //$file = $_POST["file"];
 //                    status = $_POST["status"];
@@ -75,12 +71,21 @@ class AdminAddImage: UIViewController, UIImagePickerControllerDelegate, UINaviga
                         request.httpBody = createBodyWithParameters(param, boundary: boundary)
                     }
                     UploadImage = ""
-                    //spinningWheel.startAnimating();
+                    
+                    //spinningWheel.startAnimating()
+                    let activityIndicator = UIActivityIndicatorView()
+                    activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge
+                    activityIndicator.center = self.view.center
+                    activityIndicator.hidesWhenStopped = true
+                    activityIndicator.startAnimating()
+                    self.view.addSubview(activityIndicator)
+                    
                     let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: {
                         data, response, error in
         
                         if error != nil {
                             print("error=\(String(describing: error))")
+                            activityIndicator.stopAnimating()
                             return
                         }
         
@@ -108,6 +113,16 @@ class AdminAddImage: UIViewController, UIImagePickerControllerDelegate, UINaviga
 //                                });
 //                            }
 //                        }
+                        DispatchQueue.main.async(execute: {
+                            activityIndicator.stopAnimating()
+                            //Add button for success
+                            let alert = UIAlertController(title: "Success", message: "The image was added to the server!", preferredStyle: .alert)
+                            
+                            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in alert.dismiss(animated: true, completion: nil)
+                            }))
+                            
+                            self.present(alert, animated: true, completion: nil)
+                            })
                     })
                     task.resume()
                 }

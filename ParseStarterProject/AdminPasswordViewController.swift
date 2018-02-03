@@ -28,9 +28,19 @@ class AdminPasswordViewController: UIViewController {
                 }
             }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
+//    @IBAction func SaveAll(sender: AnyObject) {
+//        let username:String = user_name.text!
+//        let password:String = pass_word.text!
+//
+//        let defaults = UserDefaults.standard
+//
+//        defaults.set(username, forKey: "username")
+//        defaults.set(password, forKey: "password")
+//    }
+//
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//    }
 
 //    @objc func loadAdminImageTableViewController(_ notification: Notification) {
 //    let storyboard = UIStoryboard(name: "Main", bundle: nil)//you need to set the storyboard id of your AdminImageTableViewController to "AdminImageTable"
