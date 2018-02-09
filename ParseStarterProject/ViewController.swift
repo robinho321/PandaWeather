@@ -9,10 +9,10 @@
 
 import MapKit
 import UIKit
-import Parse
 import CoreLocation
 import AddressBookUI
 import CoreData
+import Photos
 
 class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDelegate, SettingsTableViewControllerDelegate
 /*, CustomizePhotosViewControllerDelegate*/ {
@@ -36,6 +36,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
             settingsTVController.delegate = self
         }
         
+        
 //        if segue.identifier == "openCustomizePhotos" {
 //            let navigationController: UINavigationController = segue.destination as! UINavigationController
 //            let customizePhotosTVController: CustomizePhotosViewController = navigationController.viewControllers[0] as! CustomizePhotosViewController
@@ -44,10 +45,35 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         
     }
     
+    //Weather Folder Arrays
+    var niceUserImage = [PHAsset]()
+    let albumName = "Nice Weather"
+    var albumFound : Bool = false
+    var assetCollection: PHAssetCollection = PHAssetCollection()
+    var photoAssets = PHFetchResult<AnyObject>()
+    
+    var currentNo: UInt32 = 0
+    
     var locationHasBeenFound = false
     var buttonIsSelected = false
     let locationManager = CLLocationManager()
 
+//    @IBAction func customziePhotosButton(_ sender: UIButton) {
+//        self.performSegue(withIdentifier: "showCustomPhotos", sender: self)
+//    }
+    
+    @IBAction func customizePhotosSwitch(_ sender: UISwitch) {
+        if (sender.isOn == true) {
+            
+        }
+        else {
+
+        }
+    }
+    
+    @IBOutlet weak var switchLabel: UISwitch!
+    
+    
     @IBOutlet weak var whiteBackgroundWeatherView: UIView!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var dogImageView: UIImageView!
@@ -92,8 +118,8 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         self.updateDropWisdomButton()
     }
     @IBAction func setCurrentLocation(_ sender: UIButton) {
-        self.getTemperature()
-
+//        self.getTemperature()
+      self.getUserImage()
     }
     
     @IBOutlet weak var searchButtonView: UIButton!
@@ -278,60 +304,62 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         
         //partly cloud icon
         if theCondition.range(of: "Mostly Cloudy") != nil {
-            theImageView.image! = #imageLiteral(resourceName: "clouds") }
+            theImageView.image! = #imageLiteral(resourceName: "Cloudy") }
         else if theCondition.range(of: "Mostly Cloudy with Haze") != nil {
-            theImageView.image! = #imageLiteral(resourceName: "clouds") }
+            theImageView.image! = #imageLiteral(resourceName: "Cloudy") }
         else if theCondition.range(of: "Mostly Cloudy and Breezy") != nil {
-            theImageView.image! = #imageLiteral(resourceName: "clouds") }
+            theImageView.image! = #imageLiteral(resourceName: "Cloudy") }
         else if theCondition.range(of: "Partly Cloudy") != nil {
-            theImageView.image! = #imageLiteral(resourceName: "clouds") }
+            theImageView.image! = #imageLiteral(resourceName: "Cloudy") }
         else if theCondition.range(of: "Partly Cloudy with Haze") != nil {
-            theImageView.image! = #imageLiteral(resourceName: "clouds") }
+            theImageView.image! = #imageLiteral(resourceName: "Cloudy") }
         else if theCondition.range(of: "Partly Cloudy and Breezy") != nil {
-            theImageView.image! = #imageLiteral(resourceName: "clouds") }
+            theImageView.image! = #imageLiteral(resourceName: "Cloudy") }
         else if theCondition.range(of: "NA") != nil {
             theImageView.image! = #imageLiteral(resourceName: "nil") }
         else if theCondition.range(of: "") != nil {
             theImageView.image! = #imageLiteral(resourceName: "nil") }
         else if theCondition.range(of: "Clear") != nil {
-            theImageView.image! = #imageLiteral(resourceName: "sunny") }
+            theImageView.image! = #imageLiteral(resourceName: "Nice") }
 
         //clear day icon
         else if theCondition.range(of: "Fair") != nil {
-            theImageView.image! = #imageLiteral(resourceName: "sunny") }
+            theImageView.image! = #imageLiteral(resourceName: "Nice") }
         else if theCondition.range(of: "Clear") != nil {
-            theImageView.image! = #imageLiteral(resourceName: "sunny") }
+            theImageView.image! = #imageLiteral(resourceName: "Nice") }
+        else if theCondition.range(of: "Sunny") != nil {
+            theImageView.image! = #imageLiteral(resourceName: "Nice") }
         else if theCondition.range(of: "Fair with Haze") != nil {
-            theImageView.image! = #imageLiteral(resourceName: "sunny") }
+            theImageView.image! = #imageLiteral(resourceName: "Nice") }
         else if theCondition.range(of: "Clear with Haze") != nil {
-            theImageView.image! = #imageLiteral(resourceName: "sunny") }
+            theImageView.image! = #imageLiteral(resourceName: "Nice") }
         else if theCondition.range(of: "Fair and Breezy") != nil {
-            theImageView.image! = #imageLiteral(resourceName: "sunny")  }
+            theImageView.image! = #imageLiteral(resourceName: "Nice") }
         else if theCondition.range(of: "Clear and Breezy") != nil {
-            theImageView.image! = #imageLiteral(resourceName: "sunny")  }
+            theImageView.image! = #imageLiteral(resourceName: "Nice") }
         else if theCondition.range(of: "A Few Clouds") != nil {
-            theImageView.image! = #imageLiteral(resourceName: "sunny")  }
+            theImageView.image! = #imageLiteral(resourceName: "Nice") }
         else if theCondition.range(of: "A Few Clouds with Haze") != nil {
-            theImageView.image! = #imageLiteral(resourceName: "sunny")  }
+            theImageView.image! = #imageLiteral(resourceName: "Nice") }
         else if theCondition.range(of: "A Few Clouds and Breezy") != nil {
-            theImageView.image! = #imageLiteral(resourceName: "sunny")  }
+            theImageView.image! = #imageLiteral(resourceName: "Nice") }
         
         //cloudy icon
         else if theCondition.range(of: "Overcast") != nil {
-            theImageView.image! = #imageLiteral(resourceName: "cloudy") }
+            theImageView.image! = #imageLiteral(resourceName: "Cold") }
         else if theCondition.range(of: "Overcast with Haze") != nil {
-            theImageView.image! = #imageLiteral(resourceName: "cloudy") }
+            theImageView.image! = #imageLiteral(resourceName: "Cold") }
         else if theCondition.range(of: "Overcast and Breezy") != nil {
-            theImageView.image! = #imageLiteral(resourceName: "cloudy") }
+            theImageView.image! = #imageLiteral(resourceName: "Cold") }
         
         
         //fog icon
         else if theCondition.range(of: "Fog") != nil {
-            theImageView.image! = #imageLiteral(resourceName: "cloudy") }
+            theImageView.image! = #imageLiteral(resourceName: "Cold") }
         else if theCondition.range(of: "Smoke") != nil {
-            theImageView.image! = #imageLiteral(resourceName: "cloudy") }
+            theImageView.image! = #imageLiteral(resourceName: "Cold") }
         else if theCondition.range(of: "Haze") != nil {
-            theImageView.image! = #imageLiteral(resourceName: "cloudy") }
+            theImageView.image! = #imageLiteral(resourceName: "Cold") }
         
         //hail icon
         else if theCondition.range(of: "Ice") != nil {
@@ -366,10 +394,699 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
             theImageView.image! = #imageLiteral(resourceName: "windy") }
     }
     
-    func getImage(temperature: String, condition: String) {
-        //SNOW
-        var coreSnowImages = fetchCoreImage("active", "snow")
-        let randomSnowImages = Int(arc4random_uniform(UInt32(coreSnowImages!.count)))
+    
+    func FetchNiceWeatherCustomAlbumPhotos()
+    {
+        
+        PHPhotoLibrary.requestAuthorization { (status) in
+            switch status
+            {
+            case .authorized:
+                print("Good to proceed")
+                let fetchOptions = PHFetchOptions()
+                fetchOptions.predicate = NSPredicate(format: "title = %@", self.albumName)
+                let collection: PHFetchResult = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: fetchOptions)
+                
+                if let first_Obj:AnyObject = collection.firstObject{
+                    print("first object of collection is: \(first_Obj)")
+                    //found the album
+                    self.albumFound = true
+                    self.assetCollection = first_Obj as! PHAssetCollection
+
+                    let allPhotos = PHAsset.fetchAssets(in: self.assetCollection, options: nil)
+                    print(allPhotos.count)
+                    allPhotos.enumerateObjects({ (object, count, stop) in
+                        self.niceUserImage.append(object)
+                    })
+                    print("Found \(allPhotos.count) images")
+                    
+                } else {
+                    self.albumFound = false
+                }
+                
+                
+            case .denied, .restricted:
+                print("Not allowed")
+            case .notDetermined:
+                print("Not determined yet")
+            }
+            
+            if self.albumFound == false {
+                let alert = UIAlertController(title: "No Nice Weather Images Found", message: "Please add an image to your Nice Weather folder, so the background can be populated with your image, instead of Panda's! Thanks :)", preferredStyle: UIAlertControllerStyle.alert)
+                
+                let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                
+                alert.addAction(cancelAction)
+                self.present(alert, animated: true, completion: nil)
+                
+                self.dogImageView.image = #imageLiteral(resourceName: "smiling")
+            } else {
+            
+                DispatchQueue.main.async(execute: {
+                    let niceUserImageCount = UInt32(self.niceUserImage.count)
+                    self.dogImageView.image = self.convertImageFromAsset(asset: self.niceUserImage[self.randomNumber(maximum: niceUserImageCount)])
+            })
+            }
+        }
+    }
+////        var i = collection.count
+//        photoAssets = PHAsset.fetchAssets(in: assetCollection, options: nil) as! PHFetchResult<AnyObject>
+////        let imageManager = PHCachingImageManager()
+//
+//        //        let imageManager = PHImageManager.defaultManager()
+//
+//        photoAssets.enumerateObjects{(object: AnyObject!,
+//            count: Int,
+//            stop: UnsafeMutablePointer<ObjCBool>) in
+//
+//            if object is PHAsset{
+//                let asset = object as! PHAsset
+//                print("Inside \(asset) If object is PHAsset, This is number 1")
+//
+////                let option = PHImageRequestOptions()
+////                var thumbnail = UIImage()
+////                let imageSize = CGSize(width: asset.pixelWidth,
+////                                       height: asset.pixelHeight)
+//
+//                /* For faster performance, and maybe degraded image */
+////                let options = PHImageRequestOptions()
+////                options.deliveryMode = .FastFormat
+////                options.synchronous = true
+//
+////                imageManager.requestImage(for: asset,
+////                     targetSize: imageSize,
+////                     contentMode: .aspectFill,
+////                     options: option,
+////                     resultHandler: {(result, info)->Void in
+////                        thumbnail = result!
+//////                               self.photo = image!
+////                               /* The image is now available to us */
+////                        self.niceUserImage.append(thumbnail)
+////                        print("Number of images in Nice Weather folder is \(self.niceUserImage.count).")
+//
+//
+//                        let manager = PHImageManager.default()
+//                        let requestOptions = PHImageRequestOptions()
+//                        requestOptions.resizeMode = .exact
+//                        requestOptions.deliveryMode = .highQualityFormat;
+//
+//                        // Request Image
+//                        manager.requestImageData(for: asset, options: nil, resultHandler: { (data, _, _, _) -> Void in
+////                            if data != nil {
+//                                let retrievedImage = UIImage(data: data!)!
+//                                self.niceUserImage.append(retrievedImage)
+//                            print("Image data is \(self.niceUserImage).")
+////                            }
+//                        })
+            
+//                })
+                
+//            }
+//        }
+//    }
+    
+    func randomNumber(maximum: UInt32) -> Int {
+        
+        var randomNumber: UInt32
+        
+        repeat {
+            randomNumber = (arc4random_uniform(maximum))
+        }while currentNo == randomNumber
+        
+        currentNo = randomNumber
+        
+        return Int(randomNumber)
+    }
+    
+    func convertImageFromAsset(asset: PHAsset) -> UIImage {
+        let manager = PHImageManager.default()
+        let option = PHImageRequestOptions()
+        var image = UIImage()
+        option.isSynchronous = true
+        manager.requestImage(for: asset, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFit, options: option, resultHandler: {(result, info)->Void in
+            image = result!
+        })
+        return image
+    }
+    
+    //USER IMAGE FETCH
+    func getUserImage(/*temperature: String, condition: String*/) {
+
+        //getPandaImage func input Strings
+//        let theValue = Double(temperature)
+//        let theCondition = condition
+
+//        print("theValue: " + "\(String(describing: theValue))")
+//        print("condition: " + "\(theCondition)")
+
+//        //NICE
+        self.FetchNiceWeatherCustomAlbumPhotos()
+//        let randomNiceUserImage = Int(arc4random_uniform(UInt32(niceUserImage.count)))
+//        print("The Nice Weather Folder image is \(randomNiceUserImage).")
+//        dogImageView.image = niceUserImage[randomNiceUserImage]
+        
+        }
+//
+//        //CLOUDY
+//        if fetchOptions.predicate == NSPredicate(format: "title = %@", "Cloudy Weather") {
+//            let collection: PHFetchResult = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: fetchOptions)
+//            if let first_Obj:AnyObject = collection.firstObject{
+//                //found the album
+//                assetCollection = (collection.firstObject)!
+//                albumFound = true
+//            }
+//            else {
+//                albumFound = false
+//
+//                let alert = UIAlertController(title: "No Cloudy Weather Images Found", message: "Please add an image to your Cloudy Weather folder, so the background can be populated with your image, instead of Panda's! Thanks :)", preferredStyle: UIAlertControllerStyle.alert)
+//
+//                let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+//
+//                alert.addAction(cancelAction)
+//                self.present(alert, animated: true, completion: nil)
+//
+//                dogImageView.image = #imageLiteral(resourceName: "smiling")
+//            }
+////            var i = collection.count
+//            photosAsset = PHAsset.fetchAssets(in: assetCollection, options: nil)
+//            let randomCloudyUserImage = Int(arc4random_uniform(UInt32(photosAsset!.count)))
+//            print("The Cloudy Weather Folder image count is \(photosAsset.count).")
+//        }
+//
+//        //COLD
+//        if fetchOptions.predicate == NSPredicate(format: "title = %@", "Cold Weather") {
+//            let collection: PHFetchResult = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: fetchOptions)
+//            if let first_Obj:AnyObject = collection.firstObject{
+//                //found the album
+//                assetCollection = (collection.firstObject)!
+//                albumFound = true
+//            }
+//            else {
+//                albumFound = false
+//
+//                let alert = UIAlertController(title: "No Cold Weather Images Found", message: "Please add an image to your Cold Weather folder, so the background can be populated with your image, instead of Panda's! Thanks :)", preferredStyle: UIAlertControllerStyle.alert)
+//
+//                let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+//
+//                alert.addAction(cancelAction)
+//                self.present(alert, animated: true, completion: nil)
+//
+//                dogImageView.image = #imageLiteral(resourceName: "smiling")
+//                 }
+//
+////            var i = collection.count
+//            photosAsset = PHAsset.fetchAssets(in: assetCollection, options: nil)
+//            let randomColdUserImage = Int(arc4random_uniform(UInt32(photosAsset!.count)))
+//            print("The Cold Weather Folder image count is \(photosAsset.count).")
+//
+//            // Temperature is nil
+//            if theValue == nil {
+//                if randomColdUserImage != nil
+//                {
+//                    dogImageView.image = UIImage(data: randomColdUserImage as? Data)!)
+//                } }
+//
+//        }
+//
+//        //RAIN
+//        if fetchOptions.predicate == NSPredicate(format: "title = %@", "Rain Weather") {
+//            let collection: PHFetchResult = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: fetchOptions)
+//            if let first_Obj:AnyObject = collection.firstObject{
+//                //found the album
+//                assetCollection = (collection.firstObject)!
+//                albumFound = true
+//            }
+//            else {
+//                albumFound = false
+//
+//                let alert = UIAlertController(title: "No Rain Weather Images Found", message: "Please add an image to your Rain Weather folder, so the background can be populated with your image, instead of Panda's! Thanks :)", preferredStyle: UIAlertControllerStyle.alert)
+//
+//                let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+//
+//                alert.addAction(cancelAction)
+//                self.present(alert, animated: true, completion: nil)
+//
+//                dogImageView.image = #imageLiteral(resourceName: "smiling")
+//            }
+//
+////            var i = collection.count
+//            photosAsset = PHAsset.fetchAssets(in: assetCollection, options: nil)
+//            let randomRainUserImage = Int(arc4random_uniform(UInt32(photosAsset!.count)))
+//            print("The Rain Weather Folder image count is \(photosAsset.count).")
+//        }
+//
+//        //LIGHTNING
+//        if fetchOptions.predicate == NSPredicate(format: "title = %@", "Lightning Weather") {
+//            let collection: PHFetchResult = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: fetchOptions)
+//            if let first_Obj:AnyObject = collection.firstObject{
+//                //found the album
+//                assetCollection = (collection.firstObject)!
+//                albumFound = true
+//            }
+//            else {
+//                albumFound = false
+//
+//                let alert = UIAlertController(title: "No Lightning Weather Images Found", message: "Please add an image to your Lightning Weather folder, so the background can be populated with your image, instead of Panda's! Thanks :)", preferredStyle: UIAlertControllerStyle.alert)
+//
+//                let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+//
+//                alert.addAction(cancelAction)
+//                self.present(alert, animated: true, completion: nil)
+//
+//                dogImageView.image = #imageLiteral(resourceName: "smiling")
+//            }
+//
+////            var i = collection.count
+//            photosAsset = PHAsset.fetchAssets(in: assetCollection, options: nil)
+//            let randomLightningUserImage = Int(arc4random_uniform(UInt32(photosAsset!.count)))
+//            print("The Lightning Weather Folder image count is \(photosAsset.count).")
+//        }
+//
+//        //SNOW
+////        var snowUserImages = fetchCoreImage("active", "snow")
+////        let randomSnowUserImage = Int(arc4random_uniform(UInt32(coreSnowImages!.count)))
+//
+//
+//
+//
+//
+//            //<32 degreesF
+//        else if theValue! < 32 && theCondition.range(of:"Clouds") != nil {
+//            if (coreColdImages?[randomColdImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreColdImages?[randomColdImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! < 32 && theCondition.range(of:"Cloudy") != nil {
+//            if (coreColdImages?[randomColdImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreColdImages?[randomColdImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! < 32 && theCondition.range(of:"Fair") != nil {
+//            if (coreColdImages?[randomColdImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreColdImages?[randomColdImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! < 32 && theCondition.range(of:"Clear") != nil {
+//            if (coreColdImages?[randomColdImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreColdImages?[randomColdImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! < 32 && theCondition.range(of:"Overcast") != nil {
+//            if (coreCloudyImages?[randomCloudyImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreCloudyImages?[randomCloudyImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! < 32 && theCondition.range(of:"Fog") != nil {
+//            if (coreCloudyImages?[randomCloudyImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreCloudyImages?[randomCloudyImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! < 32 && theCondition.range(of:"Rain") != nil {
+//            if (coreSnowImages?[randomSnowImages].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreSnowImages?[randomSnowImages].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! < 32 && theCondition.range(of:"storm") != nil {
+//            if (coreSnowImages?[randomSnowImages].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreSnowImages?[randomSnowImages].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! < 32 && theCondition.range(of:"hurricane") != nil {
+//            if (coreSnowImages?[randomSnowImages].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreSnowImages?[randomSnowImages].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! < 32 && theCondition.range(of:"Snow") != nil {
+//            if (coreSnowImages?[randomSnowImages].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreSnowImages?[randomSnowImages].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! < 32 && theCondition.range(of: "NA") != nil {
+//            if (coreSnowImages?[randomSnowImages].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreSnowImages?[randomSnowImages].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! < 32 && theCondition.range(of: "") != nil {
+//            if (coreSnowImages?[randomSnowImages].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreSnowImages?[randomSnowImages].value(forKey: "image") as? Data)!)
+//            } }
+//
+//            // 32 && < 50
+//        else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"Clouds") != nil {
+//            if (coreColdImages?[randomColdImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreColdImages?[randomColdImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"Cloudy") != nil {
+//            if (coreColdImages?[randomColdImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreColdImages?[randomColdImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"Fair") != nil {
+//            if (coreColdImages?[randomColdImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreColdImages?[randomColdImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"Clear") != nil {
+//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"Overcast") != nil {
+//            if (coreCloudyImages?[randomCloudyImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreCloudyImages?[randomCloudyImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"Fog") != nil {
+//            if (coreCloudyImages?[randomCloudyImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreCloudyImages?[randomCloudyImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"Rain") != nil {
+//            if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"storm") != nil {
+//            if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"hurricane") != nil {
+//            if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"showers") != nil {
+//            if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"Thunderstorm") != nil {
+//            if (coreLightningImages?[randomLightningImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreLightningImages?[randomLightningImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"NA") != nil {
+//            if (coreColdImages?[randomColdImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreColdImages?[randomColdImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"") != nil {
+//            if (coreColdImages?[randomColdImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreColdImages?[randomColdImage].value(forKey: "image") as? Data)!)
+//            } }
+//
+//            // 50 && < 70
+//        else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"Clouds") != nil {
+//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"Cloudy") != nil {
+//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"Fair") != nil {
+//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"Clear") != nil {
+//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"Overcast") != nil {
+//            if (coreCloudyImages?[randomCloudyImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreCloudyImages?[randomCloudyImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"Fog") != nil {
+//            if (coreCloudyImages?[randomCloudyImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreCloudyImages?[randomCloudyImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"Rain") != nil {
+//            if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"storm") != nil {
+//            if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"hurricane") != nil {
+//            if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"showers") != nil {
+//            if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"Thunderstorm") != nil {
+//            if (coreLightningImages?[randomLightningImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreLightningImages?[randomLightningImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"NA") != nil {
+//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"") != nil {
+//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
+//            } }
+//
+//
+//            // 70 && < 80
+//        else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"Clouds") != nil {
+//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"Cloudy") != nil {
+//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"Fair") != nil {
+//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"Clear") != nil {
+//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"Overcast") != nil {
+//            if (coreCloudyImages?[randomCloudyImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreCloudyImages?[randomCloudyImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"Fog") != nil {
+//            if (coreCloudyImages?[randomCloudyImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreCloudyImages?[randomCloudyImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"Rain") != nil {
+//            if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"storm") != nil {
+//            if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"hurricane") != nil {
+//            if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"showers") != nil {
+//            if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"Thunderstorm") != nil {
+//            if (coreLightningImages?[randomLightningImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreLightningImages?[randomLightningImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"NA") != nil {
+//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"") != nil {
+//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
+//            } }
+//
+//            // 80 && < 90
+//        else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"Clouds") != nil {
+//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"Cloudy") != nil {
+//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"Fair") != nil {
+//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"Clear") != nil {
+//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"Overcast") != nil {
+//            if (coreCloudyImages?[randomCloudyImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreCloudyImages?[randomCloudyImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"Fog") != nil {
+//            if (coreCloudyImages?[randomCloudyImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreCloudyImages?[randomCloudyImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"Rain") != nil {
+//            if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"storm") != nil {
+//            if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"hurricane") != nil {
+//            if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"showers") != nil {
+//            if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"Thunderstorm") != nil {
+//            if (coreLightningImages?[randomLightningImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreLightningImages?[randomLightningImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"NA") != nil {
+//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"") != nil {
+//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
+//            } }
+//
+//
+//            // > 90
+//        else if theValue! >= 90 && theCondition.range(of:"Clouds") != nil {
+//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 90 && theCondition.range(of:"Cloudy") != nil {
+//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 90 && theCondition.range(of:"Fair") != nil {
+//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 90 && theCondition.range(of:"Clear") != nil {
+//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 90 && theCondition.range(of:"Overcast") != nil {
+//            if (coreCloudyImages?[randomCloudyImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreCloudyImages?[randomCloudyImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 90 && theCondition.range(of:"Fog") != nil {
+//            if (coreCloudyImages?[randomCloudyImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreCloudyImages?[randomCloudyImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 90 && theCondition.range(of:"Rain") != nil {
+//            if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 90 && theCondition.range(of:"storm") != nil {
+//            if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 90 && theCondition.range(of:"hurricane") != nil {
+//            if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 90 && theCondition.range(of:"showers") != nil {
+//            if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 90 && theCondition.range(of:"Thunderstorm") != nil {
+//            if (coreLightningImages?[randomLightningImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreLightningImages?[randomLightningImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 90 && theCondition.range(of:"NA") != nil {
+//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
+//            } }
+//        else if theValue! >= 90 && theCondition.range(of:"") != nil {
+//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
+//            } }
+//
+//        else {
+//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
+//            {
+//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
+//            }
+//        }
+//    }
+    
+    
+    //PANDA IMAGE FETCH
+    func getPandaImage(temperature: String, condition: String) {
+        //NICE
+        var coreNiceImages = fetchCoreImage("active", "nice")
+        let randomNiceImage = Int(arc4random_uniform(UInt32(coreNiceImages!.count)))
+        
+        //CLOUDY
+        var coreCloudyImages = fetchCoreImage("active", "cloudy")
+        let randomCloudyImage = Int(arc4random_uniform(UInt32(coreCloudyImages!.count)))
         
         //COLD
         var coreColdImages = fetchCoreImage("active", "cold")
@@ -379,21 +1096,17 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         var coreRainImages = fetchCoreImage("active", "rain")
         let randomRainImage = Int(arc4random_uniform(UInt32(coreRainImages!.count)))
         
-        //NICE
-        var coreNiceImages = fetchCoreImage("active", "nice")
-        let randomNiceImage = Int(arc4random_uniform(UInt32(coreNiceImages!.count)))
-        
-        //CLOUDY
-        var coreCloudyImages = fetchCoreImage("active", "cloudy")
-        let randomCloudyImage = Int(arc4random_uniform(UInt32(coreCloudyImages!.count)))
-        
         //LIGHTNING
         var coreLightningImages = fetchCoreImage("active", "lightning")
         let randomLightningImage = Int(arc4random_uniform(UInt32(coreLightningImages!.count)))
         
+        //SNOW
+        var coreSnowImages = fetchCoreImage("active", "snow")
+        let randomSnowImages = Int(arc4random_uniform(UInt32(coreSnowImages!.count)))
+        
         //should change these to switch 'condition' { case '': statement case '': statement }
         
-        //getImage func input Strings
+        //getPandaImage func input Strings
         let theValue = Double(temperature)
         let theCondition = condition
         
@@ -853,7 +1566,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                 print("\(weatherDescription[0])")
                 weatherLabel.text! = weatherDescription[0] as! String
             
-                self.getImage(temperature: temp, condition: condition)
+                self.getPandaImage(temperature: temp, condition: condition)
                 self.getWeatherIcon(theImageView: self.weatherImageView, theCondition: condition)
                 
                 //7-day forecast, day 1 Date, Weather Icon, and High/Low Temp
@@ -927,7 +1640,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                     
                 }
                 
-                //Setting the temperature for input string in func getWeatherIcon and getImage
+                //Setting the temperature for input string in func getWeatherIcon and getPandaImage
                 let sevenDayOneWeekTempZero: String = sevenDayTempDescription[0] as! String
                 let sevenDayTwoWeekTempOne: String = sevenDayTempDescription[1] as! String
                 let sevenDayThreeWeekTempTwo: String = sevenDayTempDescription[2] as! String
@@ -936,7 +1649,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                 let sevenDaySixWeekTempFive: String = sevenDayTempDescription[5] as! String
                 let sevenDaySevenWeekTempSix: String = sevenDayTempDescription[6] as! String
                 
-                //Setting the condition for input string in func getWeatherIcon and getImage
+                //Setting the condition for input string in func getWeatherIcon and getPandaImage
                 let sevenDayOneCondition = json["data"] as! [String:Any]?
                 let sevenDayConditionDescription: NSArray = sevenDayOneCondition!["weather"] as! NSArray
                 print("\(sevenDayConditionDescription[0])")
@@ -949,25 +1662,25 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                 let sevenDaySixConditionDescriptionFive: String = sevenDayConditionDescription[5] as! String
                 let sevenDaySevenConditionDescriptionSix: String = sevenDayConditionDescription[6] as! String
                 
-                self.getImage(temperature: sevenDayOneWeekTempZero, condition: sevenDayOneConditionDescriptionZero)
+                self.getPandaImage(temperature: sevenDayOneWeekTempZero, condition: sevenDayOneConditionDescriptionZero)
                 self.getWeatherIcon(theImageView: sevenDayWeatherImageView, theCondition: sevenDayOneConditionDescriptionZero)
                 
-                self.getImage(temperature: sevenDayTwoWeekTempOne, condition: sevenDayTwoConditionDescriptionOne)
+                self.getPandaImage(temperature: sevenDayTwoWeekTempOne, condition: sevenDayTwoConditionDescriptionOne)
                 self.getWeatherIcon(theImageView: sevenDayTwoWeatherImageView, theCondition: sevenDayTwoConditionDescriptionOne)
                 
-                self.getImage(temperature: sevenDayThreeWeekTempTwo, condition: sevenDayThreeConditionDescriptionTwo)
+                self.getPandaImage(temperature: sevenDayThreeWeekTempTwo, condition: sevenDayThreeConditionDescriptionTwo)
                 self.getWeatherIcon(theImageView: sevenDayThreeWeatherImageView, theCondition: sevenDayThreeConditionDescriptionTwo)
                 
-                self.getImage(temperature: sevenDayFourWeekTempThree, condition: sevenDayFourConditionDescriptionThree)
+                self.getPandaImage(temperature: sevenDayFourWeekTempThree, condition: sevenDayFourConditionDescriptionThree)
                 self.getWeatherIcon(theImageView: sevenDayFourWeatherImageView, theCondition: sevenDayFourConditionDescriptionThree)
                 
-                self.getImage(temperature: sevenDayFiveWeekTempFour, condition: sevenDayFiveConditionDescriptionFour)
+                self.getPandaImage(temperature: sevenDayFiveWeekTempFour, condition: sevenDayFiveConditionDescriptionFour)
                 self.getWeatherIcon(theImageView: sevenDayFiveWeatherImageView, theCondition: sevenDayFiveConditionDescriptionFour)
                 
-                self.getImage(temperature: sevenDaySixWeekTempFive, condition: sevenDaySixConditionDescriptionFive)
+                self.getPandaImage(temperature: sevenDaySixWeekTempFive, condition: sevenDaySixConditionDescriptionFive)
                 self.getWeatherIcon(theImageView: sevenDaySixWeatherImageView, theCondition: sevenDaySixConditionDescriptionFive)
                 
-                self.getImage(temperature: sevenDaySevenWeekTempSix, condition: sevenDaySevenConditionDescriptionSix)
+                self.getPandaImage(temperature: sevenDaySevenWeekTempSix, condition: sevenDaySevenConditionDescriptionSix)
                 self.getWeatherIcon(theImageView: sevenDaySevenWeatherImageView, theCondition: sevenDaySevenConditionDescriptionSix)
 
             }
@@ -1047,7 +1760,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                         print("\(weatherDescription[0])")
                         self.weatherLabel.text! = weatherDescription[0] as! String
                         
-                        self.getImage(temperature: temp, condition: condition)
+                        self.getPandaImage(temperature: temp, condition: condition)
                         self.getWeatherIcon(theImageView: self.weatherImageView, theCondition: condition)
                         
                         //7-day forecast, day 1 Date, Weather Icon, and High/Low Temp
@@ -1121,7 +1834,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                             
                         }
                         
-                        //Setting the temperature for input string in func getWeatherIcon and getImage
+                        //Setting the temperature for input string in func getWeatherIcon and getPandaImage
                         let sevenDayOneWeekTempZero: String = sevenDayTempDescription[0] as! String
                         let sevenDayTwoWeekTempOne: String = sevenDayTempDescription[1] as! String
                         let sevenDayThreeWeekTempTwo: String = sevenDayTempDescription[2] as! String
@@ -1130,7 +1843,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                         let sevenDaySixWeekTempFive: String = sevenDayTempDescription[5] as! String
                         let sevenDaySevenWeekTempSix: String = sevenDayTempDescription[6] as! String
                         
-                        //Setting the condition for input string in func getWeatherIcon and getImage
+                        //Setting the condition for input string in func getWeatherIcon and getPandaImage
                         let sevenDayOneCondition = json["data"] as! [String:Any]?
                         let sevenDayConditionDescription: NSArray = sevenDayOneCondition!["weather"] as! NSArray
                         print("\(sevenDayConditionDescription[0])")
@@ -1143,25 +1856,25 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                         let sevenDaySixConditionDescriptionFive: String = sevenDayConditionDescription[5] as! String
                         let sevenDaySevenConditionDescriptionSix: String = sevenDayConditionDescription[6] as! String
                         
-                        self.getImage(temperature: sevenDayOneWeekTempZero, condition: sevenDayOneConditionDescriptionZero)
+                        self.getPandaImage(temperature: sevenDayOneWeekTempZero, condition: sevenDayOneConditionDescriptionZero)
                         self.getWeatherIcon(theImageView: self.sevenDayWeatherImageView, theCondition: sevenDayOneConditionDescriptionZero)
                         
-                        self.getImage(temperature: sevenDayTwoWeekTempOne, condition: sevenDayTwoConditionDescriptionOne)
+                        self.getPandaImage(temperature: sevenDayTwoWeekTempOne, condition: sevenDayTwoConditionDescriptionOne)
                         self.getWeatherIcon(theImageView: self.sevenDayTwoWeatherImageView, theCondition: sevenDayTwoConditionDescriptionOne)
                         
-                        self.getImage(temperature: sevenDayThreeWeekTempTwo, condition: sevenDayThreeConditionDescriptionTwo)
+                        self.getPandaImage(temperature: sevenDayThreeWeekTempTwo, condition: sevenDayThreeConditionDescriptionTwo)
                         self.getWeatherIcon(theImageView: self.sevenDayThreeWeatherImageView, theCondition: sevenDayThreeConditionDescriptionTwo)
                         
-                        self.getImage(temperature: sevenDayFourWeekTempThree, condition: sevenDayFourConditionDescriptionThree)
+                        self.getPandaImage(temperature: sevenDayFourWeekTempThree, condition: sevenDayFourConditionDescriptionThree)
                         self.getWeatherIcon(theImageView: self.sevenDayFourWeatherImageView, theCondition: sevenDayFourConditionDescriptionThree)
                         
-                        self.getImage(temperature: sevenDayFiveWeekTempFour, condition: sevenDayFiveConditionDescriptionFour)
+                        self.getPandaImage(temperature: sevenDayFiveWeekTempFour, condition: sevenDayFiveConditionDescriptionFour)
                         self.getWeatherIcon(theImageView: self.sevenDayFiveWeatherImageView, theCondition: sevenDayFiveConditionDescriptionFour)
                         
-                        self.getImage(temperature: sevenDaySixWeekTempFive, condition: sevenDaySixConditionDescriptionFive)
+                        self.getPandaImage(temperature: sevenDaySixWeekTempFive, condition: sevenDaySixConditionDescriptionFive)
                         self.getWeatherIcon(theImageView: self.sevenDaySixWeatherImageView, theCondition: sevenDaySixConditionDescriptionFive)
                         
-                        self.getImage(temperature: sevenDaySevenWeekTempSix, condition: sevenDaySevenConditionDescriptionSix)
+                        self.getPandaImage(temperature: sevenDaySevenWeekTempSix, condition: sevenDaySevenConditionDescriptionSix)
                         self.getWeatherIcon(theImageView: self.sevenDaySevenWeatherImageView, theCondition: sevenDaySevenConditionDescriptionSix)
                         
                     }
@@ -1184,41 +1897,3 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
     }
     
 }
-
-
-//random images for 6 buckets - Snow, Cold, Rain, Nice, Cloudy and Lightning
-//        let pandaSnowWeatherImages = [#imageLiteral(resourceName: "IMG_8382")]
-//        let randomSnow = pandaSnowWeatherImages[Int(arc4random_uniform(UInt32(pandaSnowWeatherImages.count)))]
-//        let pandaColdWeatherImages = [#imageLiteral(resourceName: "faceCute"), #imageLiteral(resourceName: "onTheCouch"), #imageLiteral(resourceName: "peakingOut"), #imageLiteral(resourceName: "cold"), #imageLiteral(resourceName: "sleep"), #imageLiteral(resourceName: "ballInMouth"), #imageLiteral(resourceName: "inTheHall"), #imageLiteral(resourceName: "onTheBed"), #imageLiteral(resourceName: "pandaart"), #imageLiteral(resourceName: "sohappy"), #imageLiteral(resourceName: "sleepingagain"), #imageLiteral(resourceName: "toyscarpet"), #imageLiteral(resourceName: "sleepy"),#imageLiteral(resourceName: "pandapumpkin"),  #imageLiteral(resourceName: "pandapumpkin2")]
-//        let randomCold = pandaColdWeatherImages[Int(arc4random_uniform(UInt32(pandaColdWeatherImages.count)))]
-//        let pandaRainWeatherImages = [#imageLiteral(resourceName: "image2"), #imageLiteral(resourceName: "IMG_1680"), #imageLiteral(resourceName: "IMG_3485"), #imageLiteral(resourceName: "rain"), #imageLiteral(resourceName: "ballInMouth"), #imageLiteral(resourceName: "onTheBed"), #imageLiteral(resourceName: "pumpkin"),#imageLiteral(resourceName: "toyscarpet"), #imageLiteral(resourceName: "sohappy"), #imageLiteral(resourceName: "sleepingagain"),#imageLiteral(resourceName: "duskRain"),#imageLiteral(resourceName: "rainDog"),#imageLiteral(resourceName: "bluepanda")]
-//        let randomRain = pandaRainWeatherImages[Int(arc4random_uniform(UInt32(pandaRainWeatherImages.count)))]
-//        let pandaNiceWeatherImages = [#imageLiteral(resourceName: "duskOutside"), #imageLiteral(resourceName: "happyOnBench"), #imageLiteral(resourceName: "image6"), #imageLiteral(resourceName: "stick"), #imageLiteral(resourceName: "onTheMountain"), #imageLiteral(resourceName: "onTheMountain2"),#imageLiteral(resourceName: "balconyimage"),#imageLiteral(resourceName: "heatherfarm"), #imageLiteral(resourceName: "byTheTre"), #imageLiteral(resourceName: "civicPark"), #imageLiteral(resourceName: "niceDay"), #imageLiteral(resourceName: "sunnyDay"), #imageLiteral(resourceName: "inSFNice"), #imageLiteral(resourceName: "ontherocks"), #imageLiteral(resourceName: "onTheWaterwithLuvi"), #imageLiteral(resourceName: "pandapumpkin"),#imageLiteral(resourceName: "baseballpanda")]
-//        let randomNice = pandaNiceWeatherImages[Int(arc4random_uniform(UInt32(pandaNiceWeatherImages.count)))]
-//        let pandaCloudyWeatherImages = [#imageLiteral(resourceName: "image3"), #imageLiteral(resourceName: "IMG_1974"), #imageLiteral(resourceName: "IMG_3548"), #imageLiteral(resourceName: "onRedChair"), #imageLiteral(resourceName: "onTheTile"), #imageLiteral(resourceName: "treatrawhide"), #imageLiteral(resourceName: "ballInMouth"), #imageLiteral(resourceName: "inTheHall"), #imageLiteral(resourceName: "pumpkin"),#imageLiteral(resourceName: "toyscarpet"),#imageLiteral(resourceName: "sohappy"),#imageLiteral(resourceName: "legscrossed"), #imageLiteral(resourceName: "sleepy"), #imageLiteral(resourceName: "duskRain"), #imageLiteral(resourceName: "parkGreen"), #imageLiteral(resourceName: "pandapumpkin2"), #imageLiteral(resourceName: "slycloudy"),#imageLiteral(resourceName: "flowerpanda")]
-//        let randomCloudy = pandaCloudyWeatherImages[Int(arc4random_uniform(UInt32(pandaCloudyWeatherImages.count)))]
-//        let pandaLightningWeatherImages = [#imageLiteral(resourceName: "atTheDoor"), #imageLiteral(resourceName: "scared"), #imageLiteral(resourceName: "IMG_2068"), #imageLiteral(resourceName: "IMG_2798"), #imageLiteral(resourceName: "IMG_7199"), #imageLiteral(resourceName: "underDrawer"), #imageLiteral(resourceName: "soSmall"), #imageLiteral(resourceName: "pandaart"),#imageLiteral(resourceName: "sleepingagain")]
-//        let randomLightning = pandaLightningWeatherImages[Int(arc4random_uniform(UInt32(pandaLightningWeatherImages.count)))]
-
-
-//        self.updateWalkMeLabel ()
-//        //needs to click to start animation because it needs to unhide it... why?
-//        if buttonIsSelected {
-//            UIView.animate(withDuration: 4, delay: 0, options: [.curveEaseOut],
-//                    animations: {
-//                        self.walkMeLabel.center.y -= self.view.bounds.midY
-//                        self.view.layoutIfNeeded()
-//            }, completion:
-//                { finished in
-//                    if finished {
-//                    self.walkMeLabel.isHidden = true
-//                    self.walkMeLabel.layer.removeAllAnimations()
-//                    self.walkMeLabel.frame.origin.y = 600.0
-//                    self.walkMeLabel.frame.origin.x = 80.0
-//                    }
-//            })
-//        }
-//        else {
-//            walkMeLabel.isHidden = true
-//        }
-//    }
