@@ -1,4 +1,4 @@
-//
+ //
 //  NiceCVC.swift
 //  PandaWeather
 //
@@ -9,7 +9,7 @@
 import UIKit
 import Photos
 
-let albumName = "Nice Weather"            //App specific folder name
+ let albumName = "Panda - Nice Weather"            //App specific folder name
 
 class NiceCVC: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     

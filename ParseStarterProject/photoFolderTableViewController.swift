@@ -16,11 +16,12 @@ enum weatherConditions {
     case cold
     case rain
     case lightning
+    case snow
     
-    static let allValues = [nice, cloudy, cold, rain, lightning]
+    static let allValues = [nice, cloudy, cold, rain, lightning, snow]
 }
 
-var weatherFolders = ["Nice", "Cloudy", "Cold", "Rain", "Lightning"]
+var weatherFolders = ["Nice", "Cloudy", "Cold", "Rain", "Lightning", "Snow"]
 var myIndex = 0
 
 //protocol photoFolderTableViewControllerDelegate {
@@ -86,21 +87,14 @@ class photoFolderTableViewController: UITableViewController {
             segueToPhotoFolder(.lightning)
         }
         
+        else if indexPath.row == 5 {
+            segueToPhotoFolder(.snow)
+        }
+        
         //        myIndex = indexPath.row
         //        performSegue(withIdentifier: "collectionVC", sender: self)
         
     }
-    
-    //    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
-    //
-    //        if let index = self.tableView.indexPathForSelectedRow{
-    //            self.tableView.deselectRow(at: index, animated: true)
-    //        }
-    //
-    //        myIndex = indexPath.row
-    //        performSegue(withIdentifier: "collectionVC", sender: self)
-    //
-    //    }
     
     override func viewDidAppear(_ animated: Bool) {
         if let index = self.tableView.indexPathForSelectedRow{
@@ -126,6 +120,8 @@ class photoFolderTableViewController: UITableViewController {
             return self.performSegue(withIdentifier: "showRain", sender: nil)
         case .lightning:
             return self.performSegue(withIdentifier: "showLightning", sender: nil)
+        case .snow:
+            return self.performSegue(withIdentifier: "showSnow", sender: nil)
         }
     }
 }

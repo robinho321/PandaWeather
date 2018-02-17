@@ -39,6 +39,8 @@
 		A93FB3D21FC23DB900E4D5B7 /* AdminImageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93FB3D11FC23DB900E4D5B7 /* AdminImageTableViewController.swift */; };
 		A93FB3D41FC23E8400E4D5B7 /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93FB3D31FC23E8400E4D5B7 /* ImageCell.swift */; };
 		A945C5881FE5E6730063DFAF /* AdminAddImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A945C5871FE5E6730063DFAF /* AdminAddImage.swift */; };
+		A946E95D2032D50600BF49CB /* SnowCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A946E95C2032D50600BF49CB /* SnowCVC.swift */; };
+		A946E95F2032D54E00BF49CB /* snowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A946E95E2032D54E00BF49CB /* snowCell.swift */; };
 		A977881E2027925700EB125F /* photoFolderTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A977881D2027925700EB125F /* photoFolderTableViewController.swift */; };
 		A9930F7B201506FB00E4D644 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9930F7A201506FB00E4D644 /* Date.swift */; };
 		A9A97E671F5543360046B1AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9A97E661F5543360046B1AD /* Assets.xcassets */; };
@@ -84,6 +86,8 @@
 		A93FB3D11FC23DB900E4D5B7 /* AdminImageTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminImageTableViewController.swift; sourceTree = "<group>"; };
 		A93FB3D31FC23E8400E4D5B7 /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
 		A945C5871FE5E6730063DFAF /* AdminAddImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminAddImage.swift; sourceTree = "<group>"; };
+		A946E95C2032D50600BF49CB /* SnowCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnowCVC.swift; sourceTree = "<group>"; };
+		A946E95E2032D54E00BF49CB /* snowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = snowCell.swift; sourceTree = "<group>"; };
 		A977881D2027925700EB125F /* photoFolderTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = photoFolderTableViewController.swift; sourceTree = "<group>"; };
 		A9930F7A201506FB00E4D644 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		A9A97E661F5543360046B1AD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -207,6 +211,7 @@
 				A9174E392028396900DB6BCE /* ColdCVC.swift */,
 				A9174E3D20283B2900DB6BCE /* RainCVC.swift */,
 				A9174E4120283CA500DB6BCE /* LightningCVC.swift */,
+				A946E95C2032D50600BF49CB /* SnowCVC.swift */,
 			);
 			path = WeatherCVCs;
 			sourceTree = "<group>";
@@ -219,6 +224,7 @@
 				A9174E3B2028398900DB6BCE /* coldCell.swift */,
 				A9174E3F20283B3600DB6BCE /* rainCell.swift */,
 				A9174E4320283CB100DB6BCE /* lightningCell.swift */,
+				A946E95E2032D54E00BF49CB /* snowCell.swift */,
 			);
 			path = WeatherCells;
 			sourceTree = "<group>";
@@ -253,7 +259,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0820;
+				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = Parse;
 				TargetAttributes = {
 					81BA81441A49DA1800E65899 = {
@@ -379,6 +385,7 @@
 				A9174E3C2028398900DB6BCE /* coldCell.swift in Sources */,
 				A9174E4220283CA500DB6BCE /* LightningCVC.swift in Sources */,
 				A9930F7B201506FB00E4D644 /* Date.swift in Sources */,
+				A946E95D2032D50600BF49CB /* SnowCVC.swift in Sources */,
 				A9174E3E20283B2900DB6BCE /* RainCVC.swift in Sources */,
 				A91ACE501F9437A40082401A /* PandaWeather.xcdatamodeld in Sources */,
 				A9174E4020283B3600DB6BCE /* rainCell.swift in Sources */,
@@ -391,6 +398,7 @@
 				A9174E36202835DA00DB6BCE /* CloudyCVC.swift in Sources */,
 				A9174E4420283CB100DB6BCE /* lightningCell.swift in Sources */,
 				A9C752C31FC248DD008002C5 /* AdminPasswordViewController.swift in Sources */,
+				A946E95F2032D54E00BF49CB /* snowCell.swift in Sources */,
 				A9174E3420280BF700DB6BCE /* niceCell.swift in Sources */,
 				A945C5881FE5E6730063DFAF /* AdminAddImage.swift in Sources */,
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,
@@ -425,14 +433,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -472,14 +486,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;

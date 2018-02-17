@@ -36,19 +36,30 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
             settingsTVController.delegate = self
         }
         
-        
 //        if segue.identifier == "openCustomizePhotos" {
-//            let navigationController: UINavigationController = segue.destination as! UINavigationController
-//            let customizePhotosTVController: CustomizePhotosViewController = navigationController.viewControllers[0] as! CustomizePhotosViewController
-//            customizePhotosTVController.delegate = self
+//            segue.photoFolderTableViewController.someSegueCouldHappen = true
 //        }
         
     }
     
+    var disclaimerHasBeenDisplayed = false
+    
     //Weather Folder Arrays
     var niceUserImage = [PHAsset]()
-    let albumName = "Nice Weather"
-    var albumFound : Bool = false
+    var cloudyUserImage = [PHAsset]()
+    var coldUserImage = [PHAsset]()
+    var rainUserImage = [PHAsset]()
+    var lightningUserImage = [PHAsset]()
+    var snowUserImage = [PHAsset]()
+    
+    let albumName = "Panda - Nice Weather"
+    let albumName2 = "Panda - Cloudy Weather"
+    let albumName3 = "Panda - Cold Weather"
+    let albumName4 = "Panda - Rain Weather"
+    let albumName5 = "Panda - Lightning Weather"
+    let albumName6 = "Panda - Snow Weather"
+    
+    var albumFound: Bool = false
     var assetCollection: PHAssetCollection = PHAssetCollection()
     var photoAssets = PHFetchResult<AnyObject>()
     
@@ -57,22 +68,36 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
     var locationHasBeenFound = false
     var buttonIsSelected = false
     let locationManager = CLLocationManager()
-
-//    @IBAction func customziePhotosButton(_ sender: UIButton) {
-//        self.performSegue(withIdentifier: "showCustomPhotos", sender: self)
-//    }
     
     @IBAction func customizePhotosSwitch(_ sender: UISwitch) {
-        if (sender.isOn == true) {
+        if switchLabel.isOn {
+        } else {
+        let AlertOnce = UserDefaults.standard
+        if(!AlertOnce.bool(forKey: "oneTimeAlert")){
             
-        }
-        else {
-
+            let alert = UIAlertController(title: "Custom Photos", message: "\n Hello! You've just switched to custom photos! Here is how it works: \n \n ON position: loads only Panda images. \n \n OFF position: loads only your custom photos. \n \n Now press the search or the arrow to update your weather background!", preferredStyle: .alert)
+            
+            let DoNotShowAgainAction = UIAlertAction(title: "Do Not Show Again", style: UIAlertActionStyle.default) { (action:UIAlertAction) in
+                
+                AlertOnce.set(true , forKey: "oneTimeAlert")
+                AlertOnce.synchronize()
+                
+            }
+            
+            let cancelAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel) {
+                UIAlertAction in
+                alert.removeFromParentViewController()
+            }
+            alert.addAction(cancelAction)
+            alert.addAction(DoNotShowAgainAction)
+            
+            self.present(alert, animated: true, completion: nil)
+            }
         }
     }
     
-    @IBOutlet weak var switchLabel: UISwitch!
     
+    @IBOutlet weak var switchLabel: UISwitch!
     
     @IBOutlet weak var whiteBackgroundWeatherView: UIView!
     @IBOutlet weak var temperatureLabel: UILabel!
@@ -118,8 +143,11 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         self.updateDropWisdomButton()
     }
     @IBAction func setCurrentLocation(_ sender: UIButton) {
-//        self.getTemperature()
-      self.getUserImage()
+        if switchLabel.isOn {
+            self.getPandaTemperature()
+        } else {
+            self.getUserTemperature()
+        }
     }
     
     @IBOutlet weak var searchButtonView: UIButton!
@@ -131,29 +159,34 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         //ignoring user
-        UIApplication.shared.beginIgnoringInteractionEvents()
+//        UIApplication.shared.beginIgnoringInteractionEvents()
         
         //Hide search bar
         searchBar.resignFirstResponder()
         dismiss(animated: true, completion: nil)
         
         //Spinner Activity indicator
-        let activityIndicator = UIActivityIndicatorView()
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge
-        activityIndicator.center = self.view.center
-        activityIndicator.hidesWhenStopped = true
-        
-        activityIndicator.startAnimating()
-        
-        self.view.addSubview(activityIndicator)
+//        let activityIndicator = UIActivityIndicatorView()
+//        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge
+//        activityIndicator.center = self.view.center
+//        activityIndicator.hidesWhenStopped = true
+//
+//        activityIndicator.startAnimating()
+//
+//        self.view.addSubview(activityIndicator)
         
         //Create the search request
         let address = searchBar.text
-        self.forwardGeocoding(address: "\(address!)")
-        UIApplication.shared.endIgnoringInteractionEvents()
+        if switchLabel.isOn {
+            self.forwardGeocodingPanda(address: "\(address!)")
+        } else {
+            self.forwardGeocodingUser(address: "\(address!)")
+        }
+
+//        UIApplication.shared.endIgnoringInteractionEvents()
         
         //stop activity indicator -- spinner never shows up... fix later
-        activityIndicator.stopAnimating()
+//        activityIndicator.stopAnimating()
     }
     
     
@@ -200,13 +233,15 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         //1
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext!
+        let privateMOC = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        privateMOC.parent = managedContext
         //2
         let fetchRequest = NSFetchRequest<PandaImage>(entityName:"PandaImage")
         let resultPredicate1 = NSPredicate(format: "active = %@", "active")
         let resultPredicate2 = NSPredicate(format: "type = %@", type)
         let compound = NSCompoundPredicate(andPredicateWithSubpredicates:[resultPredicate1, resultPredicate2])
         fetchRequest.predicate = compound
-        let fetchedResult = try! managedContext.fetch(fetchRequest) as NSArray
+        let fetchedResult = try! privateMOC.fetch(fetchRequest) as NSArray
         return fetchedResult as? [NSManagedObject]
         
     }
@@ -229,7 +264,13 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         if locationHasBeenFound == false {
             //self.showSpinnerOverlay() -- removed this because now have the spinner on the SplashScreenViewController
             self.whiteBackgroundWeatherView.isHidden = false
-            self.getTemperature()
+            
+            if switchLabel.isOn {
+                self.getPandaTemperature()
+            } else {
+                self.getUserTemperature()
+            }
+            
             locationHasBeenFound = true
         }
         }
@@ -363,11 +404,11 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         
         //hail icon
         else if theCondition.range(of: "Ice") != nil {
-            theImageView.image! = #imageLiteral(resourceName: "hail") }
+            theImageView.image! = #imageLiteral(resourceName: "Snow") }
         else if theCondition.range(of: "Pellets") != nil {
-            theImageView.image! = #imageLiteral(resourceName: "hail") }
+            theImageView.image! = #imageLiteral(resourceName: "Snow") }
         else if theCondition.range(of: "Hail") != nil {
-            theImageView.image! = #imageLiteral(resourceName: "hail") }
+            theImageView.image! = #imageLiteral(resourceName: "Snow") }
         
         //raining icon
         else if theCondition.range(of: "Rain") != nil {
@@ -383,7 +424,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         
         //snowing icon
         else if theCondition.range(of: "Snow") != nil {
-            theImageView.image! = #imageLiteral(resourceName: "hail") }
+            theImageView.image! = #imageLiteral(resourceName: "Snow") }
         
         //thunderstorm icon
         else if theCondition.range(of: "Thunderstorm") != nil {
@@ -397,7 +438,6 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
     
     func FetchNiceWeatherCustomAlbumPhotos()
     {
-        
         PHPhotoLibrary.requestAuthorization { (status) in
             switch status
             {
@@ -417,11 +457,166 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                     print(allPhotos.count)
                     allPhotos.enumerateObjects({ (object, count, stop) in
                         self.niceUserImage.append(object)
+                        DispatchQueue.main.async(execute: {
+                            let randomNice = Int(arc4random_uniform(UInt32(self.niceUserImage.count)))
+                            self.dogImageView.image = self.convertImageFromAsset(asset: self.niceUserImage[randomNice])
+                        })
                     })
                     print("Found \(allPhotos.count) images")
                     
                 } else {
                     self.albumFound = false
+                    let alert = UIAlertController(title: "No Nice Weather Images Found", message: "Please add an image to your Nice Weather folder, so the background can be populated with your image, instead of Panda's! Thanks :)", preferredStyle: UIAlertControllerStyle.alert)
+                    
+                    let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                    
+                    alert.addAction(cancelAction)
+                    self.present(alert, animated: true, completion: nil)
+                }
+            case .denied, .restricted:
+                print("Not allowed")
+            case .notDetermined:
+                print("Not determined yet")
+            }
+        
+
+        }
+    }
+    
+    func FetchCloudyWeatherCustomAlbumPhotos()
+    {
+        PHPhotoLibrary.requestAuthorization { (status) in
+            switch status
+            {
+            case .authorized:
+                print("Good to proceed")
+                let fetchOptions = PHFetchOptions()
+                fetchOptions.predicate = NSPredicate(format: "title = %@", self.albumName2)
+                let collection: PHFetchResult = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: fetchOptions)
+                
+                if let first_Obj:AnyObject = collection.firstObject{
+                    print("first object of collection is: \(first_Obj)")
+                    //found the album
+                    self.albumFound = true
+                    self.assetCollection = first_Obj as! PHAssetCollection
+                    
+                    let allPhotos = PHAsset.fetchAssets(in: self.assetCollection, options: nil)
+                    print(allPhotos.count)
+                    allPhotos.enumerateObjects({ (object, count, stop) in
+                        self.cloudyUserImage.append(object)
+                        DispatchQueue.main.async(execute: {
+                            let randomCloudy = Int(arc4random_uniform(UInt32(self.cloudyUserImage.count)))
+                            print("Random cloudy array number is \(randomCloudy)")
+                            self.dogImageView.image = self.convertImageFromAsset(asset: self.cloudyUserImage[randomCloudy])
+                        })
+                    })
+                    print("Found \(allPhotos.count) images")
+                    
+                } else {
+                    self.albumFound = false
+                    
+                    let alert = UIAlertController(title: "No Cloudy Weather Images Found", message: "Please add an image to your Cloudy Weather folder, so the background can be populated with your image, instead of Panda's! Thanks :)", preferredStyle: UIAlertControllerStyle.alert)
+                    
+                    let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                    
+                    alert.addAction(cancelAction)
+                    self.present(alert, animated: true, completion: nil)
+                }
+                
+                
+            case .denied, .restricted:
+                print("Not allowed")
+            case .notDetermined:
+                print("Not determined yet")
+            }
+        }
+    }
+    
+    func FetchColdWeatherCustomAlbumPhotos()
+    {
+        
+        PHPhotoLibrary.requestAuthorization { (status) in
+            switch status
+            {
+            case .authorized:
+                print("Good to proceed")
+                let fetchOptions = PHFetchOptions()
+                fetchOptions.predicate = NSPredicate(format: "title = %@", self.albumName3)
+                let collection: PHFetchResult = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: fetchOptions)
+                
+                if let first_Obj:AnyObject = collection.firstObject{
+                    print("first object of collection is: \(first_Obj)")
+                    //found the album
+                    self.albumFound = true
+                    self.assetCollection = first_Obj as! PHAssetCollection
+                    
+                    let allPhotos = PHAsset.fetchAssets(in: self.assetCollection, options: nil)
+                    print(allPhotos.count)
+                    allPhotos.enumerateObjects({ (object, count, stop) in
+                        self.coldUserImage.append(object)
+                        DispatchQueue.main.async(execute: {
+                            let randomCold = Int(arc4random_uniform(UInt32(self.coldUserImage.count)))
+                            self.dogImageView.image = self.convertImageFromAsset(asset: self.coldUserImage[randomCold])
+                        })
+                    })
+                    print("Found \(allPhotos.count) images")
+                    
+                } else {
+                    self.albumFound = false
+                    let alert = UIAlertController(title: "No Cold Weather Images Found", message: "Please add an image to your Cold Weather folder, so the background can be populated with your image, instead of Panda's! Thanks :)", preferredStyle: UIAlertControllerStyle.alert)
+                    
+                    let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                    
+                    alert.addAction(cancelAction)
+                    self.present(alert, animated: true, completion: nil)
+                    
+//                    self.dogImageView.image = #imageLiteral(resourceName: "smiling")
+                }
+                
+            case .denied, .restricted:
+                print("Not allowed")
+            case .notDetermined:
+                print("Not determined yet")
+            }
+        }
+    }
+    
+    func FetchRainWeatherCustomAlbumPhotos()
+    {
+        PHPhotoLibrary.requestAuthorization { (status) in
+            switch status
+            {
+            case .authorized:
+                print("Good to proceed")
+                let fetchOptions = PHFetchOptions()
+                fetchOptions.predicate = NSPredicate(format: "title = %@", self.albumName4)
+                let collection: PHFetchResult = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: fetchOptions)
+                
+                if let first_Obj:AnyObject = collection.firstObject{
+                    print("first object of collection is: \(first_Obj)")
+                    //found the album
+                    self.albumFound = true
+                    self.assetCollection = first_Obj as! PHAssetCollection
+                    
+                    let allPhotos = PHAsset.fetchAssets(in: self.assetCollection, options: nil)
+                    print(allPhotos.count)
+                    allPhotos.enumerateObjects({ (object, count, stop) in
+                        self.rainUserImage.append(object)
+                        DispatchQueue.main.async(execute: {
+                            let randomRain = Int(arc4random_uniform(UInt32(self.rainUserImage.count)))
+                            self.dogImageView.image = self.convertImageFromAsset(asset: self.rainUserImage[randomRain])
+                        })
+                    })
+                    print("Found \(allPhotos.count) images")
+                    
+                } else {
+                    self.albumFound = false
+                    let alert = UIAlertController(title: "No Rain Weather Images Found", message: "Please add an image to your Rain Weather folder, so the background can be populated with your image, instead of Panda's! Thanks :)", preferredStyle: UIAlertControllerStyle.alert)
+                    
+                    let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                    
+                    alert.addAction(cancelAction)
+                    self.present(alert, animated: true, completion: nil)
                 }
                 
                 
@@ -431,92 +626,114 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                 print("Not determined yet")
             }
             
-            if self.albumFound == false {
-                let alert = UIAlertController(title: "No Nice Weather Images Found", message: "Please add an image to your Nice Weather folder, so the background can be populated with your image, instead of Panda's! Thanks :)", preferredStyle: UIAlertControllerStyle.alert)
-                
-                let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-                
-                alert.addAction(cancelAction)
-                self.present(alert, animated: true, completion: nil)
-                
-                self.dogImageView.image = #imageLiteral(resourceName: "smiling")
-            } else {
             
-                DispatchQueue.main.async(execute: {
-                    let niceUserImageCount = UInt32(self.niceUserImage.count)
-                    self.dogImageView.image = self.convertImageFromAsset(asset: self.niceUserImage[self.randomNumber(maximum: niceUserImageCount)])
-            })
+        }
+    }
+    
+    func FetchLightningWeatherCustomAlbumPhotos()
+    {
+        PHPhotoLibrary.requestAuthorization { (status) in
+            switch status
+            {
+            case .authorized:
+                print("Good to proceed")
+                let fetchOptions = PHFetchOptions()
+                fetchOptions.predicate = NSPredicate(format: "title = %@", self.albumName5)
+                let collection: PHFetchResult = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: fetchOptions)
+                
+                if let first_Obj:AnyObject = collection.firstObject{
+                    print("first object of collection is: \(first_Obj)")
+                    //found the album
+                    self.albumFound = true
+                    self.assetCollection = first_Obj as! PHAssetCollection
+                    
+                    let allPhotos = PHAsset.fetchAssets(in: self.assetCollection, options: nil)
+                    print(allPhotos.count)
+                    allPhotos.enumerateObjects({ (object, count, stop) in
+                        self.lightningUserImage.append(object)
+                        DispatchQueue.main.async(execute: {
+                            let randomLightning = Int(arc4random_uniform(UInt32(self.lightningUserImage.count)))
+                            self.dogImageView.image = self.convertImageFromAsset(asset: self.lightningUserImage[randomLightning])
+                        })
+                    })
+                    print("Found \(allPhotos.count) images")
+                    
+                } else {
+                    self.albumFound = false
+                    let alert = UIAlertController(title: "No Lightning Weather Images Found", message: "Please add an image to your Lightning Weather folder, so the background can be populated with your image, instead of Panda's! Thanks :)", preferredStyle: UIAlertControllerStyle.alert)
+                    
+                    let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                    
+                    alert.addAction(cancelAction)
+                    self.present(alert, animated: true, completion: nil)
+                }
+                
+                
+            case .denied, .restricted:
+                print("Not allowed")
+            case .notDetermined:
+                print("Not determined yet")
+            }
+            
+            
+        }
+    }
+    
+    func FetchSnowWeatherCustomAlbumPhotos()
+    {
+        PHPhotoLibrary.requestAuthorization { (status) in
+            switch status
+            {
+            case .authorized:
+                print("Good to proceed")
+                let fetchOptions = PHFetchOptions()
+                fetchOptions.predicate = NSPredicate(format: "title = %@", self.albumName6)
+                let collection: PHFetchResult = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: fetchOptions)
+                
+                if let first_Obj:AnyObject = collection.firstObject{
+                    print("first object of collection is: \(first_Obj)")
+                    //found the album
+                    self.albumFound = true
+                    self.assetCollection = first_Obj as! PHAssetCollection
+                    
+                    let allPhotos = PHAsset.fetchAssets(in: self.assetCollection, options: nil)
+                    print(allPhotos.count)
+                    allPhotos.enumerateObjects({ (object, count, stop) in
+                        self.snowUserImage.append(object)
+                        DispatchQueue.main.async(execute: {
+                            let randomSnow = Int(arc4random_uniform(UInt32(self.snowUserImage.count)))
+                            self.dogImageView.image = self.convertImageFromAsset(asset: self.snowUserImage[randomSnow])
+                        })
+                    })
+                    print("Found \(allPhotos.count) images")
+                    
+                } else {
+                    self.albumFound = false
+                    let alert = UIAlertController(title: "No Snow Weather Images Found", message: "Please add an image to your Snow Weather folder, so the background can be populated with your image, instead of Panda's! Thanks :)", preferredStyle: UIAlertControllerStyle.alert)
+                    
+                    let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                    
+                    alert.addAction(cancelAction)
+                    self.present(alert, animated: true, completion: nil)
+                }
+                
+            case .denied, .restricted:
+                print("Not allowed")
+            case .notDetermined:
+                print("Not determined yet")
             }
         }
     }
-////        var i = collection.count
-//        photoAssets = PHAsset.fetchAssets(in: assetCollection, options: nil) as! PHFetchResult<AnyObject>
-////        let imageManager = PHCachingImageManager()
-//
-//        //        let imageManager = PHImageManager.defaultManager()
-//
-//        photoAssets.enumerateObjects{(object: AnyObject!,
-//            count: Int,
-//            stop: UnsafeMutablePointer<ObjCBool>) in
-//
-//            if object is PHAsset{
-//                let asset = object as! PHAsset
-//                print("Inside \(asset) If object is PHAsset, This is number 1")
-//
-////                let option = PHImageRequestOptions()
-////                var thumbnail = UIImage()
-////                let imageSize = CGSize(width: asset.pixelWidth,
-////                                       height: asset.pixelHeight)
-//
-//                /* For faster performance, and maybe degraded image */
-////                let options = PHImageRequestOptions()
-////                options.deliveryMode = .FastFormat
-////                options.synchronous = true
-//
-////                imageManager.requestImage(for: asset,
-////                     targetSize: imageSize,
-////                     contentMode: .aspectFill,
-////                     options: option,
-////                     resultHandler: {(result, info)->Void in
-////                        thumbnail = result!
-//////                               self.photo = image!
-////                               /* The image is now available to us */
-////                        self.niceUserImage.append(thumbnail)
-////                        print("Number of images in Nice Weather folder is \(self.niceUserImage.count).")
-//
-//
-//                        let manager = PHImageManager.default()
-//                        let requestOptions = PHImageRequestOptions()
-//                        requestOptions.resizeMode = .exact
-//                        requestOptions.deliveryMode = .highQualityFormat;
-//
-//                        // Request Image
-//                        manager.requestImageData(for: asset, options: nil, resultHandler: { (data, _, _, _) -> Void in
-////                            if data != nil {
-//                                let retrievedImage = UIImage(data: data!)!
-//                                self.niceUserImage.append(retrievedImage)
-//                            print("Image data is \(self.niceUserImage).")
-////                            }
-//                        })
-            
-//                })
-                
-//            }
-//        }
-//    }
     
-    func randomNumber(maximum: UInt32) -> Int {
-        
-        var randomNumber: UInt32
-        
-        repeat {
-            randomNumber = (arc4random_uniform(maximum))
-        }while currentNo == randomNumber
-        
-        currentNo = randomNumber
-        
-        return Int(randomNumber)
-    }
+//    func randomNumber(maximum: UInt32) -> Int {
+//
+//        var randomNumber: UInt32
+//        repeat {
+//            randomNumber = (arc4random_uniform(maximum))
+//        }while currentNo == randomNumber
+//        currentNo = randomNumber
+//        return Int(randomNumber)
+//    }
     
     func convertImageFromAsset(asset: PHAsset) -> UIImage {
         let manager = PHImageManager.default()
@@ -530,553 +747,265 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
     }
     
     //USER IMAGE FETCH
-    func getUserImage(/*temperature: String, condition: String*/) {
+    func getUserImage(temperature: String, condition: String) {
 
-        //getPandaImage func input Strings
-//        let theValue = Double(temperature)
-//        let theCondition = condition
+        //getUserImage func input Strings
+        let theValue = Double(temperature)
+        let theCondition = condition
 
-//        print("theValue: " + "\(String(describing: theValue))")
-//        print("condition: " + "\(theCondition)")
+        print("theValue: " + "\(String(describing: theValue))")
+        print("condition: " + "\(theCondition)")
 
-//        //NICE
-        self.FetchNiceWeatherCustomAlbumPhotos()
-//        let randomNiceUserImage = Int(arc4random_uniform(UInt32(niceUserImage.count)))
-//        print("The Nice Weather Folder image is \(randomNiceUserImage).")
-//        dogImageView.image = niceUserImage[randomNiceUserImage]
-        
+            //<32 degreesF
+        if theValue! < 32 && theCondition.range(of:"Clouds") != nil {
+            self.FetchColdWeatherCustomAlbumPhotos()
         }
-//
-//        //CLOUDY
-//        if fetchOptions.predicate == NSPredicate(format: "title = %@", "Cloudy Weather") {
-//            let collection: PHFetchResult = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: fetchOptions)
-//            if let first_Obj:AnyObject = collection.firstObject{
-//                //found the album
-//                assetCollection = (collection.firstObject)!
-//                albumFound = true
-//            }
-//            else {
-//                albumFound = false
-//
-//                let alert = UIAlertController(title: "No Cloudy Weather Images Found", message: "Please add an image to your Cloudy Weather folder, so the background can be populated with your image, instead of Panda's! Thanks :)", preferredStyle: UIAlertControllerStyle.alert)
-//
-//                let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-//
-//                alert.addAction(cancelAction)
-//                self.present(alert, animated: true, completion: nil)
-//
-//                dogImageView.image = #imageLiteral(resourceName: "smiling")
-//            }
-////            var i = collection.count
-//            photosAsset = PHAsset.fetchAssets(in: assetCollection, options: nil)
-//            let randomCloudyUserImage = Int(arc4random_uniform(UInt32(photosAsset!.count)))
-//            print("The Cloudy Weather Folder image count is \(photosAsset.count).")
-//        }
-//
-//        //COLD
-//        if fetchOptions.predicate == NSPredicate(format: "title = %@", "Cold Weather") {
-//            let collection: PHFetchResult = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: fetchOptions)
-//            if let first_Obj:AnyObject = collection.firstObject{
-//                //found the album
-//                assetCollection = (collection.firstObject)!
-//                albumFound = true
-//            }
-//            else {
-//                albumFound = false
-//
-//                let alert = UIAlertController(title: "No Cold Weather Images Found", message: "Please add an image to your Cold Weather folder, so the background can be populated with your image, instead of Panda's! Thanks :)", preferredStyle: UIAlertControllerStyle.alert)
-//
-//                let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-//
-//                alert.addAction(cancelAction)
-//                self.present(alert, animated: true, completion: nil)
-//
-//                dogImageView.image = #imageLiteral(resourceName: "smiling")
-//                 }
-//
-////            var i = collection.count
-//            photosAsset = PHAsset.fetchAssets(in: assetCollection, options: nil)
-//            let randomColdUserImage = Int(arc4random_uniform(UInt32(photosAsset!.count)))
-//            print("The Cold Weather Folder image count is \(photosAsset.count).")
-//
-//            // Temperature is nil
-//            if theValue == nil {
-//                if randomColdUserImage != nil
-//                {
-//                    dogImageView.image = UIImage(data: randomColdUserImage as? Data)!)
-//                } }
-//
-//        }
-//
-//        //RAIN
-//        if fetchOptions.predicate == NSPredicate(format: "title = %@", "Rain Weather") {
-//            let collection: PHFetchResult = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: fetchOptions)
-//            if let first_Obj:AnyObject = collection.firstObject{
-//                //found the album
-//                assetCollection = (collection.firstObject)!
-//                albumFound = true
-//            }
-//            else {
-//                albumFound = false
-//
-//                let alert = UIAlertController(title: "No Rain Weather Images Found", message: "Please add an image to your Rain Weather folder, so the background can be populated with your image, instead of Panda's! Thanks :)", preferredStyle: UIAlertControllerStyle.alert)
-//
-//                let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-//
-//                alert.addAction(cancelAction)
-//                self.present(alert, animated: true, completion: nil)
-//
-//                dogImageView.image = #imageLiteral(resourceName: "smiling")
-//            }
-//
-////            var i = collection.count
-//            photosAsset = PHAsset.fetchAssets(in: assetCollection, options: nil)
-//            let randomRainUserImage = Int(arc4random_uniform(UInt32(photosAsset!.count)))
-//            print("The Rain Weather Folder image count is \(photosAsset.count).")
-//        }
-//
-//        //LIGHTNING
-//        if fetchOptions.predicate == NSPredicate(format: "title = %@", "Lightning Weather") {
-//            let collection: PHFetchResult = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: fetchOptions)
-//            if let first_Obj:AnyObject = collection.firstObject{
-//                //found the album
-//                assetCollection = (collection.firstObject)!
-//                albumFound = true
-//            }
-//            else {
-//                albumFound = false
-//
-//                let alert = UIAlertController(title: "No Lightning Weather Images Found", message: "Please add an image to your Lightning Weather folder, so the background can be populated with your image, instead of Panda's! Thanks :)", preferredStyle: UIAlertControllerStyle.alert)
-//
-//                let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-//
-//                alert.addAction(cancelAction)
-//                self.present(alert, animated: true, completion: nil)
-//
-//                dogImageView.image = #imageLiteral(resourceName: "smiling")
-//            }
-//
-////            var i = collection.count
-//            photosAsset = PHAsset.fetchAssets(in: assetCollection, options: nil)
-//            let randomLightningUserImage = Int(arc4random_uniform(UInt32(photosAsset!.count)))
-//            print("The Lightning Weather Folder image count is \(photosAsset.count).")
-//        }
-//
-//        //SNOW
-////        var snowUserImages = fetchCoreImage("active", "snow")
-////        let randomSnowUserImage = Int(arc4random_uniform(UInt32(coreSnowImages!.count)))
-//
-//
-//
-//
-//
-//            //<32 degreesF
-//        else if theValue! < 32 && theCondition.range(of:"Clouds") != nil {
-//            if (coreColdImages?[randomColdImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreColdImages?[randomColdImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! < 32 && theCondition.range(of:"Cloudy") != nil {
-//            if (coreColdImages?[randomColdImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreColdImages?[randomColdImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! < 32 && theCondition.range(of:"Fair") != nil {
-//            if (coreColdImages?[randomColdImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreColdImages?[randomColdImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! < 32 && theCondition.range(of:"Clear") != nil {
-//            if (coreColdImages?[randomColdImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreColdImages?[randomColdImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! < 32 && theCondition.range(of:"Overcast") != nil {
-//            if (coreCloudyImages?[randomCloudyImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreCloudyImages?[randomCloudyImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! < 32 && theCondition.range(of:"Fog") != nil {
-//            if (coreCloudyImages?[randomCloudyImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreCloudyImages?[randomCloudyImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! < 32 && theCondition.range(of:"Rain") != nil {
-//            if (coreSnowImages?[randomSnowImages].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreSnowImages?[randomSnowImages].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! < 32 && theCondition.range(of:"storm") != nil {
-//            if (coreSnowImages?[randomSnowImages].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreSnowImages?[randomSnowImages].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! < 32 && theCondition.range(of:"hurricane") != nil {
-//            if (coreSnowImages?[randomSnowImages].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreSnowImages?[randomSnowImages].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! < 32 && theCondition.range(of:"Snow") != nil {
-//            if (coreSnowImages?[randomSnowImages].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreSnowImages?[randomSnowImages].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! < 32 && theCondition.range(of: "NA") != nil {
-//            if (coreSnowImages?[randomSnowImages].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreSnowImages?[randomSnowImages].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! < 32 && theCondition.range(of: "") != nil {
-//            if (coreSnowImages?[randomSnowImages].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreSnowImages?[randomSnowImages].value(forKey: "image") as? Data)!)
-//            } }
-//
-//            // 32 && < 50
-//        else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"Clouds") != nil {
-//            if (coreColdImages?[randomColdImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreColdImages?[randomColdImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"Cloudy") != nil {
-//            if (coreColdImages?[randomColdImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreColdImages?[randomColdImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"Fair") != nil {
-//            if (coreColdImages?[randomColdImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreColdImages?[randomColdImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"Clear") != nil {
-//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"Overcast") != nil {
-//            if (coreCloudyImages?[randomCloudyImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreCloudyImages?[randomCloudyImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"Fog") != nil {
-//            if (coreCloudyImages?[randomCloudyImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreCloudyImages?[randomCloudyImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"Rain") != nil {
-//            if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"storm") != nil {
-//            if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"hurricane") != nil {
-//            if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"showers") != nil {
-//            if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"Thunderstorm") != nil {
-//            if (coreLightningImages?[randomLightningImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreLightningImages?[randomLightningImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"NA") != nil {
-//            if (coreColdImages?[randomColdImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreColdImages?[randomColdImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"") != nil {
-//            if (coreColdImages?[randomColdImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreColdImages?[randomColdImage].value(forKey: "image") as? Data)!)
-//            } }
-//
-//            // 50 && < 70
-//        else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"Clouds") != nil {
-//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"Cloudy") != nil {
-//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"Fair") != nil {
-//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"Clear") != nil {
-//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"Overcast") != nil {
-//            if (coreCloudyImages?[randomCloudyImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreCloudyImages?[randomCloudyImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"Fog") != nil {
-//            if (coreCloudyImages?[randomCloudyImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreCloudyImages?[randomCloudyImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"Rain") != nil {
-//            if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"storm") != nil {
-//            if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"hurricane") != nil {
-//            if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"showers") != nil {
-//            if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"Thunderstorm") != nil {
-//            if (coreLightningImages?[randomLightningImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreLightningImages?[randomLightningImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"NA") != nil {
-//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"") != nil {
-//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
-//            } }
-//
-//
-//            // 70 && < 80
-//        else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"Clouds") != nil {
-//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"Cloudy") != nil {
-//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"Fair") != nil {
-//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"Clear") != nil {
-//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"Overcast") != nil {
-//            if (coreCloudyImages?[randomCloudyImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreCloudyImages?[randomCloudyImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"Fog") != nil {
-//            if (coreCloudyImages?[randomCloudyImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreCloudyImages?[randomCloudyImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"Rain") != nil {
-//            if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"storm") != nil {
-//            if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"hurricane") != nil {
-//            if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"showers") != nil {
-//            if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"Thunderstorm") != nil {
-//            if (coreLightningImages?[randomLightningImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreLightningImages?[randomLightningImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"NA") != nil {
-//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"") != nil {
-//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
-//            } }
-//
-//            // 80 && < 90
-//        else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"Clouds") != nil {
-//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"Cloudy") != nil {
-//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"Fair") != nil {
-//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"Clear") != nil {
-//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"Overcast") != nil {
-//            if (coreCloudyImages?[randomCloudyImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreCloudyImages?[randomCloudyImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"Fog") != nil {
-//            if (coreCloudyImages?[randomCloudyImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreCloudyImages?[randomCloudyImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"Rain") != nil {
-//            if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"storm") != nil {
-//            if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"hurricane") != nil {
-//            if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"showers") != nil {
-//            if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"Thunderstorm") != nil {
-//            if (coreLightningImages?[randomLightningImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreLightningImages?[randomLightningImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"NA") != nil {
-//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"") != nil {
-//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
-//            } }
-//
-//
-//            // > 90
-//        else if theValue! >= 90 && theCondition.range(of:"Clouds") != nil {
-//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 90 && theCondition.range(of:"Cloudy") != nil {
-//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 90 && theCondition.range(of:"Fair") != nil {
-//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 90 && theCondition.range(of:"Clear") != nil {
-//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 90 && theCondition.range(of:"Overcast") != nil {
-//            if (coreCloudyImages?[randomCloudyImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreCloudyImages?[randomCloudyImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 90 && theCondition.range(of:"Fog") != nil {
-//            if (coreCloudyImages?[randomCloudyImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreCloudyImages?[randomCloudyImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 90 && theCondition.range(of:"Rain") != nil {
-//            if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 90 && theCondition.range(of:"storm") != nil {
-//            if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 90 && theCondition.range(of:"hurricane") != nil {
-//            if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 90 && theCondition.range(of:"showers") != nil {
-//            if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 90 && theCondition.range(of:"Thunderstorm") != nil {
-//            if (coreLightningImages?[randomLightningImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreLightningImages?[randomLightningImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 90 && theCondition.range(of:"NA") != nil {
-//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
-//            } }
-//        else if theValue! >= 90 && theCondition.range(of:"") != nil {
-//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
-//            } }
-//
-//        else {
-//            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-//            {
-//                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
-//            }
-//        }
-//    }
-    
+        else if theValue! < 32 && theCondition.range(of:"Cloudy") != nil {
+            self.FetchColdWeatherCustomAlbumPhotos()
+        }
+        else if theValue! < 32 && theCondition.range(of:"Snow") != nil {
+            self.FetchSnowWeatherCustomAlbumPhotos()
+        }
+        else if theValue! < 32 && theCondition.range(of:"Fair") != nil {
+            self.FetchColdWeatherCustomAlbumPhotos()
+        }
+        else if theValue! < 32 && theCondition.range(of:"Clear") != nil {
+            self.FetchColdWeatherCustomAlbumPhotos()
+        }
+        else if theValue! < 32 && theCondition.range(of:"Overcast") != nil {
+            self.FetchCloudyWeatherCustomAlbumPhotos()
+        }
+        else if theValue! < 32 && theCondition.range(of:"Fog") != nil {
+            self.FetchCloudyWeatherCustomAlbumPhotos()
+        }
+        else if theValue! < 32 && theCondition.range(of:"Rain") != nil {
+            self.FetchSnowWeatherCustomAlbumPhotos()
+        }
+        else if theValue! < 32 && theCondition.range(of:"storm") != nil {
+            self.FetchSnowWeatherCustomAlbumPhotos()
+        }
+        else if theValue! < 32 && theCondition.range(of:"hurricane") != nil {
+            self.FetchSnowWeatherCustomAlbumPhotos()
+        }
+        else if theValue! < 32 && theCondition.range(of: "NA") != nil {
+            self.FetchSnowWeatherCustomAlbumPhotos()
+        }
+        else if theValue! < 32 && theCondition.range(of: "") != nil {
+            self.FetchSnowWeatherCustomAlbumPhotos()
+        }
+
+            // 32 && < 50
+        else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"Clouds") != nil {
+            self.FetchColdWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"Cloudy") != nil {
+            self.FetchColdWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"Fair") != nil {
+            self.FetchColdWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"Clear") != nil {
+            self.FetchNiceWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"Overcast") != nil {
+            self.FetchCloudyWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"Fog") != nil {
+            self.FetchCloudyWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"Rain") != nil {
+            self.FetchRainWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"storm") != nil {
+            self.FetchRainWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"hurricane") != nil {
+            self.FetchRainWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"showers") != nil {
+            self.FetchRainWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"Thunderstorm") != nil {
+            self.FetchLightningWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"NA") != nil {
+            self.FetchColdWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"") != nil {
+            self.FetchColdWeatherCustomAlbumPhotos()
+        }
+
+            // 50 && < 70
+        else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"Clouds") != nil {
+            self.FetchNiceWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"Cloudy") != nil {
+            self.FetchNiceWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"Fair") != nil {
+            self.FetchNiceWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"Clear") != nil {
+            self.FetchNiceWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"Overcast") != nil {
+            self.FetchCloudyWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"Fog") != nil {
+            self.FetchCloudyWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"Rain") != nil {
+            self.FetchRainWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"storm") != nil {
+            self.FetchRainWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"hurricane") != nil {
+            self.FetchRainWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"showers") != nil {
+            self.FetchRainWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"Thunderstorm") != nil {
+            self.FetchLightningWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"NA") != nil {
+            self.FetchNiceWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"") != nil {
+            self.FetchNiceWeatherCustomAlbumPhotos()
+        }
+
+
+            // 70 && < 80
+        else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"Clouds") != nil {
+            self.FetchNiceWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"Cloudy") != nil {
+            self.FetchNiceWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"Fair") != nil {
+            self.FetchNiceWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"Clear") != nil {
+            self.FetchNiceWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"Overcast") != nil {
+            self.FetchCloudyWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"Fog") != nil {
+            self.FetchCloudyWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"Rain") != nil {
+            self.FetchRainWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"storm") != nil {
+            self.FetchRainWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"hurricane") != nil {
+            self.FetchRainWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"showers") != nil {
+            self.FetchRainWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"Thunderstorm") != nil {
+            self.FetchLightningWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"NA") != nil {
+            self.FetchNiceWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"") != nil {
+            self.FetchNiceWeatherCustomAlbumPhotos()
+        }
+
+            // 80 && < 90
+        else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"Clouds") != nil {
+            self.FetchNiceWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"Cloudy") != nil {
+            self.FetchNiceWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"Fair") != nil {
+            self.FetchNiceWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"Clear") != nil {
+            self.FetchNiceWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"Overcast") != nil {
+            self.FetchCloudyWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"Fog") != nil {
+            self.FetchCloudyWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"Rain") != nil {
+            self.FetchRainWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"storm") != nil {
+            self.FetchRainWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"hurricane") != nil {
+            self.FetchRainWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"showers") != nil {
+            self.FetchRainWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"Thunderstorm") != nil {
+            self.FetchLightningWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"NA") != nil {
+            self.FetchNiceWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"") != nil {
+            self.FetchNiceWeatherCustomAlbumPhotos()
+        }
+
+
+            // > 90
+        else if theValue! >= 90 && theCondition.range(of:"Clouds") != nil {
+            self.FetchNiceWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 90 && theCondition.range(of:"Cloudy") != nil {
+            self.FetchNiceWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 90 && theCondition.range(of:"Fair") != nil {
+            self.FetchNiceWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 90 && theCondition.range(of:"Clear") != nil {
+            self.FetchNiceWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 90 && theCondition.range(of:"Overcast") != nil {
+            self.FetchCloudyWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 90 && theCondition.range(of:"Fog") != nil {
+            self.FetchCloudyWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 90 && theCondition.range(of:"Rain") != nil {
+            self.FetchRainWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 90 && theCondition.range(of:"storm") != nil {
+            self.FetchRainWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 90 && theCondition.range(of:"hurricane") != nil {
+            self.FetchRainWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 90 && theCondition.range(of:"showers") != nil {
+            self.FetchRainWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 90 && theCondition.range(of:"Thunderstorm") != nil {
+            self.FetchLightningWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 90 && theCondition.range(of:"NA") != nil {
+            self.FetchNiceWeatherCustomAlbumPhotos()
+        }
+        else if theValue! >= 90 && theCondition.range(of:"") != nil {
+            self.FetchNiceWeatherCustomAlbumPhotos()
+        }
+
+        else {
+            self.FetchNiceWeatherCustomAlbumPhotos()
+        }
+    }
+
     
     //PANDA IMAGE FETCH
     func getPandaImage(temperature: String, condition: String) {
@@ -1528,8 +1457,8 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         }
     
 
-    
-    func getTemperature() {
+    //FOR WEATHER RELOAD BUTTON PANDA
+    func getPandaTemperature() {
         print("first")
         
         let location:CLLocationCoordinate2D = locationManager.location!.coordinate
@@ -1579,19 +1508,19 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                 print("dateCount: " + "\(dateCount)")
                 
                 // get the first three characters of the Date
-                let DayOne = String((sevenDayDateDescription[2] as! String).characters.prefix(3))
+                let DayOne = String((sevenDayDateDescription[2] as! String).prefix(3))
                 print("\(DayOne)")
-                let DayTwo = String((sevenDayDateDescription[4] as! String).characters.prefix(3))
-                let DayThree = String((sevenDayDateDescription[6] as! String).characters.prefix(3))
-                let DayFour = String((sevenDayDateDescription[8] as! String).characters.prefix(3))
-                let DayFive = String((sevenDayDateDescription[10] as! String).characters.prefix(3))
+                let DayTwo = String((sevenDayDateDescription[4] as! String).prefix(3))
+                let DayThree = String((sevenDayDateDescription[6] as! String).prefix(3))
+                let DayFour = String((sevenDayDateDescription[8] as! String).prefix(3))
+                let DayFive = String((sevenDayDateDescription[10] as! String).prefix(3))
                 print("\(DayFive)")
-                let DaySix = String((sevenDayDateDescription[12] as! String).characters.prefix(3))
+                let DaySix = String((sevenDayDateDescription[12] as! String).prefix(3))
                 print("\(DaySix)")
                 print("\(dateCount)")
                 
                 if dateCount > 13 {
-                    let DaySeven = String((sevenDayDateDescription[13] as! String).characters.prefix(3))
+                    let DaySeven = String((sevenDayDateDescription[13] as! String).prefix(3))
                     print("Day Seven: " + "\(DaySeven)")
                     sevenDayDateLabel.text! = DayOne
                     sevenDayTwoDateLabel.text! = DayTwo
@@ -1640,14 +1569,15 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                     
                 }
                 
-                //Setting the temperature for input string in func getWeatherIcon and getPandaImage
-                let sevenDayOneWeekTempZero: String = sevenDayTempDescription[0] as! String
-                let sevenDayTwoWeekTempOne: String = sevenDayTempDescription[1] as! String
-                let sevenDayThreeWeekTempTwo: String = sevenDayTempDescription[2] as! String
-                let sevenDayFourWeekTempThree: String = sevenDayTempDescription[3] as! String
-                let sevenDayFiveWeekTempFour: String = sevenDayTempDescription[4] as! String
-                let sevenDaySixWeekTempFive: String = sevenDayTempDescription[5] as! String
-                let sevenDaySevenWeekTempSix: String = sevenDayTempDescription[6] as! String
+                    //NOT NEEDED, SINCE IMAGE CALLED EARLIER ALREADY
+                //Setting the temperature for input string in func getPandaImage
+//                let sevenDayOneWeekTempZero: String = sevenDayTempDescription[0] as! String
+//                let sevenDayTwoWeekTempOne: String = sevenDayTempDescription[1] as! String
+//                let sevenDayThreeWeekTempTwo: String = sevenDayTempDescription[2] as! String
+//                let sevenDayFourWeekTempThree: String = sevenDayTempDescription[3] as! String
+//                let sevenDayFiveWeekTempFour: String = sevenDayTempDescription[4] as! String
+//                let sevenDaySixWeekTempFive: String = sevenDayTempDescription[5] as! String
+//                let sevenDaySevenWeekTempSix: String = sevenDayTempDescription[6] as! String
                 
                 //Setting the condition for input string in func getWeatherIcon and getPandaImage
                 let sevenDayOneCondition = json["data"] as! [String:Any]?
@@ -1662,25 +1592,25 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                 let sevenDaySixConditionDescriptionFive: String = sevenDayConditionDescription[5] as! String
                 let sevenDaySevenConditionDescriptionSix: String = sevenDayConditionDescription[6] as! String
                 
-                self.getPandaImage(temperature: sevenDayOneWeekTempZero, condition: sevenDayOneConditionDescriptionZero)
+//                self.getPandaImage(temperature: sevenDayOneWeekTempZero, condition: sevenDayOneConditionDescriptionZero)
                 self.getWeatherIcon(theImageView: sevenDayWeatherImageView, theCondition: sevenDayOneConditionDescriptionZero)
                 
-                self.getPandaImage(temperature: sevenDayTwoWeekTempOne, condition: sevenDayTwoConditionDescriptionOne)
+//                self.getPandaImage(temperature: sevenDayTwoWeekTempOne, condition: sevenDayTwoConditionDescriptionOne)
                 self.getWeatherIcon(theImageView: sevenDayTwoWeatherImageView, theCondition: sevenDayTwoConditionDescriptionOne)
                 
-                self.getPandaImage(temperature: sevenDayThreeWeekTempTwo, condition: sevenDayThreeConditionDescriptionTwo)
+//                self.getPandaImage(temperature: sevenDayThreeWeekTempTwo, condition: sevenDayThreeConditionDescriptionTwo)
                 self.getWeatherIcon(theImageView: sevenDayThreeWeatherImageView, theCondition: sevenDayThreeConditionDescriptionTwo)
                 
-                self.getPandaImage(temperature: sevenDayFourWeekTempThree, condition: sevenDayFourConditionDescriptionThree)
+//                self.getPandaImage(temperature: sevenDayFourWeekTempThree, condition: sevenDayFourConditionDescriptionThree)
                 self.getWeatherIcon(theImageView: sevenDayFourWeatherImageView, theCondition: sevenDayFourConditionDescriptionThree)
                 
-                self.getPandaImage(temperature: sevenDayFiveWeekTempFour, condition: sevenDayFiveConditionDescriptionFour)
+//                self.getPandaImage(temperature: sevenDayFiveWeekTempFour, condition: sevenDayFiveConditionDescriptionFour)
                 self.getWeatherIcon(theImageView: sevenDayFiveWeatherImageView, theCondition: sevenDayFiveConditionDescriptionFour)
                 
-                self.getPandaImage(temperature: sevenDaySixWeekTempFive, condition: sevenDaySixConditionDescriptionFive)
+//                self.getPandaImage(temperature: sevenDaySixWeekTempFive, condition: sevenDaySixConditionDescriptionFive)
                 self.getWeatherIcon(theImageView: sevenDaySixWeatherImageView, theCondition: sevenDaySixConditionDescriptionFive)
                 
-                self.getPandaImage(temperature: sevenDaySevenWeekTempSix, condition: sevenDaySevenConditionDescriptionSix)
+//                self.getPandaImage(temperature: sevenDaySevenWeekTempSix, condition: sevenDaySevenConditionDescriptionSix)
                 self.getWeatherIcon(theImageView: sevenDaySevenWeatherImageView, theCondition: sevenDaySevenConditionDescriptionSix)
 
             }
@@ -1699,8 +1629,9 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         }
 }
     
+    //FOR SEARCH BAR BUTTON
     //forward geocoding function
-    func forwardGeocoding(address: String) {
+    func forwardGeocodingPanda(address: String) {
         CLGeocoder().geocodeAddressString(address, completionHandler: { (placemarks, error) in
             if error != nil {
                 //need to add an error message
@@ -1773,19 +1704,19 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                         print("dateCount: " + "\(dateCount)")
                         
                         // get the first three characters of the Date
-                        let DayOne = String((sevenDayDateDescription[2] as! String).characters.prefix(3))
+                        let DayOne = String((sevenDayDateDescription[2] as! String).prefix(3))
                         print("\(DayOne)")
-                        let DayTwo = String((sevenDayDateDescription[4] as! String).characters.prefix(3))
-                        let DayThree = String((sevenDayDateDescription[6] as! String).characters.prefix(3))
-                        let DayFour = String((sevenDayDateDescription[8] as! String).characters.prefix(3))
-                        let DayFive = String((sevenDayDateDescription[10] as! String).characters.prefix(3))
+                        let DayTwo = String((sevenDayDateDescription[4] as! String).prefix(3))
+                        let DayThree = String((sevenDayDateDescription[6] as! String).prefix(3))
+                        let DayFour = String((sevenDayDateDescription[8] as! String).prefix(3))
+                        let DayFive = String((sevenDayDateDescription[10] as! String).prefix(3))
                         print("\(DayFive)")
-                        let DaySix = String((sevenDayDateDescription[12] as! String).characters.prefix(3))
+                        let DaySix = String((sevenDayDateDescription[12] as! String).prefix(3))
                         print("\(DaySix)")
                         print("\(dateCount)")
                         
                         if dateCount > 13 {
-                            let DaySeven = String((sevenDayDateDescription[13] as! String).characters.prefix(3))
+                            let DaySeven = String((sevenDayDateDescription[13] as! String).prefix(3))
                             print("Day Seven: " + "\(DaySeven)")
                             self.sevenDayDateLabel.text! = DayOne
                             self.sevenDayTwoDateLabel.text! = DayTwo
@@ -1834,14 +1765,15 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                             
                         }
                         
-                        //Setting the temperature for input string in func getWeatherIcon and getPandaImage
-                        let sevenDayOneWeekTempZero: String = sevenDayTempDescription[0] as! String
-                        let sevenDayTwoWeekTempOne: String = sevenDayTempDescription[1] as! String
-                        let sevenDayThreeWeekTempTwo: String = sevenDayTempDescription[2] as! String
-                        let sevenDayFourWeekTempThree: String = sevenDayTempDescription[3] as! String
-                        let sevenDayFiveWeekTempFour: String = sevenDayTempDescription[4] as! String
-                        let sevenDaySixWeekTempFive: String = sevenDayTempDescription[5] as! String
-                        let sevenDaySevenWeekTempSix: String = sevenDayTempDescription[6] as! String
+                            //NOT NEEDED, SINCE IMAGE CALLED EARLIER IN FUNC
+                        //Setting the temperature for input string in func getPandaImage
+//                        let sevenDayOneWeekTempZero: String = sevenDayTempDescription[0] as! String
+//                        let sevenDayTwoWeekTempOne: String = sevenDayTempDescription[1] as! String
+//                        let sevenDayThreeWeekTempTwo: String = sevenDayTempDescription[2] as! String
+//                        let sevenDayFourWeekTempThree: String = sevenDayTempDescription[3] as! String
+//                        let sevenDayFiveWeekTempFour: String = sevenDayTempDescription[4] as! String
+//                        let sevenDaySixWeekTempFive: String = sevenDayTempDescription[5] as! String
+//                        let sevenDaySevenWeekTempSix: String = sevenDayTempDescription[6] as! String
                         
                         //Setting the condition for input string in func getWeatherIcon and getPandaImage
                         let sevenDayOneCondition = json["data"] as! [String:Any]?
@@ -1856,28 +1788,399 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                         let sevenDaySixConditionDescriptionFive: String = sevenDayConditionDescription[5] as! String
                         let sevenDaySevenConditionDescriptionSix: String = sevenDayConditionDescription[6] as! String
                         
-                        self.getPandaImage(temperature: sevenDayOneWeekTempZero, condition: sevenDayOneConditionDescriptionZero)
+//                        self.getPandaImage(temperature: sevenDayOneWeekTempZero, condition: sevenDayOneConditionDescriptionZero)
                         self.getWeatherIcon(theImageView: self.sevenDayWeatherImageView, theCondition: sevenDayOneConditionDescriptionZero)
                         
-                        self.getPandaImage(temperature: sevenDayTwoWeekTempOne, condition: sevenDayTwoConditionDescriptionOne)
+//                        self.getPandaImage(temperature: sevenDayTwoWeekTempOne, condition: sevenDayTwoConditionDescriptionOne)
                         self.getWeatherIcon(theImageView: self.sevenDayTwoWeatherImageView, theCondition: sevenDayTwoConditionDescriptionOne)
                         
-                        self.getPandaImage(temperature: sevenDayThreeWeekTempTwo, condition: sevenDayThreeConditionDescriptionTwo)
+//                        self.getPandaImage(temperature: sevenDayThreeWeekTempTwo, condition: sevenDayThreeConditionDescriptionTwo)
                         self.getWeatherIcon(theImageView: self.sevenDayThreeWeatherImageView, theCondition: sevenDayThreeConditionDescriptionTwo)
                         
-                        self.getPandaImage(temperature: sevenDayFourWeekTempThree, condition: sevenDayFourConditionDescriptionThree)
+//                        self.getPandaImage(temperature: sevenDayFourWeekTempThree, condition: sevenDayFourConditionDescriptionThree)
                         self.getWeatherIcon(theImageView: self.sevenDayFourWeatherImageView, theCondition: sevenDayFourConditionDescriptionThree)
                         
-                        self.getPandaImage(temperature: sevenDayFiveWeekTempFour, condition: sevenDayFiveConditionDescriptionFour)
+//                        self.getPandaImage(temperature: sevenDayFiveWeekTempFour, condition: sevenDayFiveConditionDescriptionFour)
                         self.getWeatherIcon(theImageView: self.sevenDayFiveWeatherImageView, theCondition: sevenDayFiveConditionDescriptionFour)
                         
-                        self.getPandaImage(temperature: sevenDaySixWeekTempFive, condition: sevenDaySixConditionDescriptionFive)
+//                        self.getPandaImage(temperature: sevenDaySixWeekTempFive, condition: sevenDaySixConditionDescriptionFive)
                         self.getWeatherIcon(theImageView: self.sevenDaySixWeatherImageView, theCondition: sevenDaySixConditionDescriptionFive)
                         
-                        self.getPandaImage(temperature: sevenDaySevenWeekTempSix, condition: sevenDaySevenConditionDescriptionSix)
+//                        self.getPandaImage(temperature: sevenDaySevenWeekTempSix, condition: sevenDaySevenConditionDescriptionSix)
                         self.getWeatherIcon(theImageView: self.sevenDaySevenWeatherImageView, theCondition: sevenDaySevenConditionDescriptionSix)
                         
                     }
+                        else{
+                            print("error")
+                            let alert = UIAlertController(title: "Error", message: "United States weather only, please try another location in the United States!", preferredStyle: .alert)
+                            
+                            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in alert.dismiss(animated: true, completion: nil)
+                            }))
+                            
+                            self.present(alert, animated: true, completion: nil)
+                        }
+                    }
+                } catch let err{
+                    print(err.localizedDescription)
+                }
+                
+            }
+        })
+    }
+    
+    //FOR WEATHER RELOAD BUTTON
+    func getUserTemperature() {
+        print("first")
+        
+        let location:CLLocationCoordinate2D = locationManager.location!.coordinate
+        let lat = String(location.latitude)
+        let long = String(location.longitude)
+        let weatherURL = NSURL(string: "http://forecast.weather.gov/MapClick.php?lat=\(lat)&lon=\(long)&unit=0&lg=english&FcstType=json&TextType=1")
+        let weatherData = try? Data(contentsOf: weatherURL! as URL)
+        
+        do {
+            if let json = try JSONSerialization.jsonObject(with: weatherData!, options:.allowFragments) as? [String:Any] {
+                print(json as Any)
+                
+                if json["currentobservation"] != nil {
+                    
+                    let currentObservation = json["currentobservation"] as! [String:Any]?
+                    let temp: String = currentObservation?["Temp"] as! String
+                    let tempDegreesF = temp + "℉"
+                    temperatureLabel.text! = tempDegreesF
+                    print("tempDegreesF: \(tempDegreesF)")
+                    
+                    let weatherCondition = json["currentobservation"] as! [String:Any]?
+                    let condition: String = weatherCondition?["Weather"] as! String
+                    conditionLabel.text! = condition
+                    print("condition: \(condition)")
+                    
+                    let myLocation = json["location"] as! [String:Any]?
+                    let city: String = myLocation?["areaDescription"] as! String
+                    //                let city = json["productionCenter"] as! String
+                    cityLabel.text! = city
+                    print("city: \(city)")
+                    
+                    let forecast = json["data"] as! [String:Any]?
+                    let weatherDescription: NSArray = forecast!["text"] as! NSArray
+                    print("\(weatherDescription[0])")
+                    weatherLabel.text! = weatherDescription[0] as! String
+                    
+                    self.getUserImage(temperature: temp, condition: condition)
+                    self.getWeatherIcon(theImageView: self.weatherImageView, theCondition: condition)
+                    
+                    //7-day forecast, day 1 Date, Weather Icon, and High/Low Temp
+                    let sevenDayDate = json["time"] as! [String:Any]?
+                    let sevenDayDateDescription: NSArray = sevenDayDate!["startPeriodName"] as! NSArray
+                    print("\(sevenDayDateDescription[1])")
+                    print("\(sevenDayDateDescription[12])")
+                    
+                    let dateCount = sevenDayDateDescription.count
+                    print("dateCount: " + "\(dateCount)")
+                    
+                    // get the first three characters of the Date
+                    let DayOne = String((sevenDayDateDescription[2] as! String).prefix(3))
+                    print("\(DayOne)")
+                    let DayTwo = String((sevenDayDateDescription[4] as! String).prefix(3))
+                    let DayThree = String((sevenDayDateDescription[6] as! String).prefix(3))
+                    let DayFour = String((sevenDayDateDescription[8] as! String).prefix(3))
+                    let DayFive = String((sevenDayDateDescription[10] as! String).prefix(3))
+                    print("\(DayFive)")
+                    let DaySix = String((sevenDayDateDescription[12] as! String).prefix(3))
+                    print("\(DaySix)")
+                    print("\(dateCount)")
+                    
+                    if dateCount > 13 {
+                        let DaySeven = String((sevenDayDateDescription[13] as! String).prefix(3))
+                        print("Day Seven: " + "\(DaySeven)")
+                        sevenDayDateLabel.text! = DayOne
+                        sevenDayTwoDateLabel.text! = DayTwo
+                        sevenDayThreeDateLabel.text! = DayThree
+                        sevenDayFourDateLabel.text! = DayFour
+                        sevenDayFiveDateLabel.text! = DayFive
+                        sevenDaySixDateLabel.text! = DaySix
+                        sevenDaySevenDateLabel.text! = DaySeven }
+                        
+                    else {
+                        
+                        if dateCount <= 13 {
+                            sevenDayDateLabel.text! = DayOne
+                            sevenDayTwoDateLabel.text! = DayTwo
+                            sevenDayThreeDateLabel.text! = DayThree
+                            sevenDayFourDateLabel.text! = DayFour
+                            sevenDayFiveDateLabel.text! = DayFive
+                            sevenDaySixDateLabel.text! = DaySix
+                            sevenDaySevenDateLabel.text! = "NA" }
+                    }
+                    
+                    let sevenDayTemp = json["data"] as! [String:Any]?
+                    let sevenDayTempDescription: NSArray = sevenDayTemp!["temperature"] as! NSArray
+                    print("\(sevenDayTempDescription[0], sevenDayTempDescription[1])")
+                    
+                    let tempCount = sevenDayTempDescription.count
+                    print("tempCount: " + "\(tempCount)")
+                    if tempCount > 13 {
+                        sevenDayHighLowTempLabel.text! = "\(sevenDayTempDescription[1])" + " | " + "\(sevenDayTempDescription[2])"
+                        sevenDayTwoHighLowTempLabel.text! = "\(sevenDayTempDescription[3])" + " | " + "\(sevenDayTempDescription[4])"
+                        sevenDayThreeHighLowTempLabel.text! = "\(sevenDayTempDescription[5])" + " | " + "\(sevenDayTempDescription[6])"
+                        sevenDayFourHighLowTempLabel.text! = "\(sevenDayTempDescription[7])" + " | " + "\(sevenDayTempDescription[8])"
+                        sevenDayFiveHighLowTempLabel.text! = "\(sevenDayTempDescription[9])" + " | " + "\(sevenDayTempDescription[10])"
+                        sevenDaySixHighLowTempLabel.text! = "\(sevenDayTempDescription[11])" + " | " + "\(sevenDayTempDescription[12])"
+                        sevenDaySevenHighLowTempLabel.text! = "\(sevenDayTempDescription[12])" + " | " + "\(sevenDayTempDescription[13])"
+                    }
+                    
+                    if tempCount <= 13 {
+                        sevenDayHighLowTempLabel.text! = "\(sevenDayTempDescription[1])" + " | " + "\(sevenDayTempDescription[2])"
+                        sevenDayTwoHighLowTempLabel.text! = "\(sevenDayTempDescription[3])" + " | " + "\(sevenDayTempDescription[4])"
+                        sevenDayThreeHighLowTempLabel.text! = "\(sevenDayTempDescription[5])" + " | " + "\(sevenDayTempDescription[6])"
+                        sevenDayFourHighLowTempLabel.text! = "\(sevenDayTempDescription[7])" + " | " + "\(sevenDayTempDescription[8])"
+                        sevenDayFiveHighLowTempLabel.text! = "\(sevenDayTempDescription[9])" + " | " + "\(sevenDayTempDescription[10])"
+                        sevenDaySixHighLowTempLabel.text! = "\(sevenDayTempDescription[11])" + " | " + "\(sevenDayTempDescription[12])"
+                        sevenDaySevenHighLowTempLabel.text! = "\(sevenDayTempDescription[12])" + " | " + "NA"
+                        
+                    }
+                    
+                                                //NOT NEEDED, SINCE IMAGE CALLED EARLIER IN FUNC
+                    //Setting the temperature for input string in func getWeatherIcon and getUserImage
+//                    let sevenDayOneWeekTempZero: String = sevenDayTempDescription[0] as! String
+//                    let sevenDayTwoWeekTempOne: String = sevenDayTempDescription[1] as! String
+//                    let sevenDayThreeWeekTempTwo: String = sevenDayTempDescription[2] as! String
+//                    let sevenDayFourWeekTempThree: String = sevenDayTempDescription[3] as! String
+//                    let sevenDayFiveWeekTempFour: String = sevenDayTempDescription[4] as! String
+//                    let sevenDaySixWeekTempFive: String = sevenDayTempDescription[5] as! String
+//                    let sevenDaySevenWeekTempSix: String = sevenDayTempDescription[6] as! String
+                    
+                    //Setting the condition for input string in func getWeatherIcon and getUserImage
+                    let sevenDayOneCondition = json["data"] as! [String:Any]?
+                    let sevenDayConditionDescription: NSArray = sevenDayOneCondition!["weather"] as! NSArray
+                    print("\(sevenDayConditionDescription[0])")
+                    
+                    let sevenDayOneConditionDescriptionZero: String = sevenDayConditionDescription[0] as! String
+                    let sevenDayTwoConditionDescriptionOne: String = sevenDayConditionDescription[1] as! String
+                    let sevenDayThreeConditionDescriptionTwo: String = sevenDayConditionDescription[2] as! String
+                    let sevenDayFourConditionDescriptionThree: String = sevenDayConditionDescription[3] as! String
+                    let sevenDayFiveConditionDescriptionFour: String = sevenDayConditionDescription[4] as! String
+                    let sevenDaySixConditionDescriptionFive: String = sevenDayConditionDescription[5] as! String
+                    let sevenDaySevenConditionDescriptionSix: String = sevenDayConditionDescription[6] as! String
+                    
+//                    self.getUserImage(temperature: sevenDayOneWeekTempZero, condition: sevenDayOneConditionDescriptionZero)
+                    self.getWeatherIcon(theImageView: sevenDayWeatherImageView, theCondition: sevenDayOneConditionDescriptionZero)
+                    
+//                    self.getUserImage(temperature: sevenDayTwoWeekTempOne, condition: sevenDayTwoConditionDescriptionOne)
+                    self.getWeatherIcon(theImageView: sevenDayTwoWeatherImageView, theCondition: sevenDayTwoConditionDescriptionOne)
+                    
+//                    self.getUserImage(temperature: sevenDayThreeWeekTempTwo, condition: sevenDayThreeConditionDescriptionTwo)
+                    self.getWeatherIcon(theImageView: sevenDayThreeWeatherImageView, theCondition: sevenDayThreeConditionDescriptionTwo)
+                    
+//                    self.getUserImage(temperature: sevenDayFourWeekTempThree, condition: sevenDayFourConditionDescriptionThree)
+                    self.getWeatherIcon(theImageView: sevenDayFourWeatherImageView, theCondition: sevenDayFourConditionDescriptionThree)
+                    
+//                    self.getUserImage(temperature: sevenDayFiveWeekTempFour, condition: sevenDayFiveConditionDescriptionFour)
+                    self.getWeatherIcon(theImageView: sevenDayFiveWeatherImageView, theCondition: sevenDayFiveConditionDescriptionFour)
+                    
+//                    self.getUserImage(temperature: sevenDaySixWeekTempFive, condition: sevenDaySixConditionDescriptionFive)
+                    self.getWeatherIcon(theImageView: sevenDaySixWeatherImageView, theCondition: sevenDaySixConditionDescriptionFive)
+                    
+//                    self.getUserImage(temperature: sevenDaySevenWeekTempSix, condition: sevenDaySevenConditionDescriptionSix)
+                    self.getWeatherIcon(theImageView: sevenDaySevenWeatherImageView, theCondition: sevenDaySevenConditionDescriptionSix)
+                    
+                }
+                else{
+                    print("error")
+                    let alert = UIAlertController(title: "Error", message: "United States weather only, please try another location in the United States!", preferredStyle: .alert)
+                    
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in alert.dismiss(animated: true, completion: nil)
+                    }))
+                    
+                    self.present(alert, animated: true, completion: nil)
+                }
+            }
+        } catch let err{
+            print(err.localizedDescription)
+        }
+    }
+    
+    //FOR SEARCH BAR BUTTON USER IMAGE
+    //forward geocoding function
+    func forwardGeocodingUser(address: String) {
+        CLGeocoder().geocodeAddressString(address, completionHandler: { (placemarks, error) in
+            if error != nil {
+                //Error message
+                print(error!)
+                return
+            }
+            if placemarks!.count > 0 {
+                let placemark = placemarks?[0]
+                let location = placemark?.location
+                let coordinate = location?.coordinate
+                let lat = coordinate!.latitude
+                let long = coordinate!.longitude
+                print("\nlat: \(lat), long: \(long)")
+                
+                //                if placemark!.areasOfInterest!.count > 0 {
+                //                    let areaOfInterest = placemark!.areasOfInterest![0]
+                //                    print(areaOfInterest)
+                //                } else {
+                //                    print("No area of interest found.")
+                //                }
+                
+                let weatherURL = NSURL(string: "http://forecast.weather.gov/MapClick.php?lat=\(lat)&lon=\(long)&unit=0&lg=english&FcstType=json&TextType=1")
+                let weatherData = try? Data(contentsOf: weatherURL! as URL)
+                
+                do {
+                    if let json = try JSONSerialization.jsonObject(with: weatherData!, options:.allowFragments) as? [String:Any] {
+                        print(json as Any)
+                        
+                        if json["currentobservation"] != nil {
+                            
+                            //let currentObservation = json["currentobservation"] as! [String:Any]?
+                            //let state: String = currentObservation?["state"] as! String
+                            //
+                            //if state != nil {
+                            
+                            let currentObservation = json["currentobservation"] as! [String:Any]?
+                            let temp: String = currentObservation?["Temp"] as! String
+                            let tempDegreesF = temp + "℉"
+                            self.temperatureLabel.text! = tempDegreesF
+                            print("tempDegreesF: \(tempDegreesF)")
+                            
+                            let weatherCondition = json["currentobservation"] as! [String:Any]?
+                            let condition: String = weatherCondition?["Weather"] as! String
+                            self.conditionLabel.text! = condition
+                            print("condition: \(condition)")
+                            
+                            
+                            let myLocation = json["location"] as! [String:Any]?
+                            let city: String = myLocation?["areaDescription"] as! String
+                            //
+                            //                        let city = json["productionCenter"] as! String //location, areaDescription
+                            self.cityLabel.text! = city
+                            print("city: \(city)")
+                            
+                            let forecast = json["data"] as! [String:Any]?
+                            let weatherDescription: NSArray = forecast!["text"] as! NSArray
+                            print("\(weatherDescription[0])")
+                            self.weatherLabel.text! = weatherDescription[0] as! String
+                            
+                            self.getUserImage(temperature: temp, condition: condition)
+                            self.getWeatherIcon(theImageView: self.weatherImageView, theCondition: condition)
+                            
+                            //7-day forecast, day 1 Date, Weather Icon, and High/Low Temp
+                            let sevenDayDate = json["time"] as! [String:Any]?
+                            let sevenDayDateDescription: NSArray = sevenDayDate!["startPeriodName"] as! NSArray
+                            print("\(sevenDayDateDescription[1])")
+                            print("\(sevenDayDateDescription[12])")
+                            
+                            let dateCount = sevenDayDateDescription.count
+                            print("dateCount: " + "\(dateCount)")
+                            
+                            // get the first three characters of the Date
+                            let DayOne = String((sevenDayDateDescription[2] as! String).prefix(3))
+                            print("\(DayOne)")
+                            let DayTwo = String((sevenDayDateDescription[4] as! String).prefix(3))
+                            let DayThree = String((sevenDayDateDescription[6] as! String).prefix(3))
+                            let DayFour = String((sevenDayDateDescription[8] as! String).prefix(3))
+                            let DayFive = String((sevenDayDateDescription[10] as! String).prefix(3))
+                            print("\(DayFive)")
+                            let DaySix = String((sevenDayDateDescription[12] as! String).prefix(3))
+                            print("\(DaySix)")
+                            print("\(dateCount)")
+                            
+                            if dateCount > 13 {
+                                let DaySeven = String((sevenDayDateDescription[13] as! String).prefix(3))
+                                print("Day Seven: " + "\(DaySeven)")
+                                self.sevenDayDateLabel.text! = DayOne
+                                self.sevenDayTwoDateLabel.text! = DayTwo
+                                self.sevenDayThreeDateLabel.text! = DayThree
+                                self.sevenDayFourDateLabel.text! = DayFour
+                                self.sevenDayFiveDateLabel.text! = DayFive
+                                self.sevenDaySixDateLabel.text! = DaySix
+                                self.sevenDaySevenDateLabel.text! = DaySeven }
+                                
+                            else {
+                                
+                                if dateCount <= 13 {
+                                    self.sevenDayDateLabel.text! = DayOne
+                                    self.sevenDayTwoDateLabel.text! = DayTwo
+                                    self.sevenDayThreeDateLabel.text! = DayThree
+                                    self.sevenDayFourDateLabel.text! = DayFour
+                                    self.sevenDayFiveDateLabel.text! = DayFive
+                                    self.sevenDaySixDateLabel.text! = DaySix
+                                    self.sevenDaySevenDateLabel.text! = "NA" }
+                            }
+                            
+                            let sevenDayTemp = json["data"] as! [String:Any]?
+                            let sevenDayTempDescription: NSArray = sevenDayTemp!["temperature"] as! NSArray
+                            print("\(sevenDayTempDescription[0], sevenDayTempDescription[1])")
+                            
+                            let tempCount = sevenDayTempDescription.count
+                            print("tempCount: " + "\(tempCount)")
+                            if tempCount > 13 {
+                                self.sevenDayHighLowTempLabel.text! = "\(sevenDayTempDescription[1])" + " | " + "\(sevenDayTempDescription[2])"
+                                self.sevenDayTwoHighLowTempLabel.text! = "\(sevenDayTempDescription[3])" + " | " + "\(sevenDayTempDescription[4])"
+                                self.sevenDayThreeHighLowTempLabel.text! = "\(sevenDayTempDescription[5])" + " | " + "\(sevenDayTempDescription[6])"
+                                self.sevenDayFourHighLowTempLabel.text! = "\(sevenDayTempDescription[7])" + " | " + "\(sevenDayTempDescription[8])"
+                                self.sevenDayFiveHighLowTempLabel.text! = "\(sevenDayTempDescription[9])" + " | " + "\(sevenDayTempDescription[10])"
+                                self.sevenDaySixHighLowTempLabel.text! = "\(sevenDayTempDescription[11])" + " | " + "\(sevenDayTempDescription[12])"
+                                self.sevenDaySevenHighLowTempLabel.text! = "\(sevenDayTempDescription[12])" + " | " + "\(sevenDayTempDescription[13])"
+                            }
+                            
+                            if tempCount <= 13 {
+                                self.sevenDayHighLowTempLabel.text! = "\(sevenDayTempDescription[1])" + " | " + "\(sevenDayTempDescription[2])"
+                                self.sevenDayTwoHighLowTempLabel.text! = "\(sevenDayTempDescription[3])" + " | " + "\(sevenDayTempDescription[4])"
+                                self.sevenDayThreeHighLowTempLabel.text! = "\(sevenDayTempDescription[5])" + " | " + "\(sevenDayTempDescription[6])"
+                                self.sevenDayFourHighLowTempLabel.text! = "\(sevenDayTempDescription[7])" + " | " + "\(sevenDayTempDescription[8])"
+                                self.sevenDayFiveHighLowTempLabel.text! = "\(sevenDayTempDescription[9])" + " | " + "\(sevenDayTempDescription[10])"
+                                self.sevenDaySixHighLowTempLabel.text! = "\(sevenDayTempDescription[11])" + " | " + "\(sevenDayTempDescription[12])"
+                                self.sevenDaySevenHighLowTempLabel.text! = "\(sevenDayTempDescription[12])" + " | " + "NA"
+                                
+                            }
+                            
+                                                        //NOT NEEDED, SINCE IMAGE CALLED EARLIER IN FUNC
+                            //Setting the temperature for input string in func getWeatherIcon and getUserImage
+//                            let sevenDayOneWeekTempZero: String = sevenDayTempDescription[0] as! String
+//                            let sevenDayTwoWeekTempOne: String = sevenDayTempDescription[1] as! String
+//                            let sevenDayThreeWeekTempTwo: String = sevenDayTempDescription[2] as! String
+//                            let sevenDayFourWeekTempThree: String = sevenDayTempDescription[3] as! String
+//                            let sevenDayFiveWeekTempFour: String = sevenDayTempDescription[4] as! String
+//                            let sevenDaySixWeekTempFive: String = sevenDayTempDescription[5] as! String
+//                            let sevenDaySevenWeekTempSix: String = sevenDayTempDescription[6] as! String
+                            
+                            //Setting the condition for input string in func getWeatherIcon and getUserImage
+                            let sevenDayOneCondition = json["data"] as! [String:Any]?
+                            let sevenDayConditionDescription: NSArray = sevenDayOneCondition!["weather"] as! NSArray
+                            print("\(sevenDayConditionDescription[0])")
+                            
+                            let sevenDayOneConditionDescriptionZero: String = sevenDayConditionDescription[0] as! String
+                            let sevenDayTwoConditionDescriptionOne: String = sevenDayConditionDescription[1] as! String
+                            let sevenDayThreeConditionDescriptionTwo: String = sevenDayConditionDescription[2] as! String
+                            let sevenDayFourConditionDescriptionThree: String = sevenDayConditionDescription[3] as! String
+                            let sevenDayFiveConditionDescriptionFour: String = sevenDayConditionDescription[4] as! String
+                            let sevenDaySixConditionDescriptionFive: String = sevenDayConditionDescription[5] as! String
+                            let sevenDaySevenConditionDescriptionSix: String = sevenDayConditionDescription[6] as! String
+                            
+//                            self.getUserImage(temperature: sevenDayOneWeekTempZero, condition: sevenDayOneConditionDescriptionZero)
+                            self.getWeatherIcon(theImageView: self.sevenDayWeatherImageView, theCondition: sevenDayOneConditionDescriptionZero)
+                            
+//                            self.getUserImage(temperature: sevenDayTwoWeekTempOne, condition: sevenDayTwoConditionDescriptionOne)
+                            self.getWeatherIcon(theImageView: self.sevenDayTwoWeatherImageView, theCondition: sevenDayTwoConditionDescriptionOne)
+                            
+//                            self.getUserImage(temperature: sevenDayThreeWeekTempTwo, condition: sevenDayThreeConditionDescriptionTwo)
+                            self.getWeatherIcon(theImageView: self.sevenDayThreeWeatherImageView, theCondition: sevenDayThreeConditionDescriptionTwo)
+                            
+//                            self.getUserImage(temperature: sevenDayFourWeekTempThree, condition: sevenDayFourConditionDescriptionThree)
+                            self.getWeatherIcon(theImageView: self.sevenDayFourWeatherImageView, theCondition: sevenDayFourConditionDescriptionThree)
+                            
+//                            self.getUserImage(temperature: sevenDayFiveWeekTempFour, condition: sevenDayFiveConditionDescriptionFour)
+                            self.getWeatherIcon(theImageView: self.sevenDayFiveWeatherImageView, theCondition: sevenDayFiveConditionDescriptionFour)
+                            
+//                            self.getUserImage(temperature: sevenDaySixWeekTempFive, condition: sevenDaySixConditionDescriptionFive)
+                            self.getWeatherIcon(theImageView: self.sevenDaySixWeatherImageView, theCondition: sevenDaySixConditionDescriptionFive)
+                            
+//                            self.getUserImage(temperature: sevenDaySevenWeekTempSix, condition: sevenDaySevenConditionDescriptionSix)
+                            self.getWeatherIcon(theImageView: self.sevenDaySevenWeatherImageView, theCondition: sevenDaySevenConditionDescriptionSix)
+                            
+                        }
                         else{
                             print("error")
                             let alert = UIAlertController(title: "Error", message: "United States weather only, please try another location in the United States!", preferredStyle: .alert)

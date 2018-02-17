@@ -1,17 +1,17 @@
 //
-//  ColdCVC.swift
+//  SnowCVC.swift
 //  PandaWeather
 //
-//  Created by Robin Allemand on 2/4/18.
+//  Created by Robin Allemand on 2/13/18.
 //  Copyright © 2018 Parse. All rights reserved.
 //
 
 import UIKit
 import Photos
 
-let albumName3 = "Panda - Cold Weather"            //App specific folder name
+let albumName6 = "Panda - Snow Weather"            //App specific folder name
 
-class ColdCVC: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class SnowCVC: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     var albumFound : Bool = false
     var assetCollection: PHAssetCollection = PHAssetCollection()
@@ -60,7 +60,7 @@ class ColdCVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
         
         //Check if the folder exists, if not, create it
         let fetchOptions = PHFetchOptions()
-        fetchOptions.predicate = NSPredicate(format: "title = %@", albumName3)
+        fetchOptions.predicate = NSPredicate(format: "title = %@", albumName6)
         let collection: PHFetchResult = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: fetchOptions)
         
         if let first_Obj:AnyObject = collection.firstObject{
@@ -71,9 +71,9 @@ class ColdCVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
             //Album placeholder for the asset collection, used to reference collection in completion handler
             var albumPlaceholder: PHObjectPlaceholder!
             //create the folder
-            NSLog("\nFolder \"%@\" does not exist\nCreating now...", albumName3)
+            NSLog("\nFolder \"%@\" does not exist\nCreating now...", albumName6)
             PHPhotoLibrary.shared().performChanges({
-                let request = PHAssetCollectionChangeRequest.creationRequestForAssetCollection(withTitle: albumName3)
+                let request = PHAssetCollectionChangeRequest.creationRequestForAssetCollection(withTitle: albumName6)
                 albumPlaceholder = request.placeholderForCreatedAssetCollection
             },
                                                    completionHandler: {(success:Bool, error:Error?) in
@@ -144,7 +144,7 @@ class ColdCVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell{
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? coldCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? snowCell
         
         //Modify the cell
         let asset = self.photosAsset[indexPath.item]
@@ -207,7 +207,7 @@ class ColdCVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
         addMyImageButton.isEnabled = !editing
         if let indexPaths = collectionView?.indexPathsForVisibleItems {
             for indexPath in indexPaths {
-                if let cell = collectionView?.cellForItem(at: indexPath) as? coldCell {
+                if let cell = collectionView?.cellForItem(at: indexPath) as? snowCell {
                     cell.isEditing = editing
                 }
             }
@@ -238,9 +238,9 @@ class ColdCVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
     }
 }
 
-extension ColdCVC: coldCellDelegate
+extension SnowCVC: snowCellDelegate
 {
-    func delete(cell: coldCell) {
+    func delete(cell: snowCell) {
         if var indexPath = collectionView?.indexPath(for: cell) {
             //1. delete the photo from our data source
             PHPhotoLibrary.shared().performChanges({
@@ -279,3 +279,5 @@ extension ColdCVC: coldCellDelegate
         }
     }
 }
+
+

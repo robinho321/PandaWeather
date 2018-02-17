@@ -10,7 +10,7 @@ import UIKit
 import Foundation
 import CoreData
 
-func PandaImagesCollect(_ imageDate: String){
+func PandaImagesCollect(_ imageDate: String) {
     let myUrl = URL(string: "http://danslacave.com/PANDA/jsonfiles/PANDAIMAGES.php");
     let request = NSMutableURLRequest(url:myUrl!);
     request.httpMethod = "POST";
@@ -60,7 +60,6 @@ func PandaImagesCollect(_ imageDate: String){
         //var err: NSError?
         
         
-        
         let json = try? JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSArray
         
         if let appArray = json {
@@ -73,6 +72,7 @@ func PandaImagesCollect(_ imageDate: String){
                 let file: Int? = ImageFetch.value(forKey: "file") as! Int?
                 let status: String? = ImageFetch.value(forKey: "status") as! String?
                 let imagefile: String? = String(file!)+".jpg"
+                
                 let appDelegate = UIApplication.shared.delegate as! AppDelegate
                 let managedContext = appDelegate.managedObjectContext!
                 let privateMOC = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
@@ -86,16 +86,16 @@ func PandaImagesCollect(_ imageDate: String){
                 let compound = NSCompoundPredicate(andPredicateWithSubpredicates:[resultPredicate1])
                 request.predicate = compound
                 var error: NSError?
+            
                 
-                
-                let fetchedResult:NSArray = try! managedContext.fetch(request) as NSArray
+                let fetchedResult:NSArray = try! privateMOC.fetch(request) as NSArray
                 
                 var panda:PandaImage
                 if fetchedResult.count > 0 {
                     panda = (fetchedResult[0] as AnyObject) as! PandaImage
                 } else {
-                    let entity =  NSEntityDescription.entity(forEntityName: "PandaImage", in: managedContext)
-                    panda = (NSManagedObject(entity: entity!, insertInto:managedContext) as AnyObject) as! PandaImage
+                    let entity =  NSEntityDescription.entity(forEntityName: "PandaImage", in: privateMOC)
+                    panda = (NSManagedObject(entity: entity!, insertInto: privateMOC) as AnyObject) as! PandaImage
                     panda.setValue(id, forKey: "id")
                 }
                 

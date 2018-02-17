@@ -9,7 +9,7 @@
 import UIKit
 import Photos
 
-let albumName2 = "Cloudy Weather"            //App specific folder name
+let albumName2 = "Panda - Cloudy Weather"            //App specific folder name
 
 class CloudyCVC: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     

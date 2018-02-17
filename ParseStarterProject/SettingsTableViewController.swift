@@ -35,21 +35,6 @@ class SettingsTableViewController: UITableViewController, MFMailComposeViewContr
         self.delegate?.didClose(controller: self)
     }
     
-//    func didClose(controller: photoFolderTableViewController) {
-//        self.dismiss(animated: true, completion: nil)
-//        print("\("Will is awesome")")
-//    }
-    
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        // Get the new view controller using segue.destinationViewController.
-//        // Pass the selected object to the new view controller.
-//        if segue.identifier == "openPhotoFolderTVC" {
-//            let navigationController: UINavigationController = segue.destination as! UINavigationController
-//            let PhotoFolderTVController: photoFolderTableViewController = navigationController.viewControllers[0] as! photoFolderTableViewController
-//            PhotoFolderTVController.delegate = self
-//        }
-//    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -126,6 +111,11 @@ class SettingsTableViewController: UITableViewController, MFMailComposeViewContr
         if let index = self.tableView.indexPathForSelectedRow{
             self.tableView.deselectRow(at: index, animated: true)
         }
+        
+//        if someSegueCouldHappen {
+//            SettingsTableViewController.performSegue(withIdentifier: "The Second Segue", sender: self)
+//            someSegueCouldHappen = false
+//        }
     }
 
     /*override func numberOfSections(in tableView: UITableView) -> Int {
