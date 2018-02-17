@@ -233,15 +233,13 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         //1
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext!
-        let privateMOC = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-        privateMOC.parent = managedContext
         //2
         let fetchRequest = NSFetchRequest<PandaImage>(entityName:"PandaImage")
         let resultPredicate1 = NSPredicate(format: "active = %@", "active")
         let resultPredicate2 = NSPredicate(format: "type = %@", type)
         let compound = NSCompoundPredicate(andPredicateWithSubpredicates:[resultPredicate1, resultPredicate2])
         fetchRequest.predicate = compound
-        let fetchedResult = try! privateMOC.fetch(fetchRequest) as NSArray
+        let fetchedResult = try! managedContext.fetch(fetchRequest) as NSArray
         return fetchedResult as? [NSManagedObject]
         
     }
@@ -1248,10 +1246,8 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
             
         // 70 && < 80
         else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"Clouds") != nil {
-                    if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-        {
             dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
-        } }
+        }
         else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"Cloudy") != nil {
                     if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
         {
