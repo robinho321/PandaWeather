@@ -92,10 +92,10 @@ func PandaImagesCollect(_ imageDate: String) {
                 
                 var panda:PandaImage
                 if fetchedResult.count > 0 {
-                    panda = (fetchedResult[0] as AnyObject) as! PandaImage
+                    panda = fetchedResult[0] as! PandaImage
                 } else {
                     let entity =  NSEntityDescription.entity(forEntityName: "PandaImage", in: privateMOC)
-                    panda = (NSManagedObject(entity: entity!, insertInto: privateMOC) as AnyObject) as! PandaImage
+                    panda = NSManagedObject(entity: entity!, insertInto: privateMOC) as! PandaImage
                     panda.setValue(id, forKey: "id")
                 }
                 
@@ -103,9 +103,6 @@ func PandaImagesCollect(_ imageDate: String) {
                 panda.setValue(status, forKey: "active")
                 
                 let imagew = "http://danslacave.com/PANDA/includes/pages/image_upload/uploads/" + imagefile!
-                #if UNITY_IPHONE
-                    UnityEngine.iOS.Device.SetNoBackupFlag(path);
-                #endif
                 let url = URL(string: imagew)
                 do {
                     try (url! as NSURL).setResourceValue(true, forKey: URLResourceKey.isExcludedFromBackupKey)

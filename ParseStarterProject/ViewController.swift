@@ -354,6 +354,16 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
             theImageView.image! = #imageLiteral(resourceName: "Cloudy") }
         else if theCondition.range(of: "Partly Cloudy and Breezy") != nil {
             theImageView.image! = #imageLiteral(resourceName: "Cloudy") }
+        else if theCondition.range(of: "Breezy") != nil {
+            theImageView.image! = #imageLiteral(resourceName: "Cloudy") }
+        else if theCondition.range(of: "Frost") != nil {
+            theImageView.image! = #imageLiteral(resourceName: "Cloudy") }
+        else if theCondition.range(of: "Areas Frost then Sunny") != nil {
+            theImageView.image! = #imageLiteral(resourceName: "Cloudy") }
+        else if theCondition.range(of: "Frost then Mostly Sunny") != nil {
+            theImageView.image! = #imageLiteral(resourceName: "Cloudy") }
+        else if theCondition.range(of: "Partly Cloudy then Patchy Frost") != nil {
+            theImageView.image! = #imageLiteral(resourceName: "Cloudy") }
         else if theCondition.range(of: "NA") != nil {
             theImageView.image! = #imageLiteral(resourceName: "nil") }
         else if theCondition.range(of: "") != nil {
@@ -367,6 +377,8 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         else if theCondition.range(of: "Clear") != nil {
             theImageView.image! = #imageLiteral(resourceName: "Nice") }
         else if theCondition.range(of: "Sunny") != nil {
+            theImageView.image! = #imageLiteral(resourceName: "Nice") }
+        else if theCondition.range(of: "Areas Frost then Sunny") != nil {
             theImageView.image! = #imageLiteral(resourceName: "Nice") }
         else if theCondition.range(of: "Fair with Haze") != nil {
             theImageView.image! = #imageLiteral(resourceName: "Nice") }
@@ -385,6 +397,10 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         
         //cloudy icon
         else if theCondition.range(of: "Overcast") != nil {
+            theImageView.image! = #imageLiteral(resourceName: "Cold") }
+        else if theCondition.range(of: "Patchy Frost") != nil {
+            theImageView.image! = #imageLiteral(resourceName: "Cold") }
+        else if theCondition.range(of: "Areas Frost") != nil {
             theImageView.image! = #imageLiteral(resourceName: "Cold") }
         else if theCondition.range(of: "Overcast with Haze") != nil {
             theImageView.image! = #imageLiteral(resourceName: "Cold") }
@@ -426,6 +442,8 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         
         //thunderstorm icon
         else if theCondition.range(of: "Thunderstorm") != nil {
+            theImageView.image! = #imageLiteral(resourceName: "thunderstorm1") }
+        else if theCondition.range(of: "T-storms") != nil {
             theImageView.image! = #imageLiteral(resourceName: "thunderstorm1") }
         
         //Windy icon
