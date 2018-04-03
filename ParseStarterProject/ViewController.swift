@@ -70,32 +70,35 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
     let locationManager = CLLocationManager()
     
     @IBAction func customizePhotosSwitch(_ sender: UISwitch) {
+        UserDefaults.standard.set(sender.isOn, forKey: "switchIsOn")
+        
         if switchLabel.isOn {
+            let AlertOnce = UserDefaults.standard
+            if(!AlertOnce.bool(forKey: "oneTimeAlert")){
+                
+                let alert = UIAlertController(title: "Custom Photos", message: "\n Hello! You've just switched to custom photos! Here is how it works: \n \n ON position: loads only your custom photos. \n \n OFF position: loads only Panda images. \n \n Now press the search or the arrow to update your weather background!", preferredStyle: .alert)
+                
+                let DoNotShowAgainAction = UIAlertAction(title: "Do Not Show Again", style: UIAlertActionStyle.default) { (action:UIAlertAction) in
+                    
+                    AlertOnce.set(true , forKey: "oneTimeAlert")
+                    AlertOnce.synchronize()
+                    
+                }
+                
+                let cancelAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel) {
+                    UIAlertAction in
+                    alert.removeFromParentViewController()
+                }
+                alert.addAction(cancelAction)
+                alert.addAction(DoNotShowAgainAction)
+                
+                self.present(alert, animated: true, completion: nil)
+            }
         } else {
-        let AlertOnce = UserDefaults.standard
-        if(!AlertOnce.bool(forKey: "oneTimeAlert")){
-            
-            let alert = UIAlertController(title: "Custom Photos", message: "\n Hello! You've just switched to custom photos! Here is how it works: \n \n ON position: loads only Panda images. \n \n OFF position: loads only your custom photos. \n \n Now press the search or the arrow to update your weather background!", preferredStyle: .alert)
-            
-            let DoNotShowAgainAction = UIAlertAction(title: "Do Not Show Again", style: UIAlertActionStyle.default) { (action:UIAlertAction) in
-                
-                AlertOnce.set(true , forKey: "oneTimeAlert")
-                AlertOnce.synchronize()
-                
-            }
-            
-            let cancelAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel) {
-                UIAlertAction in
-                alert.removeFromParentViewController()
-            }
-            alert.addAction(cancelAction)
-            alert.addAction(DoNotShowAgainAction)
-            
-            self.present(alert, animated: true, completion: nil)
-            }
         }
     }
     
+    @IBOutlet weak var getTemperatureActivityIndicator: UIActivityIndicatorView!
     
     @IBOutlet weak var switchLabel: UISwitch!
     
@@ -144,9 +147,11 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
     }
     @IBAction func setCurrentLocation(_ sender: UIButton) {
         if switchLabel.isOn {
-            self.getPandaTemperature()
-        } else {
+//            self.getTemperatureActivityIndicator.startAnimating()
             self.getUserTemperature()
+        } else {
+//            self.getTemperatureActivityIndicator.startAnimating()
+            self.getPandaTemperature()
         }
     }
     
@@ -178,9 +183,9 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         //Create the search request
         let address = searchBar.text
         if switchLabel.isOn {
-            self.forwardGeocodingPanda(address: "\(address!)")
-        } else {
             self.forwardGeocodingUser(address: "\(address!)")
+        } else {
+            self.forwardGeocodingPanda(address: "\(address!)")
         }
 
 //        UIApplication.shared.endIgnoringInteractionEvents()
@@ -194,9 +199,12 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        // Save Switch state in UserDefaults
+        switchLabel.isOn = UserDefaults.standard.bool(forKey: "switchIsOn")
+            
         whiteBackgroundWeatherView.isHidden = true
 
-        self.showSpinnerOverlay()
+//        self.showSpinnerOverlay()
         
         self.walkMeLabel.alpha = 0
         
@@ -245,18 +253,18 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
     }
     
     //this func currently not being used
-    func showSpinnerOverlay() {
-        let alert = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .alert)
-
-        let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
-        loadingIndicator.hidesWhenStopped = true
-        loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
-        loadingIndicator.startAnimating();
-
-        alert.view.addSubview(loadingIndicator)
-        self.present(alert, animated: true, completion: nil)
-        self.dismiss(animated: false, completion: nil)
-    }
+//    func showSpinnerOverlay() {
+//        let alert = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .alert)
+//
+//        let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
+//        loadingIndicator.hidesWhenStopped = true
+//        loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+//        loadingIndicator.startAnimating();
+//
+//        alert.view.addSubview(loadingIndicator)
+//        self.present(alert, animated: true, completion: nil)
+//        self.dismiss(animated: false, completion: nil)
+//    }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if locationHasBeenFound == false {
@@ -264,9 +272,9 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
             self.whiteBackgroundWeatherView.isHidden = false
             
             if switchLabel.isOn {
-                self.getPandaTemperature()
-            } else {
                 self.getUserTemperature()
+            } else {
+                self.getPandaTemperature()
             }
             
             locationHasBeenFound = true
@@ -396,6 +404,8 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
             theImageView.image! = #imageLiteral(resourceName: "Nice") }
         
         //cloudy icon
+        else if theCondition.range(of: "Clouds") != nil {
+            theImageView.image! = #imageLiteral(resourceName: "Cold") }
         else if theCondition.range(of: "Overcast") != nil {
             theImageView.image! = #imageLiteral(resourceName: "Cold") }
         else if theCondition.range(of: "Patchy Frost") != nil {
@@ -634,15 +644,12 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                     alert.addAction(cancelAction)
                     self.present(alert, animated: true, completion: nil)
                 }
-                
-                
+
             case .denied, .restricted:
                 print("Not allowed")
             case .notDetermined:
                 print("Not determined yet")
             }
-            
-            
         }
     }
     
@@ -1025,6 +1032,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
     
     //PANDA IMAGE FETCH
     func getPandaImage(temperature: String, condition: String) {
+        
         //NICE
         var coreNiceImages = fetchCoreImage("active", "nice")
         let randomNiceImage = Int(arc4random_uniform(UInt32(coreNiceImages!.count)))
@@ -1626,7 +1634,6 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                 
 //                self.getPandaImage(temperature: sevenDaySevenWeekTempSix, condition: sevenDaySevenConditionDescriptionSix)
                 self.getWeatherIcon(theImageView: sevenDaySevenWeatherImageView, theCondition: sevenDaySevenConditionDescriptionSix)
-
             }
             else{
                 print("error")
@@ -1641,7 +1648,8 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         } catch let err{
             print(err.localizedDescription)
         }
-}
+//        self.getTemperatureActivityIndicator.stopAnimating()
+    }
     
     //FOR SEARCH BAR BUTTON
     //forward geocoding function
@@ -1997,7 +2005,6 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                     
 //                    self.getUserImage(temperature: sevenDaySevenWeekTempSix, condition: sevenDaySevenConditionDescriptionSix)
                     self.getWeatherIcon(theImageView: sevenDaySevenWeatherImageView, theCondition: sevenDaySevenConditionDescriptionSix)
-                    
                 }
                 else{
                     print("error")
@@ -2012,6 +2019,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         } catch let err{
             print(err.localizedDescription)
         }
+//        self.getTemperatureActivityIndicator.stopAnimating()
     }
     
     //FOR SEARCH BAR BUTTON USER IMAGE

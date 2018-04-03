@@ -127,6 +127,9 @@ class AdminImageTableViewController: UITableViewController, NSFetchedResultsCont
             task.resume()
         }
     
+    @IBAction func deleteImageButton(_ sender: UIButton) {
+        //Tell server to delete the image, remove the row, update the tableview.
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

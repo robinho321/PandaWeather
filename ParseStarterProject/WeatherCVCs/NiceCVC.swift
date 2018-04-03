@@ -263,8 +263,8 @@ extension NiceCVC: niceCellDelegate
                             print("\(self.photosAsset.count) image/s left")
                             if indexPath.item >= self.photosAsset.count {
                                 indexPath.item = self.photosAsset.count - 1
-                                self.collectionView.reloadData()
                             }
+                            self.collectionView.reloadData()
                         }
                     })
                 } else {
