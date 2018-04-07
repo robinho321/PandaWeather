@@ -102,6 +102,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
     
     @IBOutlet weak var switchLabel: UISwitch!
     
+    @IBOutlet weak var whiteStartUpView: UIView!
     @IBOutlet weak var whiteBackgroundWeatherView: UIView!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var dogImageView: UIImageView!
@@ -147,10 +148,8 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
     }
     @IBAction func setCurrentLocation(_ sender: UIButton) {
         if switchLabel.isOn {
-//            self.getTemperatureActivityIndicator.startAnimating()
             self.getUserTemperature()
         } else {
-//            self.getTemperatureActivityIndicator.startAnimating()
             self.getPandaTemperature()
         }
     }
@@ -199,9 +198,11 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        getTemperatureActivityIndicator.startAnimating()
+        
         // Save Switch state in UserDefaults
         switchLabel.isOn = UserDefaults.standard.bool(forKey: "switchIsOn")
-            
+        
         whiteBackgroundWeatherView.isHidden = true
 
 //        self.showSpinnerOverlay()
@@ -252,23 +253,8 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         
     }
     
-    //this func currently not being used
-//    func showSpinnerOverlay() {
-//        let alert = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .alert)
-//
-//        let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
-//        loadingIndicator.hidesWhenStopped = true
-//        loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
-//        loadingIndicator.startAnimating();
-//
-//        alert.view.addSubview(loadingIndicator)
-//        self.present(alert, animated: true, completion: nil)
-//        self.dismiss(animated: false, completion: nil)
-//    }
-    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if locationHasBeenFound == false {
-            //self.showSpinnerOverlay() -- removed this because now have the spinner on the SplashScreenViewController
             self.whiteBackgroundWeatherView.isHidden = false
             
             if switchLabel.isOn {
@@ -276,7 +262,8 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
             } else {
                 self.getPandaTemperature()
             }
-            
+            getTemperatureActivityIndicator.stopAnimating()
+            whiteStartUpView.isHidden = true
             locationHasBeenFound = true
         }
         }
@@ -1703,7 +1690,6 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                         
                         let myLocation = json["location"] as! [String:Any]?
                         let city: String = myLocation?["areaDescription"] as! String
-//
 //                        let city = json["productionCenter"] as! String //location, areaDescription
                         self.cityLabel.text! = city
                         print("city: \(city)")
@@ -1879,7 +1865,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                     
                     let myLocation = json["location"] as! [String:Any]?
                     let city: String = myLocation?["areaDescription"] as! String
-                    //                let city = json["productionCenter"] as! String
+//                    let city = json["productionCenter"] as! String
                     cityLabel.text! = city
                     print("city: \(city)")
                     
@@ -2074,8 +2060,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                             
                             let myLocation = json["location"] as! [String:Any]?
                             let city: String = myLocation?["areaDescription"] as! String
-                            //
-                            //                        let city = json["productionCenter"] as! String //location, areaDescription
+//                            let city = json["productionCenter"] as! String //location, areaDescription
                             self.cityLabel.text! = city
                             print("city: \(city)")
                             

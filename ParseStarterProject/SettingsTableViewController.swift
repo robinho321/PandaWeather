@@ -10,6 +10,7 @@ import UIKit
 import FacebookShare
 import MessageUI
 import QuartzCore
+import Photos
 
 protocol SettingsTableViewControllerDelegate {
     func didClose(controller: SettingsTableViewController)
@@ -80,6 +81,7 @@ class SettingsTableViewController: UITableViewController, MFMailComposeViewContr
     
     if indexPath.section == 0 && indexPath.row == 0 {
         self.customizeYourPhotos()
+        self.checkPhotoLibraryPermission()
     }
 
     else if indexPath.section == 1 && indexPath.row == 0 {
@@ -184,6 +186,29 @@ class SettingsTableViewController: UITableViewController, MFMailComposeViewContr
 //            if segue.identifier == "closeSettings" {
 //    }
     // }
+    
+    func checkPhotoLibraryPermission() {
+        let status = PHPhotoLibrary.authorizationStatus()
+        switch status {
+        case .authorized: break
+            
+        //handle authorized status
+        case .denied, .restricted : break
+        //handle denied status
+        case .notDetermined:
+            // ask for permissions
+            PHPhotoLibrary.requestAuthorization() { status in
+                switch status {
+                case .authorized: break
+                // as above
+                case .denied, .restricted: break
+                // as above
+                case .notDetermined: break
+                    // won't happen but still
+                }
+            }
+        }
+    }
 
     func customizeYourPhotos() {
         self.performSegue(withIdentifier: "openPhotoFolderTVC", sender: nil)

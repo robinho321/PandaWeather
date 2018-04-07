@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import QuartzCore
+import Photos
 
 enum weatherConditions {
     case nice
