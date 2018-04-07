@@ -59,7 +59,6 @@ class SplashScreenViewController: UIViewController, CLLocationManagerDelegate {
                 }
             }
             
-            
             //Call your core data fetch from PandaImages.swift
             PandaImagesCollect(pictureDate)
             NotificationCenter.default.addObserver(self, selector: #selector(SplashScreenViewController.loadMainViewController(_:)), name: NSNotification.Name(rawValue: "timesUpdated"), object: nil) //bookmark to call this function anywhere in code

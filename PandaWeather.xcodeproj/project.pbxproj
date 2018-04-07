@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		26C958675A227F685B785A23 /* Pods_Panda_Weather.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1466C732C57DC94F0A600E5D /* Pods_Panda_Weather.framework */; };
 		8136E54C1CB4D7DD0011D421 /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8136E54B1CB4D7DD0011D421 /* Launch.storyboard */; };
-		814C3ACA1B69877600E307BB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 814C3AC61B69877600E307BB /* Main.storyboard */; };
 		81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA814A1A49DA1800E65899 /* AppDelegate.swift */; };
 		81BA814D1A49DA1800E65899 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA814C1A49DA1800E65899 /* ViewController.swift */; };
 		81BA81701A49DB6800E65899 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA816B1A49DB6800E65899 /* Bolts.framework */; };
@@ -47,6 +46,8 @@
 		A9C752C31FC248DD008002C5 /* AdminPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C752C21FC248DD008002C5 /* AdminPasswordViewController.swift */; };
 		A9E0A20C1FF94C3B00ECD178 /* SyncDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E0A20B1FF94C3B00ECD178 /* SyncDate.swift */; };
 		A9E357D61F550D1200F9EDA8 /* termsAndConditionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E357D51F550D1200F9EDA8 /* termsAndConditionsViewController.swift */; };
+		A9FBC43D207922DE0089B39F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9FBC43B207922DE0089B39F /* Main.storyboard */; };
+		A9FBC43F207934EA0089B39F /* PandaImageFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FBC43E207934EA0089B39F /* PandaImageFetch.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,7 +55,6 @@
 		2F33022DAF607C2FF769A72D /* Pods-Panda Weather.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Panda Weather.release.xcconfig"; path = "Pods/Target Support Files/Pods-Panda Weather/Pods-Panda Weather.release.xcconfig"; sourceTree = "<group>"; };
 		4FAC3FF331B89D2371D6E043 /* Pods-Panda Weather.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Panda Weather.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Panda Weather/Pods-Panda Weather.debug.xcconfig"; sourceTree = "<group>"; };
 		8136E54B1CB4D7DD0011D421 /* Launch.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Launch.storyboard; sourceTree = "<group>"; };
-		814C3AC71B69877600E307BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		814C3AC91B69877600E307BB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		81BA81451A49DA1800E65899 /* PandaWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PandaWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81BA814A1A49DA1800E65899 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -94,6 +94,8 @@
 		A9C752C21FC248DD008002C5 /* AdminPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminPasswordViewController.swift; sourceTree = "<group>"; };
 		A9E0A20B1FF94C3B00ECD178 /* SyncDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncDate.swift; sourceTree = "<group>"; };
 		A9E357D51F550D1200F9EDA8 /* termsAndConditionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = termsAndConditionsViewController.swift; sourceTree = "<group>"; };
+		A9FBC43C207922DE0089B39F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		A9FBC43E207934EA0089B39F /* PandaImageFetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PandaImageFetch.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,26 +149,9 @@
 		81BA81471A49DA1800E65899 /* ParseStarterProject */ = {
 			isa = PBXGroup;
 			children = (
-				81BA814A1A49DA1800E65899 /* AppDelegate.swift */,
-				A93FB3C91FAC214500E4D5B7 /* SplashScreen.swift */,
-				81BA814C1A49DA1800E65899 /* ViewController.swift */,
-				A916C1221F4FDB080057A09C /* SettingsTableViewController.swift */,
-				A977881D2027925700EB125F /* photoFolderTableViewController.swift */,
-				A9E357D51F550D1200F9EDA8 /* termsAndConditionsViewController.swift */,
-				A9174E2F20280B6700DB6BCE /* WeatherCVCs */,
-				A9174E3220280BE200DB6BCE /* WeatherCells */,
-				A91ACE4E1F9437A40082401A /* PandaWeather.xcdatamodeld */,
-				A9930F7A201506FB00E4D644 /* Date.swift */,
-				A9E0A20B1FF94C3B00ECD178 /* SyncDate.swift */,
-				A91ACE511F9438980082401A /* PandaImage.swift */,
-				A93FB3C31FAC202300E4D5B7 /* PandaImages.swift */,
-				A93FB3C51FAC204200E4D5B7 /* SwiftyJSON.swift */,
-				A93FB3C71FAC205800E4D5B7 /* CoreDataStack.swift */,
-				A9C752C21FC248DD008002C5 /* AdminPasswordViewController.swift */,
-				A93FB3D11FC23DB900E4D5B7 /* AdminImageTableViewController.swift */,
-				A945C5871FE5E6730063DFAF /* AdminAddImage.swift */,
-				A93FB3D31FC23E8400E4D5B7 /* ImageCell.swift */,
-				814C3AC61B69877600E307BB /* Main.storyboard */,
+				A9FBC43620791F600089B39F /* Pages */,
+				A9FBC43420791F190089B39F /* Logical */,
+				A9FBC43320791F0B0089B39F /* Main */,
 			);
 			path = ParseStarterProject;
 			sourceTree = "<group>";
@@ -216,9 +201,10 @@
 			path = WeatherCVCs;
 			sourceTree = "<group>";
 		};
-		A9174E3220280BE200DB6BCE /* WeatherCells */ = {
+		A9174E3220280BE200DB6BCE /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				A93FB3D31FC23E8400E4D5B7 /* ImageCell.swift */,
 				A9174E3320280BF700DB6BCE /* niceCell.swift */,
 				A9174E37202836AC00DB6BCE /* cloudyCell.swift */,
 				A9174E3B2028398900DB6BCE /* coldCell.swift */,
@@ -226,7 +212,64 @@
 				A9174E4320283CB100DB6BCE /* lightningCell.swift */,
 				A946E95E2032D54E00BF49CB /* snowCell.swift */,
 			);
-			path = WeatherCells;
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		A9FBC43320791F0B0089B39F /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				A9FBC43B207922DE0089B39F /* Main.storyboard */,
+				81BA814A1A49DA1800E65899 /* AppDelegate.swift */,
+				A93FB3C91FAC214500E4D5B7 /* SplashScreen.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		A9FBC43420791F190089B39F /* Logical */ = {
+			isa = PBXGroup;
+			children = (
+				A9FBC438207920360089B39F /* References */,
+				A9FBC43720791FF00089B39F /* Modules */,
+				A91ACE4E1F9437A40082401A /* PandaWeather.xcdatamodeld */,
+				A93FB3C31FAC202300E4D5B7 /* PandaImages.swift */,
+				A9FBC43E207934EA0089B39F /* PandaImageFetch.swift */,
+				A9E0A20B1FF94C3B00ECD178 /* SyncDate.swift */,
+				A9930F7A201506FB00E4D644 /* Date.swift */,
+			);
+			path = Logical;
+			sourceTree = "<group>";
+		};
+		A9FBC43620791F600089B39F /* Pages */ = {
+			isa = PBXGroup;
+			children = (
+				81BA814C1A49DA1800E65899 /* ViewController.swift */,
+				A916C1221F4FDB080057A09C /* SettingsTableViewController.swift */,
+				A977881D2027925700EB125F /* photoFolderTableViewController.swift */,
+				A9E357D51F550D1200F9EDA8 /* termsAndConditionsViewController.swift */,
+				A9C752C21FC248DD008002C5 /* AdminPasswordViewController.swift */,
+				A93FB3D11FC23DB900E4D5B7 /* AdminImageTableViewController.swift */,
+				A945C5871FE5E6730063DFAF /* AdminAddImage.swift */,
+				A9174E3220280BE200DB6BCE /* Cells */,
+				A9174E2F20280B6700DB6BCE /* WeatherCVCs */,
+			);
+			path = Pages;
+			sourceTree = "<group>";
+		};
+		A9FBC43720791FF00089B39F /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				A91ACE511F9438980082401A /* PandaImage.swift */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		A9FBC438207920360089B39F /* References */ = {
+			isa = PBXGroup;
+			children = (
+				A93FB3C51FAC204200E4D5B7 /* SwiftyJSON.swift */,
+				A93FB3C71FAC205800E4D5B7 /* CoreDataStack.swift */,
+			);
+			path = References;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -297,8 +340,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9FBC43D207922DE0089B39F /* Main.storyboard in Resources */,
 				A9A97E671F5543360046B1AD /* Assets.xcassets in Resources */,
-				814C3ACA1B69877600E307BB /* Main.storyboard in Resources */,
 				8136E54C1CB4D7DD0011D421 /* Launch.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -387,6 +430,7 @@
 				A9930F7B201506FB00E4D644 /* Date.swift in Sources */,
 				A946E95D2032D50600BF49CB /* SnowCVC.swift in Sources */,
 				A9174E3E20283B2900DB6BCE /* RainCVC.swift in Sources */,
+				A9FBC43F207934EA0089B39F /* PandaImageFetch.swift in Sources */,
 				A91ACE501F9437A40082401A /* PandaWeather.xcdatamodeld in Sources */,
 				A9174E4020283B3600DB6BCE /* rainCell.swift in Sources */,
 				A916C1231F4FDB080057A09C /* SettingsTableViewController.swift in Sources */,
@@ -413,13 +457,12 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		814C3AC61B69877600E307BB /* Main.storyboard */ = {
+		A9FBC43B207922DE0089B39F /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				814C3AC71B69877600E307BB /* Base */,
+				A9FBC43C207922DE0089B39F /* Base */,
 			);
 			name = Main.storyboard;
-			path = ../Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

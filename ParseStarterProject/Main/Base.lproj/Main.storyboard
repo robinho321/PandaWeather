@@ -1062,7 +1062,7 @@
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T2d-2z-55j">
                                 <rect key="frame" x="100" y="319" width="214" height="46"/>
@@ -1147,8 +1147,8 @@
                                                 <action selector="statusSwitch:" destination="8Qx-d3-pNL" eventType="valueChanged" id="3O2-bQ-CgH"/>
                                             </connections>
                                         </switch>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YPb-du-56d">
-                                            <rect key="frame" x="338" y="97" width="50" height="35"/>
+                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YPb-du-56d">
+                                            <rect key="frame" x="342" y="97" width="50" height="35"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="35" id="0mo-T1-H4z"/>
                                             </constraints>
@@ -1180,6 +1180,7 @@
                                     <outlet property="ImageNameLabel" destination="TA6-zK-ddD" id="liu-JJ-Duz"/>
                                     <outlet property="PandaImage" destination="Wik-hH-vhO" id="pvx-SH-qqR"/>
                                     <outlet property="WeatherTypeLabel" destination="44g-zf-nxk" id="9zx-M1-A30"/>
+                                    <outlet property="deleteImageLabel" destination="YPb-du-56d" id="t5t-EL-OO9"/>
                                     <outlet property="switchLabel" destination="S76-DF-03f" id="5jI-ZF-HJ8"/>
                                 </connections>
                             </tableViewCell>

@@ -10,7 +10,7 @@ import UIKit
 import Foundation
 import CoreData
 
-func PandaImagesCollect(_ imageDate: String) {
+func oldPandaImagesCollect(_ imageDate: String) {
     let myUrl = URL(string: "http://danslacave.com/PANDA/jsonfiles/PANDAIMAGES.php");
     let request = NSMutableURLRequest(url:myUrl!);
     request.httpMethod = "POST";
@@ -158,7 +158,7 @@ func PandaImagesCollect(_ imageDate: String) {
 }
 
 
-func saveImageDate() {
+func oldSaveImageDate() {
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let managedContext = appDelegate.managedObjectContext!
     //1

@@ -124,11 +124,128 @@ class AdminImageTableViewController: UITableViewController, NSFetchedResultsCont
                                             }
                                         }
             })
+            tableView.reloadData()
             task.resume()
         }
     
     @IBAction func deleteImageButton(_ sender: UIButton) {
-        //Tell server to delete the image, remove the row, update the tableview.
+        //Create Account
+        let UpdateUserURL = "http://danslacave.com/PANDA/jsonfiles/deleteImage.php"
+        let request = NSMutableURLRequest(url: URL(string: UpdateUserURL)!)
+        request.httpMethod = "POST"
+        
+        let buttonRow = sender.tag
+        let indexPath = IndexPath(row: buttonRow, section: 0)
+        let dataRow = fetchedResultsController.object(at: indexPath)
+        let imageId = (dataRow.value(forKey: "id")as? Int)!
+        let id: String = String(imageId)
+        
+        let param = [
+            "id" : id
+        ]
+        let boundary = generateBoundaryString()
+        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        request.httpBody = createBodyWithParameters(param, boundary: boundary)
+        
+        //spinningWheel.startAnimating();
+        let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: {
+            data, response, error in
+            
+            if error != nil {
+                print("error=\(String(describing: error))")
+                return
+            }
+            
+            // You can print out response object
+            print("******* response = \(String(describing: response))")
+            
+            // Print out reponse body
+            _ = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
+            //                print("****** response data = \(responseString!)")
+            
+            let json = try! JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSArray
+            for appDict in json! {
+                
+                let appDict = json![0] as AnyObject
+                let stid: String? = (appDict as AnyObject).value(forKey: "type") as? String
+                if stid != nil {
+                    //Fetch data
+                    let ImageFetch:AnyObject = appDict as AnyObject
+                    let id: Int? = ImageFetch.value(forKey: "id") as! Int?
+                    let status: String? = ImageFetch.value(forKey: "status") as! String?
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    let managedContext = appDelegate.managedObjectContext!
+//                    let privateMOC = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+//                    privateMOC.parent = managedContext
+                    //Filter the data
+                    let request = NSFetchRequest<PandaImage>(entityName: "PandaImage")
+                    
+                    request.returnsObjectsAsFaults = false;
+                    let resultPredicate1 = NSPredicate(format: "id = %i", id!)
+                    let compound = NSCompoundPredicate(andPredicateWithSubpredicates:[resultPredicate1])
+                    request.predicate = compound
+                    var error: NSError?
+                    
+                    let fetchedResult:NSArray = try! managedContext.fetch(request) as NSArray
+                    
+                    var panda:PandaImage
+                    if fetchedResult.count > 0 {
+                        //Tell iphone database to delete the image, then remove panda rows below.
+                        panda = (fetchedResult[0] as AnyObject) as! PandaImage
+                    } else {
+                        let entity =  NSEntityDescription.entity(forEntityName: "PandaImage", in: managedContext)
+                        panda = (NSManagedObject(entity: entity!, insertInto:managedContext) as AnyObject) as! PandaImage
+                        panda.setValue(id, forKey: "id")
+                    }
+                    
+                    panda.setValue(status, forKey: "active")
+                    
+                    
+                    do {
+                        try managedContext.save()
+                        //Update Field -- need to make this reload just photos with latest time stamp
+                        DispatchQueue.main.async(execute: {
+                            self.tableView.reloadData()
+                            //Add button for success
+                            let alert = UIAlertController(title: "Success", message: "Status has been updated on the server!", preferredStyle: .alert)
+                            
+                            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in alert.dismiss(animated: true, completion: nil)
+                            }))
+                            
+                            self.present(alert, animated: true, completion: nil)
+                        });
+                        
+                    } catch let error1 as NSError {
+                        error = error1
+                        print("Could not save \(String(describing: error)), \(String(describing: error?.userInfo))")
+                    }
+                    //                                String Success = "Yes"
+                    //If your app goes here you are setup correctly
+                    //we will populate this later
+                }else {
+                    
+                    //Update Field
+                    DispatchQueue.main.async(execute: {
+                        self.tableView.reloadData()
+                        
+                        //Add button to say it failed -- not working...
+                        let alert = UIAlertController(title: "Error", message: "Status failed to update on the server!", preferredStyle: .alert)
+                        
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in alert.dismiss(animated: true, completion: nil)
+                            self.tableView.reloadData()
+                        }))
+                        
+                        self.present(alert, animated: true, completion: nil)
+                        
+                    });
+                }
+            }
+        })
+        DispatchQueue.main.async(execute: {
+            self.tableView.reloadData()
+            //Add button for success
+        });
+        task.resume()
     }
     
     override func viewDidLoad() {
@@ -172,6 +289,7 @@ class AdminImageTableViewController: UITableViewController, NSFetchedResultsCont
                 as! ImageCell
             let indexPaths = indexPath.row
             cell.switchLabel.tag = indexPaths
+            cell.deleteImageLabel.tag = indexPaths
             let team = fetchedResultsController.object(at: indexPath)
             cell.WeatherTypeLabel.text = team.value(forKey: "type") as? String
             if (team.value(forKey: "active") as? String == "active")
@@ -221,8 +339,9 @@ class AdminImageTableViewController: UITableViewController, NSFetchedResultsCont
         let FetchRequest = NSFetchRequest<PandaImage>(entityName: "PandaImage")
         let primarySortDescriptor = NSSortDescriptor(key: "type", ascending: true)
 //        let resultPredicate1 = NSPredicate(format: "active = %@", "active")
-//        let compound = NSCompoundPredicate(andPredicateWithSubpredicates:[resultPredicate1])
-//        FetchRequest.predicate = compound
+        let resultPredicate2 = NSPredicate(format: "active != %@", "deleted")
+        let compound = NSCompoundPredicate(andPredicateWithSubpredicates:[resultPredicate2])
+        FetchRequest.predicate = compound
         FetchRequest.sortDescriptors = [primarySortDescriptor]
         let frc = NSFetchedResultsController(
             fetchRequest: FetchRequest,
