@@ -10,7 +10,7 @@ import MapKit
 import UIKit
 import CoreData
 
-class SplashScreenViewController: UIViewController, CLLocationManagerDelegate {
+class SplashScreenViewController: UIViewController {
 
         override func viewDidLoad() {
             super.viewDidLoad()
@@ -44,14 +44,14 @@ class SplashScreenViewController: UIViewController, CLLocationManagerDelegate {
                 var panda: SyncDate
                 let appDelegate = UIApplication.shared.delegate as! AppDelegate
                 let managedContext = appDelegate.managedObjectContext!
-                let privateMOC = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-                privateMOC.parent = managedContext
-                let entity =  NSEntityDescription.entity(forEntityName: "SyncDate", in: privateMOC)
-                panda = (NSManagedObject(entity: entity!, insertInto:privateMOC) as AnyObject) as! SyncDate
+//                let privateMOC = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+//                privateMOC.parent = managedContext
+                let entity =  NSEntityDescription.entity(forEntityName: "SyncDate", in: managedContext)
+                panda = (NSManagedObject(entity: entity!, insertInto:managedContext) as AnyObject) as! SyncDate
                 panda.setValue("", forKey: "pandaImageDate")
                 
                 do {
-                    try privateMOC.save()
+                    try managedContext.save()
                     //Update Field
                 } catch let error1 as NSError {
                     error = error1
@@ -61,14 +61,16 @@ class SplashScreenViewController: UIViewController, CLLocationManagerDelegate {
             
             //Call your core data fetch from PandaImages.swift
             PandaImagesCollect(pictureDate)
+
             NotificationCenter.default.addObserver(self, selector: #selector(SplashScreenViewController.loadMainViewController(_:)), name: NSNotification.Name(rawValue: "timesUpdated"), object: nil) //bookmark to call this function anywhere in code
-            
         }
     
         @objc func loadMainViewController(_ notification: Notification) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute: {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)//you need to set the storyboard id of your original view for your app (Not the splash screen) to “"someViewController""
             let vc = storyboard.instantiateViewController(withIdentifier: "MainView")
             self.present(vc, animated: true, completion: nil)
+            })
         }
     }
 

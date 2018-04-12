@@ -72,8 +72,8 @@ func PandaImagesCollect(_ imageDate: String) {
                 
                 let appDelegate = UIApplication.shared.delegate as! AppDelegate
                 let managedContext = appDelegate.managedObjectContext!
-                let privateMOC = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-                privateMOC.parent = managedContext
+//                let privateMOC = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+//                privateMOC.parent = managedContext
                 //Filter the data
                 let request = NSFetchRequest<PandaImage>(entityName: "PandaImage")
                 
@@ -84,13 +84,13 @@ func PandaImagesCollect(_ imageDate: String) {
                 let compound = NSCompoundPredicate(andPredicateWithSubpredicates:[resultPredicate1])
                 request.predicate = compound
                 var error: NSError?
-                let fetchedResult:NSArray = try! privateMOC.fetch(request) as NSArray
+                let fetchedResult:NSArray = try! managedContext.fetch(request) as NSArray
                 var panda:PandaImage
                 if fetchedResult.count > 0 {
                     panda = fetchedResult[0] as! PandaImage
                 } else {
-                    let entity =  NSEntityDescription.entity(forEntityName: "PandaImage", in: privateMOC)
-                    panda = NSManagedObject(entity: entity!, insertInto: privateMOC) as! PandaImage
+                    let entity =  NSEntityDescription.entity(forEntityName: "PandaImage", in: managedContext)
+                    panda = NSManagedObject(entity: entity!, insertInto: managedContext) as! PandaImage
                     panda.setValue(id, forKey: "id")
                 }
                 
@@ -127,7 +127,12 @@ func PandaImagesCollect(_ imageDate: String) {
                     }
                 }
                 do {
-                    try privateMOC.save()
+                    try managedContext.save()
+                    
+                    //Loads the Main View Controller
+                    DispatchQueue.main.async(execute: {
+                        NotificationCenter.default.post(name: Notification.Name(rawValue: "timesUpdated"), object: nil, userInfo: nil)
+                    });
                     
                 } catch let error1 as NSError {
                     error = error1

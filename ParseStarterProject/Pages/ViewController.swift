@@ -1016,6 +1016,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         }
     }
 
+//    typealias CompletionHandler = (_ success:Bool) -> Void
     
     //PANDA IMAGE FETCH
     func getPandaImage(temperature: String, condition: String) {
@@ -1053,416 +1054,418 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         print("theValue: " + "\(String(describing: theValue))")
         print("condition: " + "\(theCondition)")
         
+        //this is really bad code. should put the else statement in the fetch, so can remove here.
         // Temperature is nil
         if theValue == nil {
-            if (coreColdImages?[randomColdImage].value(forKey: "image") != nil)
-            {
+            if coreColdImages?.count == 0
+            { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreColdImages?[randomColdImage].value(forKey: "image")) != nil {
                 dogImageView.image = UIImage(data: (coreColdImages?[randomColdImage].value(forKey: "image") as? Data)!)
             } }
         
         //<32 degreesF
         else if theValue! < 32 && theCondition.range(of:"Clouds") != nil {
-            if (coreColdImages?[randomColdImage].value(forKey: "image") != nil)
-            {
+            if coreColdImages?.count == 0
+            { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreColdImages?[randomColdImage].value(forKey: "image")) != nil {
                 dogImageView.image = UIImage(data: (coreColdImages?[randomColdImage].value(forKey: "image") as? Data)!)
             } }
         else if theValue! < 32 && theCondition.range(of:"Cloudy") != nil {
-            if (coreColdImages?[randomColdImage].value(forKey: "image") != nil)
-        {
+            if coreColdImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreColdImages?[randomColdImage].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreColdImages?[randomColdImage].value(forKey: "image") as? Data)!)
         } }
         else if theValue! < 32 && theCondition.range(of:"Fair") != nil {
-            if (coreColdImages?[randomColdImage].value(forKey: "image") != nil)
-        {
+            if coreColdImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreColdImages?[randomColdImage].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreColdImages?[randomColdImage].value(forKey: "image") as? Data)!)
         } }
         else if theValue! < 32 && theCondition.range(of:"Clear") != nil {
-            if (coreColdImages?[randomColdImage].value(forKey: "image") != nil)
-        {
+            if coreColdImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreColdImages?[randomColdImage].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreColdImages?[randomColdImage].value(forKey: "image") as? Data)!)
         } }
         else if theValue! < 32 && theCondition.range(of:"Overcast") != nil {
-                    if (coreCloudyImages?[randomCloudyImage].value(forKey: "image") != nil)
-        {
+                if coreCloudyImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreCloudyImages?[randomCloudyImage].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreCloudyImages?[randomCloudyImage].value(forKey: "image") as? Data)!)
         } }
         else if theValue! < 32 && theCondition.range(of:"Fog") != nil {
-                    if (coreCloudyImages?[randomCloudyImage].value(forKey: "image") != nil)
-        {
+                if coreCloudyImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreCloudyImages?[randomCloudyImage].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreCloudyImages?[randomCloudyImage].value(forKey: "image") as? Data)!)
         } }
         else if theValue! < 32 && theCondition.range(of:"Rain") != nil {
-                    if (coreSnowImages?[randomSnowImages].value(forKey: "image") != nil)
-        {
+                if coreSnowImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreSnowImages?[randomSnowImages].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreSnowImages?[randomSnowImages].value(forKey: "image") as? Data)!)
         } }
         else if theValue! < 32 && theCondition.range(of:"storm") != nil {
-                    if (coreSnowImages?[randomSnowImages].value(forKey: "image") != nil)
-        {
+                if coreSnowImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreSnowImages?[randomSnowImages].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreSnowImages?[randomSnowImages].value(forKey: "image") as? Data)!)
         } }
         else if theValue! < 32 && theCondition.range(of:"hurricane") != nil {
-                    if (coreSnowImages?[randomSnowImages].value(forKey: "image") != nil)
-        {
+                if coreSnowImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreSnowImages?[randomSnowImages].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreSnowImages?[randomSnowImages].value(forKey: "image") as? Data)!)
         } }
         else if theValue! < 32 && theCondition.range(of:"Snow") != nil {
-                    if (coreSnowImages?[randomSnowImages].value(forKey: "image") != nil)
-        {
+                if coreSnowImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreSnowImages?[randomSnowImages].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreSnowImages?[randomSnowImages].value(forKey: "image") as? Data)!)
         } }
         else if theValue! < 32 && theCondition.range(of: "NA") != nil {
-                    if (coreSnowImages?[randomSnowImages].value(forKey: "image") != nil)
-        {
+                if coreSnowImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreSnowImages?[randomSnowImages].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreSnowImages?[randomSnowImages].value(forKey: "image") as? Data)!)
         } }
         else if theValue! < 32 && theCondition.range(of: "") != nil {
-                    if (coreSnowImages?[randomSnowImages].value(forKey: "image") != nil)
-        {
+                if coreSnowImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreSnowImages?[randomSnowImages].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreSnowImages?[randomSnowImages].value(forKey: "image") as? Data)!)
         } }
             
         // 32 && < 50
         else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"Clouds") != nil {
-            if (coreColdImages?[randomColdImage].value(forKey: "image") != nil)
-        {
+            if coreColdImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreColdImages?[randomColdImage].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreColdImages?[randomColdImage].value(forKey: "image") as? Data)!)
         } }
         else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"Cloudy") != nil {
-            if (coreColdImages?[randomColdImage].value(forKey: "image") != nil)
-        {
+            if coreColdImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreColdImages?[randomColdImage].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreColdImages?[randomColdImage].value(forKey: "image") as? Data)!)
         } }
         else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"Fair") != nil {
-            if (coreColdImages?[randomColdImage].value(forKey: "image") != nil)
-        {
+            if coreColdImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreColdImages?[randomColdImage].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreColdImages?[randomColdImage].value(forKey: "image") as? Data)!)
         } }
         else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"Clear") != nil {
-            if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-            {
+            if coreNiceImages?.count == 0
+            { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreNiceImages?[randomNiceImage].value(forKey: "image")) != nil {
                 dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
             } }
         else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"Overcast") != nil {
-                    if (coreCloudyImages?[randomCloudyImage].value(forKey: "image") != nil)
-        {
+                if coreCloudyImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreCloudyImages?[randomCloudyImage].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreCloudyImages?[randomCloudyImage].value(forKey: "image") as? Data)!)
         } }
         else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"Fog") != nil {
-                    if (coreCloudyImages?[randomCloudyImage].value(forKey: "image") != nil)
-        {
+                if coreCloudyImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreCloudyImages?[randomCloudyImage].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreCloudyImages?[randomCloudyImage].value(forKey: "image") as? Data)!)
         } }
         else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"Rain") != nil {
-                    if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
-        {
+                if coreRainImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreRainImages?[randomRainImage].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
         } }
         else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"storm") != nil {
-                    if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
-        {
+                if coreRainImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreRainImages?[randomRainImage].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
         } }
         else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"hurricane") != nil {
-                    if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
-        {
+                if coreRainImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreRainImages?[randomRainImage].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
         } }
         else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"showers") != nil {
-                    if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
-        {
+                if coreRainImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreRainImages?[randomRainImage].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
         } }
         else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"Thunderstorm") != nil {
-                    if (coreLightningImages?[randomLightningImage].value(forKey: "image") != nil)
-        {
+                if coreLightningImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreLightningImages?[randomLightningImage].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreLightningImages?[randomLightningImage].value(forKey: "image") as? Data)!)
         } }
         else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"NA") != nil {
-            if (coreColdImages?[randomColdImage].value(forKey: "image") != nil)
-        {
+            if coreColdImages?.count == 0
+            { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreColdImages?[randomColdImage].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreColdImages?[randomColdImage].value(forKey: "image") as? Data)!)
         } }
         else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"") != nil {
-            if (coreColdImages?[randomColdImage].value(forKey: "image") != nil)
-        {
+            if coreColdImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreColdImages?[randomColdImage].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreColdImages?[randomColdImage].value(forKey: "image") as? Data)!)
         } }
         
         // 50 && < 70
         else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"Clouds") != nil {
-                    if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-        {
+                if coreNiceImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreNiceImages?[randomNiceImage].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
         } }
         else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"Cloudy") != nil {
-                    if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-        {
+                if coreNiceImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreNiceImages?[randomNiceImage].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
         } }
         else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"Fair") != nil {
-                    if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-        {
+                if coreNiceImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreNiceImages?[randomNiceImage].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
         } }
         else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"Clear") != nil {
-                    if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-        {
+                    if coreNiceImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreNiceImages?[randomNiceImage].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
         } }
         else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"Overcast") != nil {
-                    if (coreCloudyImages?[randomCloudyImage].value(forKey: "image") != nil)
-        {
+                    if coreCloudyImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreCloudyImages?[randomCloudyImage].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreCloudyImages?[randomCloudyImage].value(forKey: "image") as? Data)!)
         } }
         else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"Fog") != nil {
-                    if (coreCloudyImages?[randomCloudyImage].value(forKey: "image") != nil)
-        {
+                    if coreCloudyImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreCloudyImages?[randomCloudyImage].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreCloudyImages?[randomCloudyImage].value(forKey: "image") as? Data)!)
         } }
         else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"Rain") != nil {
-                    if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
-        {
+                    if coreRainImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreRainImages?[randomRainImage].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
         } }
         else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"storm") != nil {
-                    if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
-        {
+                    if coreRainImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreRainImages?[randomRainImage].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
         } }
         else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"hurricane") != nil {
-                    if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
-        {
+                    if coreRainImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreRainImages?[randomRainImage].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
         } }
         else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"showers") != nil {
-                    if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
-        {
+                    if coreRainImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreRainImages?[randomRainImage].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
         } }
         else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"Thunderstorm") != nil {
-                    if (coreLightningImages?[randomLightningImage].value(forKey: "image") != nil)
-        {
+                    if coreLightningImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreLightningImages?[randomLightningImage].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreLightningImages?[randomLightningImage].value(forKey: "image") as? Data)!)
         } }
         else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"NA") != nil {
-                    if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-        {
+                    if coreNiceImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreNiceImages?[randomNiceImage].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
         } }
         else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"") != nil {
-                    if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-        {
+                    if coreNiceImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreNiceImages?[randomNiceImage].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
         } }
 
             
         // 70 && < 80
         else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"Clouds") != nil {
-            dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
-        }
+                if coreNiceImages?.count == 0
+            { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreNiceImages?[randomNiceImage].value(forKey: "image")) != nil {
+                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
+            } }
         else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"Cloudy") != nil {
-                    if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-        {
+                if coreNiceImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreNiceImages?[randomNiceImage].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
         } }
         else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"Fair") != nil {
-                    if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-        {
+                    if coreNiceImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreNiceImages?[randomNiceImage].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
         } }
         else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"Clear") != nil {
-                    if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-        {
+                    if coreNiceImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreNiceImages?[randomNiceImage].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
         } }
         else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"Overcast") != nil {
-                    if (coreCloudyImages?[randomCloudyImage].value(forKey: "image") != nil)
-        {
+                    if coreCloudyImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreCloudyImages?[randomCloudyImage].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreCloudyImages?[randomCloudyImage].value(forKey: "image") as? Data)!)
         } }
         else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"Fog") != nil {
-                    if (coreCloudyImages?[randomCloudyImage].value(forKey: "image") != nil)
-        {
+                    if coreCloudyImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreCloudyImages?[randomCloudyImage].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreCloudyImages?[randomCloudyImage].value(forKey: "image") as? Data)!)
         } }
         else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"Rain") != nil {
-                    if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
-        {
+                    if coreRainImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreRainImages?[randomRainImage].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
         } }
         else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"storm") != nil {
-                    if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
-        {
+                    if coreRainImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreRainImages?[randomRainImage].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
         } }
         else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"hurricane") != nil {
-                    if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
-        {
+                    if coreRainImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreRainImages?[randomRainImage].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
         } }
         else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"showers") != nil {
-                    if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
-        {
+                    if coreRainImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreRainImages?[randomRainImage].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
         } }
         else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"Thunderstorm") != nil {
-                    if (coreLightningImages?[randomLightningImage].value(forKey: "image") != nil)
-        {
+                    if coreLightningImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreLightningImages?[randomLightningImage].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreLightningImages?[randomLightningImage].value(forKey: "image") as? Data)!)
         } }
         else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"NA") != nil {
-                    if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-        {
+                    if coreNiceImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreNiceImages?[randomNiceImage].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
         } }
         else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"") != nil {
-                    if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-        {
+                    if coreNiceImages?.count == 0
+        { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreNiceImages?[randomNiceImage].value(forKey: "image")) != nil {
             dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
         } }
             
         // 80 && < 90
         else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"Clouds") != nil {
-                    if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-        {
-            dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
-        } }
+                if coreNiceImages?.count == 0
+            { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreNiceImages?[randomNiceImage].value(forKey: "image")) != nil {
+                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
+            } }
         else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"Cloudy") != nil {
-                    if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-        {
-            dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
-        } }
+                if coreNiceImages?.count == 0
+            { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreNiceImages?[randomNiceImage].value(forKey: "image")) != nil {
+                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
+            } }
         else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"Fair") != nil {
-                    if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-        {
-            dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
-        } }
+                if coreNiceImages?.count == 0
+            { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreNiceImages?[randomNiceImage].value(forKey: "image")) != nil {
+                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
+            } }
         else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"Clear") != nil {
-                    if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-        {
-            dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
-        } }
+                if coreNiceImages?.count == 0
+            { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreNiceImages?[randomNiceImage].value(forKey: "image")) != nil {
+                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
+            } }
         else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"Overcast") != nil {
-                    if (coreCloudyImages?[randomCloudyImage].value(forKey: "image") != nil)
-        {
-            dogImageView.image = UIImage(data: (coreCloudyImages?[randomCloudyImage].value(forKey: "image") as? Data)!)
-        } }
+                if coreCloudyImages?.count == 0
+            { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreCloudyImages?[randomCloudyImage].value(forKey: "image")) != nil {
+                dogImageView.image = UIImage(data: (coreCloudyImages?[randomCloudyImage].value(forKey: "image") as? Data)!)
+            } }
         else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"Fog") != nil {
-                    if (coreCloudyImages?[randomCloudyImage].value(forKey: "image") != nil)
-        {
-            dogImageView.image = UIImage(data: (coreCloudyImages?[randomCloudyImage].value(forKey: "image") as? Data)!)
-        } }
+                if coreCloudyImages?.count == 0
+            { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreCloudyImages?[randomCloudyImage].value(forKey: "image")) != nil {
+                dogImageView.image = UIImage(data: (coreCloudyImages?[randomCloudyImage].value(forKey: "image") as? Data)!)
+            } }
         else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"Rain") != nil {
-                    if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
-        {
-            dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
-        } }
+                if coreRainImages?.count == 0
+            { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreRainImages?[randomRainImage].value(forKey: "image")) != nil {
+                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
+            } }
         else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"storm") != nil {
-                    if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
-        {
-            dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
-        } }
+                if coreRainImages?.count == 0
+            { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreRainImages?[randomRainImage].value(forKey: "image")) != nil {
+                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
+            } }
         else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"hurricane") != nil {
-                    if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
-        {
-            dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
-        } }
+                if coreRainImages?.count == 0
+            { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreRainImages?[randomRainImage].value(forKey: "image")) != nil {
+                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
+            } }
         else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"showers") != nil {
-                    if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
-        {
-            dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
-        } }
+                if coreRainImages?.count == 0
+            { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreRainImages?[randomRainImage].value(forKey: "image")) != nil {
+                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
+            } }
         else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"Thunderstorm") != nil {
-                    if (coreLightningImages?[randomLightningImage].value(forKey: "image") != nil)
-        {
-            dogImageView.image = UIImage(data: (coreLightningImages?[randomLightningImage].value(forKey: "image") as? Data)!)
-        } }
+                if coreLightningImages?.count == 0
+            { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreLightningImages?[randomLightningImage].value(forKey: "image")) != nil {
+                dogImageView.image = UIImage(data: (coreLightningImages?[randomLightningImage].value(forKey: "image") as? Data)!)
+            } }
         else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"NA") != nil {
-                    if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-        {
-            dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
-        } }
+                if coreNiceImages?.count == 0
+            { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreNiceImages?[randomNiceImage].value(forKey: "image")) != nil {
+                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
+            } }
         else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"") != nil {
-                    if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-        {
-            dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
-        } }
+                if coreNiceImages?.count == 0
+            { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreNiceImages?[randomNiceImage].value(forKey: "image")) != nil {
+                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
+            } }
             
             
         // > 90
         else if theValue! >= 90 && theCondition.range(of:"Clouds") != nil {
-                    if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-        {
-            dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
-        } }
+            if coreNiceImages?.count == 0
+            { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreNiceImages?[randomNiceImage].value(forKey: "image")) != nil {
+                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
+            } }
         else if theValue! >= 90 && theCondition.range(of:"Cloudy") != nil {
-                    if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-        {
-            dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
-        } }
+            if coreNiceImages?.count == 0
+            { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreNiceImages?[randomNiceImage].value(forKey: "image")) != nil {
+                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
+            } }
         else if theValue! >= 90 && theCondition.range(of:"Fair") != nil {
-                    if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-        {
-            dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
-        } }
+            if coreNiceImages?.count == 0
+            { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreNiceImages?[randomNiceImage].value(forKey: "image")) != nil {
+                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
+            } }
         else if theValue! >= 90 && theCondition.range(of:"Clear") != nil {
-                    if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-        {
-            dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
-        } }
+            if coreNiceImages?.count == 0
+            { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreNiceImages?[randomNiceImage].value(forKey: "image")) != nil {
+                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
+            } }
         else if theValue! >= 90 && theCondition.range(of:"Overcast") != nil {
-                    if (coreCloudyImages?[randomCloudyImage].value(forKey: "image") != nil)
-        {
-            dogImageView.image = UIImage(data: (coreCloudyImages?[randomCloudyImage].value(forKey: "image") as? Data)!)
-        } }
+            if coreCloudyImages?.count == 0
+            { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreCloudyImages?[randomCloudyImage].value(forKey: "image")) != nil {
+                dogImageView.image = UIImage(data: (coreCloudyImages?[randomCloudyImage].value(forKey: "image") as? Data)!)
+            } }
         else if theValue! >= 90 && theCondition.range(of:"Fog") != nil {
-                    if (coreCloudyImages?[randomCloudyImage].value(forKey: "image") != nil)
-        {
-            dogImageView.image = UIImage(data: (coreCloudyImages?[randomCloudyImage].value(forKey: "image") as? Data)!)
-        } }
+            if coreCloudyImages?.count == 0
+            { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreCloudyImages?[randomCloudyImage].value(forKey: "image")) != nil {
+                dogImageView.image = UIImage(data: (coreCloudyImages?[randomCloudyImage].value(forKey: "image") as? Data)!)
+            } }
         else if theValue! >= 90 && theCondition.range(of:"Rain") != nil {
-                    if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
-        {
-            dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
-        } }
+            if coreRainImages?.count == 0
+            { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreRainImages?[randomRainImage].value(forKey: "image")) != nil {
+                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
+            } }
         else if theValue! >= 90 && theCondition.range(of:"storm") != nil {
-                    if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
-        {
-            dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
-        } }
+            if coreRainImages?.count == 0
+            { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreRainImages?[randomRainImage].value(forKey: "image")) != nil {
+                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
+            } }
         else if theValue! >= 90 && theCondition.range(of:"hurricane") != nil {
-                    if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
-        {
-            dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
-        } }
+            if coreRainImages?.count == 0
+            { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreRainImages?[randomRainImage].value(forKey: "image")) != nil {
+                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
+            } }
         else if theValue! >= 90 && theCondition.range(of:"showers") != nil {
-                    if (coreRainImages?[randomRainImage].value(forKey: "image") != nil)
-        {
-            dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
-        } }
+            if coreRainImages?.count == 0
+            { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreRainImages?[randomRainImage].value(forKey: "image")) != nil {
+                dogImageView.image = UIImage(data: (coreRainImages?[randomRainImage].value(forKey: "image") as? Data)!)
+            } }
         else if theValue! >= 90 && theCondition.range(of:"Thunderstorm") != nil {
-                    if (coreLightningImages?[randomLightningImage].value(forKey: "image") != nil)
-        {
-            dogImageView.image = UIImage(data: (coreLightningImages?[randomLightningImage].value(forKey: "image") as? Data)!)
-        } }
+            if coreLightningImages?.count == 0
+            { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreLightningImages?[randomLightningImage].value(forKey: "image")) != nil {
+                dogImageView.image = UIImage(data: (coreLightningImages?[randomLightningImage].value(forKey: "image") as? Data)!)
+            } }
         else if theValue! >= 90 && theCondition.range(of:"NA") != nil {
-                    if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-        {
-            dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
-        } }
+            if coreNiceImages?.count == 0
+            { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreNiceImages?[randomNiceImage].value(forKey: "image")) != nil {
+                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
+            } }
         else if theValue! >= 90 && theCondition.range(of:"") != nil {
-                    if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-        {
-            dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
-        } }
+            if coreNiceImages?.count == 0
+            { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreNiceImages?[randomNiceImage].value(forKey: "image")) != nil {
+                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
+            } }
         
         else {
-                    if (coreNiceImages?[randomNiceImage].value(forKey: "image") != nil)
-        {
-            dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
-        }
-        }
+            if coreNiceImages?.count == 0
+            { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreNiceImages?[randomNiceImage].value(forKey: "image")) != nil {
+                dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
+            } }
         }
     
 
