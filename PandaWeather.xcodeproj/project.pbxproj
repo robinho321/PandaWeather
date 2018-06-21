@@ -43,6 +43,7 @@
 		A977881E2027925700EB125F /* photoFolderTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A977881D2027925700EB125F /* photoFolderTableViewController.swift */; };
 		A9930F7B201506FB00E4D644 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9930F7A201506FB00E4D644 /* Date.swift */; };
 		A9A97E671F5543360046B1AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9A97E661F5543360046B1AD /* Assets.xcassets */; };
+		A9AB9DCB20D612A90055A792 /* WeatherTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9AB9DCA20D612A90055A792 /* WeatherTableViewController.swift */; };
 		A9C752C31FC248DD008002C5 /* AdminPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C752C21FC248DD008002C5 /* AdminPasswordViewController.swift */; };
 		A9E0A20C1FF94C3B00ECD178 /* SyncDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E0A20B1FF94C3B00ECD178 /* SyncDate.swift */; };
 		A9E357D61F550D1200F9EDA8 /* termsAndConditionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E357D51F550D1200F9EDA8 /* termsAndConditionsViewController.swift */; };
@@ -91,6 +92,7 @@
 		A977881D2027925700EB125F /* photoFolderTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = photoFolderTableViewController.swift; sourceTree = "<group>"; };
 		A9930F7A201506FB00E4D644 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		A9A97E661F5543360046B1AD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A9AB9DCA20D612A90055A792 /* WeatherTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherTableViewController.swift; sourceTree = "<group>"; };
 		A9C752C21FC248DD008002C5 /* AdminPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminPasswordViewController.swift; sourceTree = "<group>"; };
 		A9E0A20B1FF94C3B00ECD178 /* SyncDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncDate.swift; sourceTree = "<group>"; };
 		A9E357D51F550D1200F9EDA8 /* termsAndConditionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = termsAndConditionsViewController.swift; sourceTree = "<group>"; };
@@ -244,6 +246,7 @@
 			isa = PBXGroup;
 			children = (
 				81BA814C1A49DA1800E65899 /* ViewController.swift */,
+				A9AB9DCA20D612A90055A792 /* WeatherTableViewController.swift */,
 				A916C1221F4FDB080057A09C /* SettingsTableViewController.swift */,
 				A977881D2027925700EB125F /* photoFolderTableViewController.swift */,
 				A9E357D51F550D1200F9EDA8 /* termsAndConditionsViewController.swift */,
@@ -438,6 +441,7 @@
 				A9174E3120280B8800DB6BCE /* NiceCVC.swift in Sources */,
 				A9174E38202836AC00DB6BCE /* cloudyCell.swift in Sources */,
 				81BA814D1A49DA1800E65899 /* ViewController.swift in Sources */,
+				A9AB9DCB20D612A90055A792 /* WeatherTableViewController.swift in Sources */,
 				A91ACE521F9438980082401A /* PandaImage.swift in Sources */,
 				A9174E36202835DA00DB6BCE /* CloudyCVC.swift in Sources */,
 				A9174E4420283CB100DB6BCE /* lightningCell.swift in Sources */,
