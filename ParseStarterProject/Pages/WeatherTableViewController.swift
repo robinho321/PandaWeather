@@ -89,7 +89,7 @@ class WeatherTableViewController: UITableViewController {
             print("\(day0[0])")
             
             //make the tableview background change if day0 is "nighttime" or "daytime"
-            if [day0[0] as! String].contains("Tonight") {
+            if [day0[0] as! String].contains("night") || [day0[0] as! String].contains("Tonight") || [day0[0] as! String].contains("Overnight") {
                 tableView.tableFooterView = UIView(frame: CGRect.zero)
                 let backgroundImage = UIImage(named: "nighttime")
                 let imageView = UIImageView(image: backgroundImage)
@@ -108,6 +108,7 @@ class WeatherTableViewController: UITableViewController {
                 detailsLabelTen.textColor = UIColor.white
                 detailsLabelEleven.textColor = UIColor.white
                 detailsLabelTwelve.textColor = UIColor.white
+                
             
             } else {
                 tableView.tableFooterView = UIView(frame: CGRect.zero)

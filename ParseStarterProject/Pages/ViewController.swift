@@ -14,13 +14,7 @@ import AddressBookUI
 import CoreData
 import Photos
 
-class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDelegate, SettingsTableViewControllerDelegate, WeatherTableViewControllerDelegate
-/*, CustomizePhotosViewControllerDelegate*/ {
-    
-//    func close() {
-//            self.dismiss(animated: true, completion: nil)
-//            print("\("Will is awesome")")
-//    }
+class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDelegate, SettingsTableViewControllerDelegate, WeatherTableViewControllerDelegate {
     
     func didClose(controller: SettingsTableViewController) {
         self.dismiss(animated: true, completion: nil)
@@ -46,10 +40,6 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
             let weatherTVC: WeatherTableViewController = navigationController.viewControllers[0] as! WeatherTableViewController
             weatherTVC.delegate = self
             }
-        
-//        if segue.identifier == "openCustomizePhotos" {
-//            segue.photoFolderTableViewController.someSegueCouldHappen = true
-//        }
         
     }
     
@@ -121,7 +111,6 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var topBackgroundView: UIView!
     @IBOutlet weak var setCurrentLocationView: UIButton!
-    @IBOutlet weak var weatherLabel: UILabel!
     @IBOutlet weak var weatherImageView: UIImageView!
     
     @IBOutlet weak var sevenDayDateLabel: UILabel!
@@ -152,6 +141,24 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
     @IBOutlet weak var sevenDaySevenWeatherImageView: UIImageView!
     @IBOutlet weak var sevenDaySevenHighLowTempLabel: UILabel!
     
+    @IBAction func weatherErrorInfoButton(_ sender: UIButton) {
+        let alert = UIAlertController(title: "See a Cloud with a Question Mark?", message: "The weather service weather.gov has outages sometimes. If you see this, please email me at pandapupgram@gmail.com, so I can forward your email to my POC. Thanks!", preferredStyle: UIAlertControllerStyle.alert)
+        
+        let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        
+        alert.addAction(cancelAction)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    @IBAction func tempErrorInfoButton(_ sender: UIButton) {
+        let alert = UIAlertController(title: "See 'NA', '°', or No Temperature?" , message: "The weather service weather.gov has outages sometimes. If you see this, please email me at pandapupgram@gmail.com, so I can forward your email to my POC. Thanks!", preferredStyle: UIAlertControllerStyle.alert)
+        
+        let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        
+        alert.addAction(cancelAction)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     @IBOutlet weak var walkMeLabel: UILabel!
     @IBAction func dropWisdomButton(_ sender: UIButton) {
 //        buttonIsSelected = !buttonIsSelected
@@ -179,16 +186,6 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         //Hide search bar
         searchBar.resignFirstResponder()
         dismiss(animated: true, completion: nil)
-        
-        //Spinner Activity indicator
-//        let activityIndicator = UIActivityIndicatorView()
-//        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge
-//        activityIndicator.center = self.view.center
-//        activityIndicator.hidesWhenStopped = true
-//
-//        activityIndicator.startAnimating()
-//
-//        self.view.addSubview(activityIndicator)
         
         //Create the search request
         let address = searchBar.text
@@ -770,14 +767,16 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
     }
     
     //USER IMAGE FETCH
-    func getUserImage(temperature: String, condition: String) {
-
+    func getUserImage(temperature: String?, condition: String) {
+        
         //getUserImage func input Strings
-        let theValue = Double(temperature)
+        let theValue = Double(temperature!)
         let theCondition = condition
-
+        
         print("theValue: " + "\(String(describing: theValue))")
         print("condition: " + "\(theCondition)")
+        
+        if theValue != nil {
 
             //<32 degreesF
         if theValue! < 32 && theCondition.range(of:"Clouds") != nil {
@@ -1023,7 +1022,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         else if theValue! >= 90 && theCondition.range(of:"") != nil {
             self.FetchNiceWeatherCustomAlbumPhotos()
         }
-
+        }
         else {
             self.FetchNiceWeatherCustomAlbumPhotos()
         }
@@ -1032,7 +1031,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
 //    typealias CompletionHandler = (_ success:Bool) -> Void
     
     //PANDA IMAGE FETCH
-    func getPandaImage(temperature: String, condition: String) {
+    func getPandaImage(temperature: String?, condition: String) {
         
         //NICE
         var coreNiceImages = fetchCoreImage("active", "nice")
@@ -1061,22 +1060,24 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         //should change these to switch 'condition' { case '': statement case '': statement }
         
         //getPandaImage func input Strings
-        let theValue = Double(temperature)
+        let theValue = Double(temperature!)
         let theCondition = condition
         
         print("theValue: " + "\(String(describing: theValue))")
         print("condition: " + "\(theCondition)")
         
+        if theValue != nil {
+        
         //this is really bad code. should put the else statement in the fetch, so can remove here.
         // Temperature is nil
-        if theValue == nil {
-            if coreColdImages?.count == 0
-            { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreColdImages?[randomColdImage].value(forKey: "image")) != nil {
-                dogImageView.image = UIImage(data: (coreColdImages?[randomColdImage].value(forKey: "image") as? Data)!)
-            } }
+//        if theValue == nil {
+//            if coreColdImages?.count == 0
+//            { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreColdImages?[randomColdImage].value(forKey: "image")) != nil {
+//                dogImageView.image = UIImage(data: (coreColdImages?[randomColdImage].value(forKey: "image") as? Data)!)
+//            } }
         
         //<32 degreesF
-        else if theValue! < 32 && theCondition.range(of:"Clouds") != nil {
+        if theValue! < 32 && theCondition.range(of:"Clouds") != nil {
             if coreColdImages?.count == 0
             { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreColdImages?[randomColdImage].value(forKey: "image")) != nil {
                 dogImageView.image = UIImage(data: (coreColdImages?[randomColdImage].value(forKey: "image") as? Data)!)
@@ -1473,6 +1474,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
             { dogImageView.image = #imageLiteral(resourceName: "smiling") } else if (coreNiceImages?[randomNiceImage].value(forKey: "image")) != nil {
                 dogImageView.image = UIImage(data: (coreNiceImages?[randomNiceImage].value(forKey: "image") as? Data)!)
             } }
+        }
         
         else {
             if coreNiceImages?.count == 0
@@ -1502,7 +1504,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                 
                 let currentObservation = json["currentobservation"] as! [String:Any]?
                 let temp: String = currentObservation?["Temp"] as! String
-                let tempDegreesF = temp + "℉"
+                let tempDegreesF = temp + "°"
                 temperatureLabel.text! = tempDegreesF
                 print("tempDegreesF: \(tempDegreesF)")
                 
@@ -1517,12 +1519,8 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                 cityLabel.text! = city
                 print("city: \(city)")
             
+                //save weather details for userdefaults
                 let forecast = json["data"] as! [String:Any]?
-                let weatherDescription: NSArray = forecast!["text"] as! NSArray
-                print("\(weatherDescription[0])")
-                weatherLabel.text! = weatherDescription[0] as! String
-                
-                //save to userdefaults for weather details
                 let myData = NSKeyedArchiver.archivedData(withRootObject: forecast!)
                 defaults.set(myData, forKey: "data")
 
@@ -1711,7 +1709,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                         
                         let currentObservation = json["currentobservation"] as! [String:Any]?
                         let temp: String = currentObservation?["Temp"] as! String
-                        let tempDegreesF = temp + "℉"
+                        let tempDegreesF = temp + "°"
                         self.temperatureLabel.text! = tempDegreesF
                         print("tempDegreesF: \(tempDegreesF)")
                         
@@ -1726,12 +1724,8 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                         self.cityLabel.text! = city
                         print("city: \(city)")
                         
+                        //save weather details for userdefaults
                         let forecast = json["data"] as! [String:Any]?
-                        let weatherDescription: NSArray = forecast!["text"] as! NSArray
-                        print("\(weatherDescription[0])")
-                        self.weatherLabel.text! = weatherDescription[0] as! String
-                            
-                        //save to userdefaults for weather details
                         let myData = NSKeyedArchiver.archivedData(withRootObject: forecast!)
                         defaults.set(myData, forKey: "data")
                         print("GEOCODE: \(myData)")
@@ -1900,7 +1894,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                     
                     let currentObservation = json["currentobservation"] as! [String:Any]?
                     let temp: String = currentObservation?["Temp"] as! String
-                    let tempDegreesF = temp + "℉"
+                    let tempDegreesF = temp + "°"
                     temperatureLabel.text! = tempDegreesF
                     print("tempDegreesF: \(tempDegreesF)")
                     
@@ -1915,12 +1909,8 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                     cityLabel.text! = city
                     print("city: \(city)")
                     
+                    //save weather details for userdefaults
                     let forecast = json["data"] as! [String:Any]?
-                    let weatherDescription: NSArray = forecast!["text"] as! NSArray
-                    print("\(weatherDescription[0])")
-                    weatherLabel.text! = weatherDescription[0] as! String
-                    
-                    //set userdefaults for weather details
                     let myData = NSKeyedArchiver.archivedData(withRootObject: forecast!)
                     defaults.set(myData, forKey: "data")
                     print("USERTEMP: \(myData)")
@@ -2108,7 +2098,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                             
                             let currentObservation = json["currentobservation"] as! [String:Any]?
                             let temp: String = currentObservation?["Temp"] as! String
-                            let tempDegreesF = temp + "℉"
+                            let tempDegreesF = temp + "°"
                             self.temperatureLabel.text! = tempDegreesF
                             print("tempDegreesF: \(tempDegreesF)")
                             
@@ -2124,12 +2114,8 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                             self.cityLabel.text! = city
                             print("city: \(city)")
                             
+                            //save weather details for userdefaults
                             let forecast = json["data"] as! [String:Any]?
-                            let weatherDescription: NSArray = forecast!["text"] as! NSArray
-                            print("\(weatherDescription[0])")
-                            self.weatherLabel.text! = weatherDescription[0] as! String
-                            
-                            //set userdefaults for weather details
                             let myData = NSKeyedArchiver.archivedData(withRootObject: forecast!)
                             defaults.set(myData, forKey: "data")
                             print("geocode: \(myData)")
