@@ -87,56 +87,58 @@ class WeatherTableViewController: UITableViewController {
             //day0
             let day0: NSArray = recoveredJsonDay!["startPeriodName"] as! NSArray
             print("\(day0[0])")
-            dayLabel.text! = day0[0] as! String
             
-            let day1: NSArray = recoveredJsonDay!["startPeriodName"] as! NSArray
-            print("\(day1[1])")
-            dayLabelOne.text! = day1[1] as! String
+            //make the tableview background change if day0 is "nighttime" or "daytime"
+            if [day0[0] as! String].contains("Tonight") {
+                tableView.tableFooterView = UIView(frame: CGRect.zero)
+                let backgroundImage = UIImage(named: "nighttime")
+                let imageView = UIImageView(image: backgroundImage)
+                imageView.contentMode = .scaleAspectFill
+                self.tableView.backgroundView = imageView
+                detailsLabel.textColor = UIColor.white
+                detailsLabelOne.textColor = UIColor.white
+                detailsLabelTwo.textColor = UIColor.white
+                detailsLabelThree.textColor = UIColor.white
+                detailsLabelFour.textColor = UIColor.white
+                detailsLabelFive.textColor = UIColor.white
+                detailsLabelSix.textColor = UIColor.white
+                detailsLabelSeven.textColor = UIColor.white
+                detailsLabelEight.textColor = UIColor.white
+                detailsLabelNine.textColor = UIColor.white
+                detailsLabelTen.textColor = UIColor.white
+                detailsLabelEleven.textColor = UIColor.white
+                detailsLabelTwelve.textColor = UIColor.white
             
-            let day2: NSArray = recoveredJsonDay!["startPeriodName"] as! NSArray
-            print("\(day2[2])")
-            dayLabelTwo.text! = day2[2] as! String
-            
-            let day3: NSArray = recoveredJsonDay!["startPeriodName"] as! NSArray
-            print("\(day3[3])")
-            dayLabelThree.text! = day3[3] as! String
-            
-            let day4: NSArray = recoveredJsonDay!["startPeriodName"] as! NSArray
-            print("\(day4[4])")
-            dayLabelFour.text! = day4[4] as! String
-            
-            let day5: NSArray = recoveredJsonDay!["startPeriodName"] as! NSArray
-            print("\(day5[5])")
-            dayLabelFive.text! = day5[5] as! String
-            
-            let day6: NSArray = recoveredJsonDay!["startPeriodName"] as! NSArray
-            print("\(day6[6])")
-            dayLabelSix.text! = day6[6] as! String
-            
-            let day7: NSArray = recoveredJsonDay!["startPeriodName"] as! NSArray
-            print("\(day7[7])")
-            dayLabelSeven.text! = day7[7] as! String
-            
-            let day8: NSArray = recoveredJsonDay!["startPeriodName"] as! NSArray
-            print("\(day8[8])")
-            dayLabelEight.text! = day8[8] as! String
-            
-            let day9: NSArray = recoveredJsonDay!["startPeriodName"] as! NSArray
-            print("\(day9[9])")
-            dayLabelNine.text! = day9[9] as! String
-            
-            let day10: NSArray = recoveredJsonDay!["startPeriodName"] as! NSArray
-            print("\(day10[10])")
-            dayLabelTen.text! = day10[10] as! String
-            
-            let day11: NSArray = recoveredJsonDay!["startPeriodName"] as! NSArray
-            print("\(day11[11])")
-            dayLabelEleven.text! = day11[11] as! String
+            } else {
+                tableView.tableFooterView = UIView(frame: CGRect.zero)
+                let backgroundImage = UIImage(named: "daytime")
+                let imageView = UIImageView(image: backgroundImage)
+                imageView.contentMode = .scaleAspectFill
+                self.tableView.backgroundView = imageView
+            }
+            //continue...
 
-            let day12: NSArray = recoveredJsonDay!["startPeriodName"] as! NSArray
-            print("\(day12[12])")
-            dayLabelTwelve.text! = day12[12] as! String
+            dayLabel.text! = day0[0] as! String
+            dayLabelOne.text! = day0[1] as! String
+            dayLabelTwo.text! = day0[2] as! String
+            dayLabelThree.text! = day0[3] as! String
+            dayLabelFour.text! = day0[4] as! String
+            dayLabelFive.text! = day0[5] as! String
+            dayLabelSix.text! = day0[6] as! String
+            dayLabelSeven.text! = day0[7] as! String
+            dayLabelEight.text! = day0[8] as! String
+            dayLabelNine.text! = day0[9] as! String
+            dayLabelTen.text! = day0[10] as! String
+            dayLabelEleven.text! = day0[11] as! String
+            dayLabelTwelve.text! = day0[12] as! String
             
+        } else {
+            let alert = UIAlertController(title: "No Weather Data Found", message: "Our weather service is currently experiencing issues. Please check back later. Thanks!", preferredStyle: UIAlertControllerStyle.alert)
+            
+            let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+            
+            alert.addAction(cancelAction)
+            self.present(alert, animated: true, completion: nil)
         }
         
         //get the weather details to populate labels from userdefaults
@@ -145,57 +147,27 @@ class WeatherTableViewController: UITableViewController {
             //Details weather details 0
             let weatherDescription0: NSArray = recoveredJson!["text"] as! NSArray
             print("\(weatherDescription0[0])")
+            
             detailsLabel.text! = weatherDescription0[0] as! String
-            
-            let weatherDescription1: NSArray = recoveredJson!["text"] as! NSArray
-            print("\(weatherDescription1[1])")
-            detailsLabelOne.text! = weatherDescription1[1] as! String
-            
-            let weatherDescription2: NSArray = recoveredJson!["text"] as! NSArray
-            print("\(weatherDescription2[2])")
-            detailsLabelTwo.text! = weatherDescription2[2] as! String
-            
-            let weatherDescription3: NSArray = recoveredJson!["text"] as! NSArray
-            print("\(weatherDescription3[3])")
-            detailsLabelThree.text! = weatherDescription3[3] as! String
-            
-            let weatherDescription4: NSArray = recoveredJson!["text"] as! NSArray
-            print("\(weatherDescription4[4])")
-            detailsLabelFour.text! = weatherDescription4[4] as! String
-            
-            let weatherDescription5: NSArray = recoveredJson!["text"] as! NSArray
-            print("\(weatherDescription5[5])")
-            detailsLabelFive.text! = weatherDescription5[5] as! String
-            
-            let weatherDescription6: NSArray = recoveredJson!["text"] as! NSArray
-            print("\(weatherDescription6[6])")
-            detailsLabelSix.text! = weatherDescription6[6] as! String
-            
-            let weatherDescription7: NSArray = recoveredJson!["text"] as! NSArray
-            print("\(weatherDescription7[7])")
-            detailsLabelSeven.text! = weatherDescription7[7] as! String
-            
-            let weatherDescription8: NSArray = recoveredJson!["text"] as! NSArray
-            print("\(weatherDescription8[8])")
-            detailsLabelEight.text! = weatherDescription8[8] as! String
-            
-            let weatherDescription9: NSArray = recoveredJson!["text"] as! NSArray
-            print("\(weatherDescription9[9])")
-            detailsLabelNine.text! = weatherDescription9[9] as! String
-            
-            let weatherDescription10: NSArray = recoveredJson!["text"] as! NSArray
-            print("\(weatherDescription10[10])")
-            detailsLabelTen.text! = weatherDescription10[10] as! String
-
-            let weatherDescription11: NSArray = recoveredJson!["text"] as! NSArray
-            print("\(weatherDescription11[11])")
-            detailsLabelEleven.text! = weatherDescription11[11] as! String
-
-            let weatherDescription12: NSArray = recoveredJson!["text"] as! NSArray
-            print("\(weatherDescription12[12])")
-            detailsLabelTwelve.text! = weatherDescription12[12] as! String
+            detailsLabelOne.text! = weatherDescription0[1] as! String
+            detailsLabelTwo.text! = weatherDescription0[2] as! String
+            detailsLabelThree.text! = weatherDescription0[3] as! String
+            detailsLabelFour.text! = weatherDescription0[4] as! String
+            detailsLabelFive.text! = weatherDescription0[5] as! String
+            detailsLabelSix.text! = weatherDescription0[6] as! String
+            detailsLabelSeven.text! = weatherDescription0[7] as! String
+            detailsLabelEight.text! = weatherDescription0[8] as! String
+            detailsLabelNine.text! = weatherDescription0[9] as! String
+            detailsLabelTen.text! = weatherDescription0[10] as! String
+            detailsLabelEleven.text! = weatherDescription0[11] as! String
+            detailsLabelTwelve.text! = weatherDescription0[12] as! String
         
+        }
     }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell,
+                   forRowAt indexPath: IndexPath) {
+        cell.backgroundColor = UIColor(white: 1, alpha: 0.25)
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){

@@ -1698,6 +1698,10 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                     if let json = try JSONSerialization.jsonObject(with: weatherData!, options:.allowFragments) as? [String:Any] {
                         print(json as Any)
                         
+                        let defaults = UserDefaults()
+//                        defaults.removeObject(forKey: "data")
+//                        defaults.removeObject(forKey: "days")
+                        
                         if json["currentobservation"] != nil {
                         
 //                        let currentObservation = json["currentobservation"] as! [String:Any]?
@@ -1715,7 +1719,6 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                         let condition: String = weatherCondition?["Weather"] as! String
                         self.conditionLabel.text! = condition
                         print("condition: \(condition)")
-                            
                         
                         let myLocation = json["location"] as! [String:Any]?
                         let city: String = myLocation?["areaDescription"] as! String
@@ -1727,6 +1730,13 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                         let weatherDescription: NSArray = forecast!["text"] as! NSArray
                         print("\(weatherDescription[0])")
                         self.weatherLabel.text! = weatherDescription[0] as! String
+                            
+                        //save to userdefaults for weather details
+                        let myData = NSKeyedArchiver.archivedData(withRootObject: forecast!)
+                        defaults.set(myData, forKey: "data")
+                        print("GEOCODE: \(myData)")
+                        
+                        //continue...
                         
                         self.getPandaImage(temperature: temp, condition: condition)
                         self.getWeatherIcon(theImageView: self.weatherImageView, theCondition: condition)
@@ -1736,6 +1746,11 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                         let sevenDayDateDescription: NSArray = sevenDayDate!["startPeriodName"] as! NSArray
                         print("\(sevenDayDateDescription[1])")
                         print("\(sevenDayDateDescription[12])")
+                            
+                        //set userdefaults for day details
+                        let myDataDays = NSKeyedArchiver.archivedData(withRootObject: sevenDayDate!)
+                        defaults.set(myDataDays, forKey: "days")
+                        //continue...
                         
                         let dateCount = sevenDayDateDescription.count
                         print("dateCount: " + "\(dateCount)")
@@ -1908,6 +1923,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                     //set userdefaults for weather details
                     let myData = NSKeyedArchiver.archivedData(withRootObject: forecast!)
                     defaults.set(myData, forKey: "data")
+                    print("USERTEMP: \(myData)")
                 
                     //continue...
                     
@@ -2081,6 +2097,8 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                     if let json = try JSONSerialization.jsonObject(with: weatherData!, options:.allowFragments) as? [String:Any] {
                         print(json as Any)
                         
+                        let defaults = UserDefaults()
+                        
                         if json["currentobservation"] != nil {
                             
                             //let currentObservation = json["currentobservation"] as! [String:Any]?
@@ -2111,6 +2129,13 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                             print("\(weatherDescription[0])")
                             self.weatherLabel.text! = weatherDescription[0] as! String
                             
+                            //set userdefaults for weather details
+                            let myData = NSKeyedArchiver.archivedData(withRootObject: forecast!)
+                            defaults.set(myData, forKey: "data")
+                            print("geocode: \(myData)")
+                            
+                            //continue...
+                            
                             self.getUserImage(temperature: temp, condition: condition)
                             self.getWeatherIcon(theImageView: self.weatherImageView, theCondition: condition)
                             
@@ -2119,6 +2144,11 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                             let sevenDayDateDescription: NSArray = sevenDayDate!["startPeriodName"] as! NSArray
                             print("\(sevenDayDateDescription[1])")
                             print("\(sevenDayDateDescription[12])")
+                            
+                            //set userdefaults for day details
+                            let myDataDays = NSKeyedArchiver.archivedData(withRootObject: sevenDayDate!)
+                            defaults.set(myDataDays, forKey: "days")
+                            //continue...
                             
                             let dateCount = sevenDayDateDescription.count
                             print("dateCount: " + "\(dateCount)")
