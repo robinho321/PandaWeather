@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		26C958675A227F685B785A23 /* Pods_Panda_Weather.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1466C732C57DC94F0A600E5D /* Pods_Panda_Weather.framework */; };
+		03E6EF6384892D9CD4752356 /* Pods_PandaWeather.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 348B114D280418E1BE86A0C6 /* Pods_PandaWeather.framework */; };
 		8136E54C1CB4D7DD0011D421 /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8136E54B1CB4D7DD0011D421 /* Launch.storyboard */; };
 		81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA814A1A49DA1800E65899 /* AppDelegate.swift */; };
 		81BA814D1A49DA1800E65899 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA814C1A49DA1800E65899 /* ViewController.swift */; };
@@ -16,7 +16,6 @@
 		81BA81791A49E0DB00E65899 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA81781A49E0DB00E65899 /* AudioToolbox.framework */; };
 		81BA817B1A49E0E500E65899 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817A1A49E0E500E65899 /* SystemConfiguration.framework */; };
 		8374E1021D9AB18E00E7A0B7 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8374E1011D9AB18E00E7A0B7 /* libsqlite3.tbd */; };
-		8374E1041D9AB24200E7A0B7 /* libstdc++.6.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8374E1031D9AB24200E7A0B7 /* libstdc++.6.tbd */; };
 		A90AAC8F1F3FDC470077243C /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A90AAC8E1F3FDC470077243C /* MapKit.framework */; };
 		A916C1231F4FDB080057A09C /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A916C1221F4FDB080057A09C /* SettingsTableViewController.swift */; };
 		A9174E3120280B8800DB6BCE /* NiceCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9174E3020280B8800DB6BCE /* NiceCVC.swift */; };
@@ -52,9 +51,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1466C732C57DC94F0A600E5D /* Pods_Panda_Weather.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Panda_Weather.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		2F33022DAF607C2FF769A72D /* Pods-Panda Weather.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Panda Weather.release.xcconfig"; path = "Pods/Target Support Files/Pods-Panda Weather/Pods-Panda Weather.release.xcconfig"; sourceTree = "<group>"; };
-		4FAC3FF331B89D2371D6E043 /* Pods-Panda Weather.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Panda Weather.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Panda Weather/Pods-Panda Weather.debug.xcconfig"; sourceTree = "<group>"; };
+		348B114D280418E1BE86A0C6 /* Pods_PandaWeather.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PandaWeather.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		38D8C8CE194E8F88588A8B93 /* Pods-PandaWeather.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PandaWeather.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PandaWeather/Pods-PandaWeather.debug.xcconfig"; sourceTree = "<group>"; };
 		8136E54B1CB4D7DD0011D421 /* Launch.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Launch.storyboard; sourceTree = "<group>"; };
 		814C3AC91B69877600E307BB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		81BA81451A49DA1800E65899 /* PandaWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PandaWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -65,7 +63,6 @@
 		81BA81781A49E0DB00E65899 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		81BA817A1A49E0E500E65899 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		8374E1011D9AB18E00E7A0B7 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
-		8374E1031D9AB24200E7A0B7 /* libstdc++.6.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.tbd"; path = "usr/lib/libstdc++.6.tbd"; sourceTree = SDKROOT; };
 		A90AAC8E1F3FDC470077243C /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		A916C1221F4FDB080057A09C /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		A9174E3020280B8800DB6BCE /* NiceCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NiceCVC.swift; sourceTree = "<group>"; };
@@ -98,6 +95,7 @@
 		A9E357D51F550D1200F9EDA8 /* termsAndConditionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = termsAndConditionsViewController.swift; sourceTree = "<group>"; };
 		A9FBC43C207922DE0089B39F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A9FBC43E207934EA0089B39F /* PandaImageFetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PandaImageFetch.swift; sourceTree = "<group>"; };
+		B177D85A429038EBD109DEF3 /* Pods-PandaWeather.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PandaWeather.release.xcconfig"; path = "Pods/Target Support Files/Pods-PandaWeather/Pods-PandaWeather.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,14 +103,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8374E1041D9AB24200E7A0B7 /* libstdc++.6.tbd in Frameworks */,
 				8374E1021D9AB18E00E7A0B7 /* libsqlite3.tbd in Frameworks */,
 				81BA817B1A49E0E500E65899 /* SystemConfiguration.framework in Frameworks */,
 				81BA81791A49E0DB00E65899 /* AudioToolbox.framework in Frameworks */,
 				A90AAC8F1F3FDC470077243C /* MapKit.framework in Frameworks */,
 				81BA81711A49DB6800E65899 /* Parse.framework in Frameworks */,
 				81BA81701A49DB6800E65899 /* Bolts.framework in Frameworks */,
-				26C958675A227F685B785A23 /* Pods_Panda_Weather.framework in Frameworks */,
+				03E6EF6384892D9CD4752356 /* Pods_PandaWeather.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -165,7 +162,7 @@
 				81BA816B1A49DB6800E65899 /* Bolts.framework */,
 				81BA816C1A49DB6800E65899 /* Parse.framework */,
 				81BA81751A49E0C500E65899 /* System Frameworks */,
-				1466C732C57DC94F0A600E5D /* Pods_Panda_Weather.framework */,
+				348B114D280418E1BE86A0C6 /* Pods_PandaWeather.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -173,7 +170,6 @@
 		81BA81751A49E0C500E65899 /* System Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				8374E1031D9AB24200E7A0B7 /* libstdc++.6.tbd */,
 				81BA817A1A49E0E500E65899 /* SystemConfiguration.framework */,
 				81BA81781A49E0DB00E65899 /* AudioToolbox.framework */,
 				8374E1011D9AB18E00E7A0B7 /* libsqlite3.tbd */,
@@ -184,8 +180,8 @@
 		8C6EDFEF3AB08CC727C9B840 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				4FAC3FF331B89D2371D6E043 /* Pods-Panda Weather.debug.xcconfig */,
-				2F33022DAF607C2FF769A72D /* Pods-Panda Weather.release.xcconfig */,
+				38D8C8CE194E8F88588A8B93 /* Pods-PandaWeather.debug.xcconfig */,
+				B177D85A429038EBD109DEF3 /* Pods-PandaWeather.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -287,7 +283,6 @@
 				81BA81421A49DA1800E65899 /* Frameworks */,
 				81BA81431A49DA1800E65899 /* Resources */,
 				AA2ABA8D1AA575B112D8DBC5 /* [CP] Embed Pods Frameworks */,
-				4019C436B2F00B9AEF1D69B9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -363,26 +358,11 @@
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Panda Weather-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-PandaWeather-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		4019C436B2F00B9AEF1D69B9 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Panda Weather/Pods-Panda Weather-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		AA2ABA8D1AA575B112D8DBC5 /* [CP] Embed Pods Frameworks */ = {
@@ -391,7 +371,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Panda Weather/Pods-Panda Weather-frameworks.sh",
+				"${SRCROOT}/Pods/Target Support Files/Pods-PandaWeather/Pods-PandaWeather-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
@@ -414,7 +394,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Panda Weather/Pods-Panda Weather-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PandaWeather/Pods-PandaWeather-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -577,19 +557,21 @@
 		};
 		81BA81651A49DA1800E65899 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4FAC3FF331B89D2371D6E043 /* Pods-Panda Weather.debug.xcconfig */;
+			baseConfigurationReference = 38D8C8CE194E8F88588A8B93 /* Pods-PandaWeather.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 977XR9D7BN;
+				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Resources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = robin.snowapp;
 				PRODUCT_NAME = PandaWeather;
+				SWIFT_REFLECTION_METADATA_LEVEL = all;
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -598,19 +580,21 @@
 		};
 		81BA81661A49DA1800E65899 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2F33022DAF607C2FF769A72D /* Pods-Panda Weather.release.xcconfig */;
+			baseConfigurationReference = B177D85A429038EBD109DEF3 /* Pods-PandaWeather.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 977XR9D7BN;
+				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Resources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = robin.snowapp;
 				PRODUCT_NAME = PandaWeather;
+				SWIFT_REFLECTION_METADATA_LEVEL = all;
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
