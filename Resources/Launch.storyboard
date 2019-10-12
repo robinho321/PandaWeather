@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
-    <device id="retina5_5" orientation="portrait">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -18,33 +18,46 @@
                         <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jvs-lz-vIt">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pandaDog" translatesAutoresizingMaskIntoConstraints="NO" id="jza-6r-OPa">
-                                        <rect key="frame" x="91.666666666666686" y="207.66666666666663" width="230" height="230"/>
+                                        <rect key="frame" x="72.666666666666686" y="246" width="230" height="230"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="230" id="8Xw-2O-0gT"/>
-                                            <constraint firstAttribute="height" constant="230" id="lwS-pa-NFt"/>
+                                            <constraint firstAttribute="width" constant="230" id="8Xw-2O-0gT">
+                                                <variation key="heightClass=regular-widthClass=regular" constant="400"/>
+                                            </constraint>
+                                            <constraint firstAttribute="height" constant="230" id="lwS-pa-NFt">
+                                                <variation key="heightClass=regular-widthClass=regular" constant="400"/>
+                                            </constraint>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Panda Puppy Weather" textAlignment="center" lineBreakMode="middleTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="GJd-Yh-RWb">
-                                        <rect key="frame" x="61.666666666666657" y="441" width="291" height="84"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weather Radar Puppy" textAlignment="center" lineBreakMode="middleTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="GJd-Yh-RWb">
+                                        <rect key="frame" x="42" y="479" width="291" height="84"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="84" id="10o-6V-sD8"/>
-                                            <constraint firstAttribute="width" constant="291" id="fbJ-Py-O46"/>
+                                            <constraint firstAttribute="height" constant="84" id="10o-6V-sD8">
+                                                <variation key="heightClass=regular-widthClass=regular" constant="150"/>
+                                            </constraint>
+                                            <constraint firstAttribute="width" constant="291" id="fbJ-Py-O46">
+                                                <variation key="heightClass=regular-widthClass=regular" constant="350"/>
+                                            </constraint>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="35"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" type="system" pointSize="45"/>
+                                        </variation>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="0.99648036333914525" blue="0.96871738017046882" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstItem="GJd-Yh-RWb" firstAttribute="centerY" secondItem="Jvs-lz-vIt" secondAttribute="centerY" constant="115" id="Xut-y3-1Lk"/>
+                                    <constraint firstItem="GJd-Yh-RWb" firstAttribute="centerY" secondItem="Jvs-lz-vIt" secondAttribute="centerY" constant="115" id="Xut-y3-1Lk">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="210"/>
+                                    </constraint>
                                     <constraint firstItem="jza-6r-OPa" firstAttribute="centerY" secondItem="Jvs-lz-vIt" secondAttribute="centerY" constant="-45" id="dgC-xO-phc"/>
                                     <constraint firstItem="jza-6r-OPa" firstAttribute="centerX" secondItem="Jvs-lz-vIt" secondAttribute="centerX" id="rXb-1t-Hiv"/>
                                     <constraint firstItem="GJd-Yh-RWb" firstAttribute="centerX" secondItem="Jvs-lz-vIt" secondAttribute="centerX" id="s54-cz-36N"/>

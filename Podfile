@@ -6,6 +6,7 @@ target 'PandaWeather' do
   use_frameworks!
 
   # Pods for Panda Weather
+  pod 'SwiftSoup'
   pod 'FacebookCore', '~> 0.5.0'
   pod 'FacebookLogin', '~> 0.5.0'
   pod 'FacebookShare', '~> 0.5.0'

@@ -39,6 +39,8 @@
 		A945C5881FE5E6730063DFAF /* AdminAddImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A945C5871FE5E6730063DFAF /* AdminAddImage.swift */; };
 		A946E95D2032D50600BF49CB /* SnowCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A946E95C2032D50600BF49CB /* SnowCVC.swift */; };
 		A946E95F2032D54E00BF49CB /* snowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A946E95E2032D54E00BF49CB /* snowCell.swift */; };
+		A976E5A92320BE40006AA2F5 /* HurricaneTrackerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A976E5A82320BE40006AA2F5 /* HurricaneTrackerViewController.swift */; };
+		A976E5AB2320D5B4006AA2F5 /* StormListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A976E5AA2320D5B4006AA2F5 /* StormListTableViewController.swift */; };
 		A977881E2027925700EB125F /* photoFolderTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A977881D2027925700EB125F /* photoFolderTableViewController.swift */; };
 		A9930F7B201506FB00E4D644 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9930F7A201506FB00E4D644 /* Date.swift */; };
 		A9A97E671F5543360046B1AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9A97E661F5543360046B1AD /* Assets.xcassets */; };
@@ -86,6 +88,8 @@
 		A945C5871FE5E6730063DFAF /* AdminAddImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminAddImage.swift; sourceTree = "<group>"; };
 		A946E95C2032D50600BF49CB /* SnowCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnowCVC.swift; sourceTree = "<group>"; };
 		A946E95E2032D54E00BF49CB /* snowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = snowCell.swift; sourceTree = "<group>"; };
+		A976E5A82320BE40006AA2F5 /* HurricaneTrackerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HurricaneTrackerViewController.swift; sourceTree = "<group>"; };
+		A976E5AA2320D5B4006AA2F5 /* StormListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StormListTableViewController.swift; sourceTree = "<group>"; };
 		A977881D2027925700EB125F /* photoFolderTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = photoFolderTableViewController.swift; sourceTree = "<group>"; };
 		A9930F7A201506FB00E4D644 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		A9A97E661F5543360046B1AD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -242,6 +246,8 @@
 			isa = PBXGroup;
 			children = (
 				81BA814C1A49DA1800E65899 /* ViewController.swift */,
+				A976E5A82320BE40006AA2F5 /* HurricaneTrackerViewController.swift */,
+				A976E5AA2320D5B4006AA2F5 /* StormListTableViewController.swift */,
 				A9AB9DCA20D612A90055A792 /* WeatherTableViewController.swift */,
 				A916C1221F4FDB080057A09C /* SettingsTableViewController.swift */,
 				A977881D2027925700EB125F /* photoFolderTableViewController.swift */,
@@ -320,6 +326,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -380,6 +387,7 @@
 				"${BUILT_PRODUCTS_DIR}/FacebookLogin/FacebookLogin.framework",
 				"${BUILT_PRODUCTS_DIR}/FacebookShare/FacebookShare.framework",
 				"${BUILT_PRODUCTS_DIR}/Parse/Parse.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftSoup/SwiftSoup.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -391,6 +399,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookLogin.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookShare.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Parse.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftSoup.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -429,8 +438,10 @@
 				A946E95F2032D54E00BF49CB /* snowCell.swift in Sources */,
 				A9174E3420280BF700DB6BCE /* niceCell.swift in Sources */,
 				A945C5881FE5E6730063DFAF /* AdminAddImage.swift in Sources */,
+				A976E5AB2320D5B4006AA2F5 /* StormListTableViewController.swift in Sources */,
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,
 				A9E0A20C1FF94C3B00ECD178 /* SyncDate.swift in Sources */,
+				A976E5A92320BE40006AA2F5 /* HurricaneTrackerViewController.swift in Sources */,
 				A977881E2027925700EB125F /* photoFolderTableViewController.swift in Sources */,
 				A93FB3C61FAC204300E4D5B7 /* SwiftyJSON.swift in Sources */,
 				A93FB3C41FAC202300E4D5B7 /* PandaImages.swift in Sources */,
@@ -567,7 +578,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Resources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = robin.snowapp;
 				PRODUCT_NAME = PandaWeather;
@@ -590,7 +601,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Resources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = robin.snowapp;
 				PRODUCT_NAME = PandaWeather;

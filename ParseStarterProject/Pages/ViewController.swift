@@ -14,7 +14,7 @@ import AddressBookUI
 import CoreData
 import Photos
 
-class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDelegate, SettingsTableViewControllerDelegate, WeatherTableViewControllerDelegate {
+class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDelegate, SettingsTableViewControllerDelegate, WeatherTableViewControllerDelegate, HurricaneTrackerViewControllerDelegate {
     
     func didClose(controller: SettingsTableViewController) {
         self.dismiss(animated: true, completion: nil)
@@ -22,6 +22,11 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
     }
     
     func didCloseAgain(controller: WeatherTableViewController) {
+        self.dismiss(animated: true, completion: nil)
+        print("\("Will is awesome")")
+    }
+    
+    func didCloseOnceMore(controller: HurricaneTrackerViewController) {
         self.dismiss(animated: true, completion: nil)
         print("\("Will is awesome")")
     }
@@ -40,6 +45,12 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
             let weatherTVC: WeatherTableViewController = navigationController.viewControllers[0] as! WeatherTableViewController
             weatherTVC.delegate = self
             }
+        
+        if segue.identifier == "openHurricaneVC" {
+            let navigationController: UINavigationController = segue.destination as! UINavigationController
+            let hurricaneVC: HurricaneTrackerViewController = navigationController.viewControllers[0] as! HurricaneTrackerViewController
+            hurricaneVC.delegate = self
+        }
         
     }
     
@@ -172,6 +183,8 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         }
     }
     
+    @IBOutlet weak var stormButtonView: UIButton!
+    
     @IBOutlet weak var searchButtonView: UIButton!
     @IBAction func searchButton(_ sender: Any) {
         let searchController = UISearchController(searchResultsController: nil)
@@ -228,6 +241,8 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         self.setCurrentLocationView.layer.cornerRadius = 5
         
         self.searchButtonView.layer.cornerRadius = 5
+        
+        self.stormButtonView.layer.cornerRadius = 5
         
         locationManager.requestWhenInUseAuthorization()
         
@@ -2435,16 +2450,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                         sevenDaySevenHighLowTempLabel.text! = "\(sevenDayTempDescription[12])" + " | " + "NA"
                         
                     }
-                    
-                                                //NOT NEEDED, SINCE IMAGE CALLED EARLIER IN FUNC
-                    //Setting the temperature for input string in func getWeatherIcon and getUserImage
-//                    let sevenDayOneWeekTempZero: String = sevenDayTempDescription[0] as! String
-//                    let sevenDayTwoWeekTempOne: String = sevenDayTempDescription[1] as! String
-//                    let sevenDayThreeWeekTempTwo: String = sevenDayTempDescription[2] as! String
-//                    let sevenDayFourWeekTempThree: String = sevenDayTempDescription[3] as! String
-//                    let sevenDayFiveWeekTempFour: String = sevenDayTempDescription[4] as! String
-//                    let sevenDaySixWeekTempFive: String = sevenDayTempDescription[5] as! String
-//                    let sevenDaySevenWeekTempSix: String = sevenDayTempDescription[6] as! String
+
                     
                     //Setting the condition for input string in func getWeatherIcon and getUserImage
                     let sevenDayOneCondition = json["data"] as! [String:Any]?

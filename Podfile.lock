@@ -28,6 +28,7 @@ PODS:
     - Parse/Core (= 1.17.2)
   - Parse/Core (1.17.2):
     - Bolts/Tasks (~> 1.9)
+  - SwiftSoup (1.7.4)
 
 DEPENDENCIES:
   - FacebookCore (~> 0.5.0)
@@ -37,6 +38,7 @@ DEPENDENCIES:
   - FBSDKLoginKit (~> 4.37)
   - FBSDKShareKit (~> 4.37)
   - Parse
+  - SwiftSoup
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -48,6 +50,7 @@ SPEC REPOS:
     - FBSDKLoginKit
     - FBSDKShareKit
     - Parse
+    - SwiftSoup
 
 SPEC CHECKSUMS:
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
@@ -58,7 +61,8 @@ SPEC CHECKSUMS:
   FBSDKLoginKit: 373830c68aa48c9e8f0bfed93a3e32d2ca8963a0
   FBSDKShareKit: 387749259d79e4070ebb304b3fd256e4b4bc4298
   Parse: 3b31a3dd1777b07ee7f0caee32fafbff544483a5
+  SwiftSoup: 92f5b348c131aed8af04f4326db1579ab19fa08c
 
-PODFILE CHECKSUM: 3f7cb4cf7db5fb0950a1ee3eab49c436e2fb1bfc
+PODFILE CHECKSUM: a825d16b0d4bbc2edfdc621dc62713d01ea08cae
 
 COCOAPODS: 1.5.3
