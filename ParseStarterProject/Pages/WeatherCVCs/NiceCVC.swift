@@ -76,16 +76,18 @@ class NiceCVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
                 let request = PHAssetCollectionChangeRequest.creationRequestForAssetCollection(withTitle: albumName)
                 albumPlaceholder = request.placeholderForCreatedAssetCollection
             },
-                                                   completionHandler: {(success:Bool, error:Error?) in
-                                                    if(success){
-                                                        print("Successfully created folder")
-                                                        self.albumFound = true
-                                                        let collection = PHAssetCollection.fetchAssetCollections(withLocalIdentifiers: [albumPlaceholder.localIdentifier], options: nil)
-                                                        self.assetCollection = collection.firstObject!
-                                                    } else {
-                                                        print("Error creating folder")
-                                                        self.albumFound = false
-                                                    }
+                        completionHandler: {(success:Bool, error:Error?) in if(success){
+                            print("Successfully created folder")
+                            self.albumFound = true
+                            let collection = PHAssetCollection.fetchAssetCollections(withLocalIdentifiers: [albumPlaceholder.localIdentifier], options: nil)
+                            
+                            self.assetCollection = collection.firstObject!
+                            
+                        } else {
+                            print("Error creating folder")
+                            self.albumFound = false
+                            
+                            }
             })
         }
     }
@@ -169,20 +171,19 @@ class NiceCVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
     //        return 1
     //    }
     
-    
-    
     //UIImagePickerControllerDelegate Methods
     internal func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]){
         NSLog("in didFinishPickingMediaWithInfo")
-        if let image: UIImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+        if let url: NSURL = info[UIImagePickerControllerImageURL] as? NSURL {
             
             //Implement if allowing user to edit the selected image
             //let editedImage = info.objectForKey("UIImagePickerControllerEditedImage") as UIImage
             
             DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async(execute: {
                 PHPhotoLibrary.shared().performChanges({
-                    let createAssetRequest = PHAssetChangeRequest.creationRequestForAsset(from: image)
-                    let assetPlaceholder = createAssetRequest.placeholderForCreatedAsset
+                
+                    let createAssetRequest = PHAssetChangeRequest.creationRequestForAssetFromImage(atFileURL: url as URL)
+                    let assetPlaceholder = createAssetRequest?.placeholderForCreatedAsset
                     if let albumChangeRequest = PHAssetCollectionChangeRequest(for: self.assetCollection, assets: self.photosAsset) {
                         albumChangeRequest.addAssets([assetPlaceholder!] as NSArray)
                     }

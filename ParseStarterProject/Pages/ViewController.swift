@@ -14,7 +14,7 @@ import AddressBookUI
 import CoreData
 import Photos
 
-class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDelegate, SettingsTableViewControllerDelegate, WeatherTableViewControllerDelegate, HurricaneTrackerViewControllerDelegate {
+class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDelegate, SettingsTableViewControllerDelegate, WeatherTableViewControllerDelegate, HurricaneTrackerViewControllerDelegate, GoesImageViewControllerDelegate {
     
     func didClose(controller: SettingsTableViewController) {
         self.dismiss(animated: true, completion: nil)
@@ -27,6 +27,11 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
     }
     
     func didCloseOnceMore(controller: HurricaneTrackerViewController) {
+        self.dismiss(animated: true, completion: nil)
+        print("\("Will is awesome")")
+    }
+    
+    func didCloseOnceMoreAgain(controller: GoesImageViewController) {
         self.dismiss(animated: true, completion: nil)
         print("\("Will is awesome")")
     }
@@ -50,6 +55,12 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
             let navigationController: UINavigationController = segue.destination as! UINavigationController
             let hurricaneVC: HurricaneTrackerViewController = navigationController.viewControllers[0] as! HurricaneTrackerViewController
             hurricaneVC.delegate = self
+        }
+        
+        if segue.identifier == "openGoesVC" {
+            let navigationController: UINavigationController = segue.destination as! UINavigationController
+            let goesVC: GoesImageViewController = navigationController.viewControllers[0] as! GoesImageViewController
+            goesVC.delegate = self
         }
         
     }
@@ -122,6 +133,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var topBackgroundView: UIView!
     @IBOutlet weak var setCurrentLocationView: UIButton!
+    @IBOutlet weak var getGoesImageView: UIButton!
     @IBOutlet weak var weatherImageView: UIImageView!
     
     @IBOutlet weak var sevenDayDateLabel: UILabel!
@@ -238,6 +250,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         self.topBackgroundView.layer.borderColor = UIColor.white.cgColor
         self.topBackgroundView.layer.borderWidth = 1
         
+        self.getGoesImageView.layer.cornerRadius = 5
         self.setCurrentLocationView.layer.cornerRadius = 5
         
         self.searchButtonView.layer.cornerRadius = 5
@@ -336,7 +349,8 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                          "Sleep. Eat. Play. Repeat!",
                          "Love meeting new friends at the park!",
                          "Can I bring my new stick home?",
-                         "Can I go chase the squirrels outside?"]
+                         "Can I go chase the squirrels outside?",
+                         "Care to join me for a walk?"]
         let randomText = textLabel[Int(arc4random_uniform(UInt32(textLabel.count)))]
         self.walkMeLabel.text! = randomText
     }
@@ -417,9 +431,13 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
             theImageView.image! = #imageLiteral(resourceName: "Nice") }
         
         //cloudy icon
+        else if theCondition.range(of: "Cloudy") != nil {
+            theImageView.image! = #imageLiteral(resourceName: "Cold") }
         else if theCondition.range(of: "Clouds") != nil {
             theImageView.image! = #imageLiteral(resourceName: "Cold") }
         else if theCondition.range(of: "Overcast") != nil {
+            theImageView.image! = #imageLiteral(resourceName: "Cold") }
+        else if theCondition.range(of: "Increasing Clouds") != nil {
             theImageView.image! = #imageLiteral(resourceName: "Cold") }
         else if theCondition.range(of: "Patchy Frost") != nil {
             theImageView.image! = #imageLiteral(resourceName: "Cold") }
@@ -448,6 +466,8 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
             theImageView.image! = #imageLiteral(resourceName: "Snow") }
         
         //raining icon
+        else if theCondition.range(of: "Chance Rain") != nil {
+            theImageView.image! = #imageLiteral(resourceName: "raining1") }
         else if theCondition.range(of: "Rain") != nil {
             theImageView.image! = #imageLiteral(resourceName: "raining1") }
         else if theCondition.range(of: "Drizzle") != nil {
@@ -850,7 +870,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
             self.FetchSnowWeatherCustomAlbumPhotos()
         }
         else if theValue! < 32 && theCondition.range(of:"Smoke") != nil {
-            self.FetchSnowWeatherCustomAlbumPhotos()
+            self.FetchColdWeatherCustomAlbumPhotos()
         }
         else if theValue! < 32 && theCondition.range(of:"Thunderstorm") != nil {
             self.FetchLightningWeatherCustomAlbumPhotos()
@@ -859,36 +879,36 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
             self.FetchLightningWeatherCustomAlbumPhotos()
         }
         else if theValue! < 32 && theCondition.range(of:"Windy") != nil {
-            self.FetchSnowWeatherCustomAlbumPhotos()
+            self.FetchColdWeatherCustomAlbumPhotos()
         }
         else if theValue! < 32 && theCondition.range(of:"Hurricane") != nil {
-            self.FetchSnowWeatherCustomAlbumPhotos()
+            self.FetchColdWeatherCustomAlbumPhotos()
         }
         else if theValue! < 32 && theCondition.range(of: "NA") != nil {
-            self.FetchSnowWeatherCustomAlbumPhotos()
+            self.FetchColdWeatherCustomAlbumPhotos()
         }
         else if theValue! < 32 && theCondition.range(of: "") != nil {
-            self.FetchSnowWeatherCustomAlbumPhotos()
+            self.FetchColdWeatherCustomAlbumPhotos()
         }
 
             // 32 && < 50
         else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"Clouds") != nil {
-            self.FetchColdWeatherCustomAlbumPhotos()
+            self.FetchCloudyWeatherCustomAlbumPhotos()
         }
         else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"Cloudy") != nil {
-            self.FetchColdWeatherCustomAlbumPhotos()
+            self.FetchCloudyWeatherCustomAlbumPhotos()
         }
         else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"Fair") != nil {
             self.FetchColdWeatherCustomAlbumPhotos()
         }
         else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"Ice") != nil {
-            self.FetchColdWeatherCustomAlbumPhotos()
+            self.FetchRainWeatherCustomAlbumPhotos()
         }
         else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"Pellets") != nil {
-            self.FetchColdWeatherCustomAlbumPhotos()
+            self.FetchRainWeatherCustomAlbumPhotos()
         }
         else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"Hail") != nil {
-            self.FetchColdWeatherCustomAlbumPhotos()
+            self.FetchRainWeatherCustomAlbumPhotos()
         }
         else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"Windy") != nil {
             self.FetchColdWeatherCustomAlbumPhotos()
@@ -906,7 +926,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
             self.FetchCloudyWeatherCustomAlbumPhotos()
         }
         else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"Sunny") != nil {
-            self.FetchCloudyWeatherCustomAlbumPhotos()
+            self.FetchNiceWeatherCustomAlbumPhotos()
         }
         else if theValue! >= 32 && theValue! < 50 && theCondition.range(of:"Haze") != nil {
             self.FetchCloudyWeatherCustomAlbumPhotos()
@@ -950,10 +970,10 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
 
             // 50 && < 70
         else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"Clouds") != nil {
-            self.FetchNiceWeatherCustomAlbumPhotos()
+            self.FetchCloudyWeatherCustomAlbumPhotos()
         }
         else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"Cloudy") != nil {
-            self.FetchNiceWeatherCustomAlbumPhotos()
+            self.FetchCloudyWeatherCustomAlbumPhotos()
         }
         else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"Fair") != nil {
             self.FetchNiceWeatherCustomAlbumPhotos()
@@ -983,7 +1003,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
             self.FetchCloudyWeatherCustomAlbumPhotos()
         }
         else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"Windy") != nil {
-            self.FetchCloudyWeatherCustomAlbumPhotos()
+            self.FetchNiceWeatherCustomAlbumPhotos()
         }
         else if theValue! >= 50 && theValue! < 70 && theCondition.range(of:"Rain") != nil {
             self.FetchRainWeatherCustomAlbumPhotos()
@@ -1016,10 +1036,10 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
 
             // 70 && < 80
         else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"Clouds") != nil {
-            self.FetchNiceWeatherCustomAlbumPhotos()
+            self.FetchCloudyWeatherCustomAlbumPhotos()
         }
         else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"Cloudy") != nil {
-            self.FetchNiceWeatherCustomAlbumPhotos()
+            self.FetchCloudyWeatherCustomAlbumPhotos()
         }
         else if theValue! >= 70 && theValue! < 80 && theCondition.range(of:"Fair") != nil {
             self.FetchNiceWeatherCustomAlbumPhotos()
@@ -1081,10 +1101,10 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
 
             // 80 && < 90
         else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"Clouds") != nil {
-            self.FetchNiceWeatherCustomAlbumPhotos()
+            self.FetchCloudyWeatherCustomAlbumPhotos()
         }
         else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"Cloudy") != nil {
-            self.FetchNiceWeatherCustomAlbumPhotos()
+            self.FetchCloudyWeatherCustomAlbumPhotos()
         }
         else if theValue! >= 80 && theValue! < 90 && theCondition.range(of:"Fair") != nil {
             self.FetchNiceWeatherCustomAlbumPhotos()
@@ -1147,10 +1167,10 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
 
             // > 90
         else if theValue! >= 90 && theCondition.range(of:"Clouds") != nil {
-            self.FetchNiceWeatherCustomAlbumPhotos()
+            self.FetchCloudyWeatherCustomAlbumPhotos()
         }
         else if theValue! >= 90 && theCondition.range(of:"Cloudy") != nil {
-            self.FetchNiceWeatherCustomAlbumPhotos()
+            self.FetchCloudyWeatherCustomAlbumPhotos()
         }
         else if theValue! >= 90 && theCondition.range(of:"Fair") != nil {
             self.FetchNiceWeatherCustomAlbumPhotos()
@@ -2021,7 +2041,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                 
                 let sevenDayTemp = json["data"] as! [String:Any]?
                 let sevenDayTempDescription: NSArray = sevenDayTemp!["temperature"] as! NSArray
-                print("\(sevenDayTempDescription[0], sevenDayTempDescription[1])")
+                    print("\((sevenDayTempDescription[0], sevenDayTempDescription[1]))")
                 
                 let tempCount = sevenDayTempDescription.count
                 print("tempCount: " + "\(tempCount)")
@@ -2071,24 +2091,26 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                 
 //                self.getPandaImage(temperature: sevenDayOneWeekTempZero, condition: sevenDayOneConditionDescriptionZero)
                 self.getWeatherIcon(theImageView: sevenDayWeatherImageView, theCondition: sevenDayOneConditionDescriptionZero)
-                
+               print("1st Day condition is: \(sevenDayOneConditionDescriptionZero)")
 //                self.getPandaImage(temperature: sevenDayTwoWeekTempOne, condition: sevenDayTwoConditionDescriptionOne)
                 self.getWeatherIcon(theImageView: sevenDayTwoWeatherImageView, theCondition: sevenDayTwoConditionDescriptionOne)
-                
+                print("2nd Day condition is: \(sevenDayTwoConditionDescriptionOne)")
 //                self.getPandaImage(temperature: sevenDayThreeWeekTempTwo, condition: sevenDayThreeConditionDescriptionTwo)
                 self.getWeatherIcon(theImageView: sevenDayThreeWeatherImageView, theCondition: sevenDayThreeConditionDescriptionTwo)
-                
+                print("3rd Day condition is: \(sevenDayThreeConditionDescriptionTwo)")
 //                self.getPandaImage(temperature: sevenDayFourWeekTempThree, condition: sevenDayFourConditionDescriptionThree)
                 self.getWeatherIcon(theImageView: sevenDayFourWeatherImageView, theCondition: sevenDayFourConditionDescriptionThree)
-                
+                print("4th Day condition is: \(sevenDayFourConditionDescriptionThree)")
 //                self.getPandaImage(temperature: sevenDayFiveWeekTempFour, condition: sevenDayFiveConditionDescriptionFour)
                 self.getWeatherIcon(theImageView: sevenDayFiveWeatherImageView, theCondition: sevenDayFiveConditionDescriptionFour)
-                
+                print("5th Day condition is: \(sevenDayFiveConditionDescriptionFour)")
 //                self.getPandaImage(temperature: sevenDaySixWeekTempFive, condition: sevenDaySixConditionDescriptionFive)
                 self.getWeatherIcon(theImageView: sevenDaySixWeatherImageView, theCondition: sevenDaySixConditionDescriptionFive)
-                
+                print("6th Day condition is: \(sevenDaySixConditionDescriptionFive)")
 //                self.getPandaImage(temperature: sevenDaySevenWeekTempSix, condition: sevenDaySevenConditionDescriptionSix)
                 self.getWeatherIcon(theImageView: sevenDaySevenWeatherImageView, theCondition: sevenDaySevenConditionDescriptionSix)
+                    
+                    print("Last Day condition is: \(sevenDaySevenConditionDescriptionSix)")
             }
             else{
                 print("error")
@@ -2234,7 +2256,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                         
                         let sevenDayTemp = json["data"] as! [String:Any]?
                         let sevenDayTempDescription: NSArray = sevenDayTemp!["temperature"] as! NSArray
-                        print("\(sevenDayTempDescription[0], sevenDayTempDescription[1])")
+                            print("\((sevenDayTempDescription[0], sevenDayTempDescription[1]))")
                         
                         let tempCount = sevenDayTempDescription.count
                         print("tempCount: " + "\(tempCount)")
@@ -2426,7 +2448,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                     
                     let sevenDayTemp = json["data"] as! [String:Any]?
                     let sevenDayTempDescription: NSArray = sevenDayTemp!["temperature"] as! NSArray
-                    print("\(sevenDayTempDescription[0], sevenDayTempDescription[1])")
+                    print("\((sevenDayTempDescription[0], sevenDayTempDescription[1]))")
                     
                     let tempCount = sevenDayTempDescription.count
                     print("tempCount: " + "\(tempCount)")
@@ -2628,7 +2650,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                             
                             let sevenDayTemp = json["data"] as! [String:Any]?
                             let sevenDayTempDescription: NSArray = sevenDayTemp!["temperature"] as! NSArray
-                            print("\(sevenDayTempDescription[0], sevenDayTempDescription[1])")
+                            print("\((sevenDayTempDescription[0], sevenDayTempDescription[1]))")
                             
                             let tempCount = sevenDayTempDescription.count
                             print("tempCount: " + "\(tempCount)")
