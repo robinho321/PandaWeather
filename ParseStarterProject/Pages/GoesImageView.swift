@@ -14,7 +14,7 @@ protocol GoesImageViewControllerDelegate {
     func didCloseOnceMoreAgain(controller: GoesImageViewController)
 }
 
-class GoesImageViewController: UIViewController, StormListTableViewControllerDelegate, UITextFieldDelegate, WKNavigationDelegate {
+class GoesImageViewController: UIViewController, UITextFieldDelegate, WKNavigationDelegate {
     
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var forwardButton: UIButton!
@@ -22,32 +22,28 @@ class GoesImageViewController: UIViewController, StormListTableViewControllerDel
     @IBOutlet weak var urlTextField: UITextField!
     
     //this is where I need to auto-parse HTML storm data
-    func getStormData(controller: StormListTableViewController) {
-        
-        self.dismiss(animated: true, completion: nil)
-        print("\("Got the selected storm data")")
-    }
+//    func getStormData(controller: StormListTableViewController) {
+//
+//        self.dismiss(animated: true, completion: nil)
+//        print("\("Got the selected storm data")")
+//    }
     
     var delegate: GoesImageViewControllerDelegate? = nil
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-        
-        if segue.identifier == "openStormListTVC" {
-            let navigationController: UINavigationController = segue.destination as! UINavigationController
-            let stormListTVC: StormListTableViewController = navigationController.viewControllers[0] as! StormListTableViewController
-            stormListTVC.delegate = self
-        }
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        // Get the new view controller using segue.destinationViewController.
+//        // Pass the selected object to the new view controller.
+//
+//        if segue.identifier == "openStormListTVC" {
+//            let navigationController: UINavigationController = segue.destination as! UINavigationController
+//            let stormListTVC: StormListTableViewController = navigationController.viewControllers[0] as! StormListTableViewController
+//            stormListTVC.delegate = self
+//        }
+//    }
     
     
     @IBAction func closeButton(_ sender: UIBarButtonItem) {
         self.delegate?.didCloseOnceMoreAgain(controller: self)
-    }
-    
-    @IBAction func searchHurricanesButton(_ sender: UIBarButtonItem) {
-        
     }
     
     override func viewDidLoad() {

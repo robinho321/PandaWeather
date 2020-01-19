@@ -39,6 +39,10 @@
 		A945C5881FE5E6730063DFAF /* AdminAddImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A945C5871FE5E6730063DFAF /* AdminAddImage.swift */; };
 		A946E95D2032D50600BF49CB /* SnowCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A946E95C2032D50600BF49CB /* SnowCVC.swift */; };
 		A946E95F2032D54E00BF49CB /* snowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A946E95E2032D54E00BF49CB /* snowCell.swift */; };
+		A95A92C223D3CDDF00777342 /* WeatherBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95A92C123D3CDDF00777342 /* WeatherBrowserViewController.swift */; };
+		A95A92C423D3D2E500777342 /* BookmarkTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95A92C323D3D2E500777342 /* BookmarkTableViewController.swift */; };
+		A95A92C623D3D32E00777342 /* BookmarkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95A92C523D3D32E00777342 /* BookmarkTableViewCell.swift */; };
+		A95A92C823D3F34A00777342 /* UIColor+ColorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95A92C723D3F34A00777342 /* UIColor+ColorConstants.swift */; };
 		A967A3CD23CB0826007A1468 /* GoesImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A967A3CC23CB0826007A1468 /* GoesImageView.swift */; };
 		A976E5A92320BE40006AA2F5 /* HurricaneTrackerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A976E5A82320BE40006AA2F5 /* HurricaneTrackerViewController.swift */; };
 		A976E5AB2320D5B4006AA2F5 /* StormListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A976E5AA2320D5B4006AA2F5 /* StormListTableViewController.swift */; };
@@ -89,6 +93,10 @@
 		A945C5871FE5E6730063DFAF /* AdminAddImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminAddImage.swift; sourceTree = "<group>"; };
 		A946E95C2032D50600BF49CB /* SnowCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnowCVC.swift; sourceTree = "<group>"; };
 		A946E95E2032D54E00BF49CB /* snowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = snowCell.swift; sourceTree = "<group>"; };
+		A95A92C123D3CDDF00777342 /* WeatherBrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherBrowserViewController.swift; sourceTree = "<group>"; };
+		A95A92C323D3D2E500777342 /* BookmarkTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkTableViewController.swift; sourceTree = "<group>"; };
+		A95A92C523D3D32E00777342 /* BookmarkTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkTableViewCell.swift; sourceTree = "<group>"; };
+		A95A92C723D3F34A00777342 /* UIColor+ColorConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+ColorConstants.swift"; sourceTree = "<group>"; };
 		A967A3CC23CB0826007A1468 /* GoesImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoesImageView.swift; sourceTree = "<group>"; };
 		A976E5A82320BE40006AA2F5 /* HurricaneTrackerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HurricaneTrackerViewController.swift; sourceTree = "<group>"; };
 		A976E5AA2320D5B4006AA2F5 /* StormListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StormListTableViewController.swift; sourceTree = "<group>"; };
@@ -209,6 +217,7 @@
 			isa = PBXGroup;
 			children = (
 				A93FB3D31FC23E8400E4D5B7 /* ImageCell.swift */,
+				A95A92C523D3D32E00777342 /* BookmarkTableViewCell.swift */,
 				A9174E3320280BF700DB6BCE /* niceCell.swift */,
 				A9174E37202836AC00DB6BCE /* cloudyCell.swift */,
 				A9174E3B2028398900DB6BCE /* coldCell.swift */,
@@ -249,8 +258,10 @@
 			children = (
 				81BA814C1A49DA1800E65899 /* ViewController.swift */,
 				A976E5A82320BE40006AA2F5 /* HurricaneTrackerViewController.swift */,
+				A95A92C123D3CDDF00777342 /* WeatherBrowserViewController.swift */,
+				A95A92C723D3F34A00777342 /* UIColor+ColorConstants.swift */,
+				A95A92C323D3D2E500777342 /* BookmarkTableViewController.swift */,
 				A967A3CC23CB0826007A1468 /* GoesImageView.swift */,
-				A976E5AA2320D5B4006AA2F5 /* StormListTableViewController.swift */,
 				A9AB9DCA20D612A90055A792 /* WeatherTableViewController.swift */,
 				A916C1221F4FDB080057A09C /* SettingsTableViewController.swift */,
 				A977881D2027925700EB125F /* photoFolderTableViewController.swift */,
@@ -258,6 +269,7 @@
 				A9C752C21FC248DD008002C5 /* AdminPasswordViewController.swift */,
 				A93FB3D11FC23DB900E4D5B7 /* AdminImageTableViewController.swift */,
 				A945C5871FE5E6730063DFAF /* AdminAddImage.swift */,
+				A976E5AA2320D5B4006AA2F5 /* StormListTableViewController.swift */,
 				A9174E3220280BE200DB6BCE /* Cells */,
 				A9174E2F20280B6700DB6BCE /* WeatherCVCs */,
 			);
@@ -390,6 +402,8 @@
 				"${BUILT_PRODUCTS_DIR}/FacebookLogin/FacebookLogin.framework",
 				"${BUILT_PRODUCTS_DIR}/FacebookShare/FacebookShare.framework",
 				"${BUILT_PRODUCTS_DIR}/Parse/Parse.framework",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftSoup/SwiftSoup.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -402,6 +416,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookLogin.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookShare.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Parse.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftSoup.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -416,14 +432,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A95A92C623D3D32E00777342 /* BookmarkTableViewCell.swift in Sources */,
 				A9174E3A2028396900DB6BCE /* ColdCVC.swift in Sources */,
+				A95A92C223D3CDDF00777342 /* WeatherBrowserViewController.swift in Sources */,
 				A93FB3D21FC23DB900E4D5B7 /* AdminImageTableViewController.swift in Sources */,
 				A93FB3CA1FAC214500E4D5B7 /* SplashScreen.swift in Sources */,
 				A9E357D61F550D1200F9EDA8 /* termsAndConditionsViewController.swift in Sources */,
 				A9174E3C2028398900DB6BCE /* coldCell.swift in Sources */,
 				A9174E4220283CA500DB6BCE /* LightningCVC.swift in Sources */,
 				A9930F7B201506FB00E4D644 /* Date.swift in Sources */,
+				A95A92C423D3D2E500777342 /* BookmarkTableViewController.swift in Sources */,
 				A946E95D2032D50600BF49CB /* SnowCVC.swift in Sources */,
+				A95A92C823D3F34A00777342 /* UIColor+ColorConstants.swift in Sources */,
 				A9174E3E20283B2900DB6BCE /* RainCVC.swift in Sources */,
 				A9FBC43F207934EA0089B39F /* PandaImageFetch.swift in Sources */,
 				A91ACE501F9437A40082401A /* PandaWeather.xcdatamodeld in Sources */,

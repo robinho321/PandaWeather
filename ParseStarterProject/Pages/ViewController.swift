@@ -14,7 +14,7 @@ import AddressBookUI
 import CoreData
 import Photos
 
-class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDelegate, SettingsTableViewControllerDelegate, WeatherTableViewControllerDelegate, HurricaneTrackerViewControllerDelegate, GoesImageViewControllerDelegate {
+class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDelegate, SettingsTableViewControllerDelegate, WeatherTableViewControllerDelegate, HurricaneTrackerViewControllerDelegate, GoesImageViewControllerDelegate, WeatherBrowserViewControllerDelegate {
     
     func didClose(controller: SettingsTableViewController) {
         self.dismiss(animated: true, completion: nil)
@@ -32,6 +32,11 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
     }
     
     func didCloseOnceMoreAgain(controller: GoesImageViewController) {
+        self.dismiss(animated: true, completion: nil)
+        print("\("Will is awesome")")
+    }
+    
+    func didCloseOnceMoreAgainAgain(controller: WeatherBrowserViewController) {
         self.dismiss(animated: true, completion: nil)
         print("\("Will is awesome")")
     }
@@ -61,6 +66,12 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
             let navigationController: UINavigationController = segue.destination as! UINavigationController
             let goesVC: GoesImageViewController = navigationController.viewControllers[0] as! GoesImageViewController
             goesVC.delegate = self
+        }
+        
+        if segue.identifier == "openBrowserVC" {
+            let navigationController: UINavigationController = segue.destination as! UINavigationController
+            let browserVC: WeatherBrowserViewController = navigationController.viewControllers[0] as! WeatherBrowserViewController
+            browserVC.delegate = self
         }
         
     }

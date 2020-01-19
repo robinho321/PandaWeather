@@ -1,0 +1,220 @@
+//
+//  WeatherBrowserViewController.swift
+//  PandaWeather
+//
+//  Created by Robin Allemand on 1/18/20.
+//  Copyright © 2020 Parse. All rights reserved.
+//
+
+import Foundation
+import UIKit
+import WebKit
+
+protocol WeatherBrowserViewControllerDelegate {
+    func didCloseOnceMoreAgainAgain(controller: WeatherBrowserViewController)
+}
+
+class WeatherBrowserViewController: UIViewController, WKNavigationDelegate, UISearchBarDelegate {
+    
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var browserView: UIView!
+    @IBOutlet weak var backButton: UIBarButtonItem!
+    @IBOutlet weak var forwardButton: UIBarButtonItem!
+    
+    var currentWebView: WKWebView!
+    var errorView: UIView = UIView()
+    var errorLabel: UILabel = UILabel()
+    
+    var delegate: WeatherBrowserViewControllerDelegate? = nil
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        configureWebView()
+        configureSearchBar()
+        configureWebViewError()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear( animated )
+        
+//        let urlString:String = "https://www.star.nesdis.noaa.gov/GOES/index.php"
+//        let url:URL = URL(string: urlString)!
+//        let urlRequest: URLRequest = URLRequest(url: url)
+//        webView.load(urlRequest)
+//
+//        urlTextField.text = urlString
+        
+    }
+    
+    //Configuration functions
+    func configureSearchBar() {
+        searchBar.delegate = self
+    }
+    
+    func configureWebView() {
+        let webConfig = WKWebViewConfiguration()
+        let frame = CGRect(x: 0.0, y: 0.0, width: browserView.frame.width, height: browserView.frame.height)
+        currentWebView = WKWebView(frame: frame, configuration: webConfig)
+        currentWebView.navigationDelegate = self
+        browserView.addSubview(currentWebView)
+    }
+    
+    func configureWebViewError() {
+        var frame = CGRect(x: 0.0, y: 0.0, width: browserView.frame.width, height: browserView.frame.height)
+        errorView = UIView(frame: frame)
+        errorView.backgroundColor = UIColor.white
+        
+        frame = CGRect(x: 0.0, y: 0.0, width: frame.size.width, height: frame.size.height)
+        errorLabel = UILabel(frame: frame)
+        errorLabel.backgroundColor = UIColor.white
+        errorLabel.textColor = UIColor.pastelGrayColor()
+        errorLabel.text = ""
+        errorLabel.textAlignment = .center
+//        errorLabel.font = UIFont(name: "System", size: 25)
+        errorLabel.numberOfLines = 0
+    }
+    
+    // WKWebview functions
+    func loadWebSite(_ input: String, _ isURLDomain: Bool) {
+        var encodedURL: String = input
+        if (isURLDomain) {
+//            encodedURL = input
+            if (encodedURL.starts(with: "http://")) {
+                encodedURL = String(encodedURL.dropFirst(7))
+            } else if (encodedURL.starts(with: "https://")) {
+                encodedURL = String(encodedURL.dropFirst(8))
+            }
+
+            encodedURL = "https://" + encodedURL
+            
+        } else {
+            encodedURL = "https://www.google.com/search?dcr=0&q=" + encodedURL.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
+        }
+        
+        let url: URL = URL(string: "\(encodedURL)")!
+        let myRequest: URLRequest = URLRequest(url: url)
+        currentWebView.load(myRequest)
+        hideWebViewError()
+        searchBar.text = encodedURL.lowercased()
+    }
+    
+    func displayWebViewError(_ info: String) {
+        errorLabel.text = info
+        browserView.addSubview(errorView)
+        browserView.addSubview(errorLabel)
+    }
+    
+    func hideWebViewError() {
+        errorView.removeFromSuperview()
+        errorLabel.removeFromSuperview()
+    }
+    
+    //WKNavigationDelegate functions
+    func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
+        print("Committed")
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        print("Finished")
+        updateNavigationToolBarButtons()
+    }
+    
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        displayWebViewError(error.localizedDescription)
+        updateNavigationToolBarButtons()
+    }
+    
+    func webView(_ webView: WKWebView, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        let cred = URLCredential(trust: challenge.protectionSpace.serverTrust!)
+        completionHandler(.useCredential, cred)
+    }
+    
+    //UISearchBarDelegate functions
+    func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
+        print(searchBar.text!)
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        let input: String = (searchBar.text?.trimmingCharacters(in: .whitespaces))!
+//        if (!input.isEmpty) {
+//            //can add a progress bar here - find tutorial
+//            if (input.hasSuffix(".com") || input.hasSuffix(".com/") || input.hasSuffix(".tv") || input.hasSuffix(".tv/") || input.hasSuffix(".php") || input.hasSuffix(".php/") || input.hasSuffix(".gov") || input.hasSuffix(".gov/")) {
+                loadWebSite(input, true)
+//            } else {
+//                loadWebSite(input, false)
+//            }
+//        }
+    }
+    
+    // Toolbar functions
+    @IBAction func closeButton(_ sender: UIBarButtonItem) {
+        self.delegate?.didCloseOnceMoreAgainAgain(controller: self)
+    }
+    
+    @IBAction func reloadButton(_ sender: UIBarButtonItem) {
+        currentWebView.reload()
+    }
+    
+    @IBAction func forwardButton(_ sender: UIBarButtonItem) {
+        currentWebView.goForward()
+        hideWebViewError()
+        searchBar.text = currentWebView.url?.absoluteString
+    }
+    
+    @IBAction func backButton(_ sender: UIBarButtonItem) {
+        if (errorView.isDescendant(of: browserView)) {
+            hideWebViewError()
+        } else {
+            currentWebView.goBack()
+        }
+        searchBar.text = currentWebView.url?.absoluteString
+    }
+    
+    func updateNavigationToolBarButtons() {
+        if (currentWebView.canGoForward) {
+            forwardButton.isEnabled = true
+        } else {
+            forwardButton.isEnabled = false
+        }
+        if (currentWebView.canGoBack) {
+            backButton.isEnabled = true
+        } else {
+            backButton.isEnabled = false
+        }
+    }
+    
+    
+    //    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//        let urlString:String = urlTextField.text!
+//        let url:URL = URL(string: urlString)!
+//        let urlRequest: URLRequest = URLRequest(url: url)
+//        webView.load(urlRequest)
+//
+//        textField.resignFirstResponder()
+//
+//        return true
+//    }
+//
+//
+//    @IBAction func forwardButton(_ sender: UIButton) {
+//        if webView.canGoForward {
+//            webView.goForward()
+//        }
+//    }
+//
+//
+//    @IBAction func backButton(_ sender: UIButton) {
+//        if webView.canGoBack {
+//            webView.goBack()
+//        }
+//    }
+//
+//    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+//        backButton.isEnabled = webView.canGoBack
+//        forwardButton.isEnabled = webView.canGoForward
+//
+//        urlTextField.text = webView.url?.absoluteString
+//    }
+    
+}
