@@ -43,6 +43,8 @@
 		A95A92C423D3D2E500777342 /* BookmarkTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95A92C323D3D2E500777342 /* BookmarkTableViewController.swift */; };
 		A95A92C623D3D32E00777342 /* BookmarkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95A92C523D3D32E00777342 /* BookmarkTableViewCell.swift */; };
 		A95A92C823D3F34A00777342 /* UIColor+ColorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95A92C723D3F34A00777342 /* UIColor+ColorConstants.swift */; };
+		A95A92CA23D51C6A00777342 /* Bookmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95A92C923D51C6A00777342 /* Bookmark.swift */; };
+		A95A92CC23D5242400777342 /* populationFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95A92CB23D5242400777342 /* populationFunctions.swift */; };
 		A967A3CD23CB0826007A1468 /* GoesImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A967A3CC23CB0826007A1468 /* GoesImageView.swift */; };
 		A976E5A92320BE40006AA2F5 /* HurricaneTrackerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A976E5A82320BE40006AA2F5 /* HurricaneTrackerViewController.swift */; };
 		A976E5AB2320D5B4006AA2F5 /* StormListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A976E5AA2320D5B4006AA2F5 /* StormListTableViewController.swift */; };
@@ -97,6 +99,8 @@
 		A95A92C323D3D2E500777342 /* BookmarkTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkTableViewController.swift; sourceTree = "<group>"; };
 		A95A92C523D3D32E00777342 /* BookmarkTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkTableViewCell.swift; sourceTree = "<group>"; };
 		A95A92C723D3F34A00777342 /* UIColor+ColorConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+ColorConstants.swift"; sourceTree = "<group>"; };
+		A95A92C923D51C6A00777342 /* Bookmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bookmark.swift; sourceTree = "<group>"; };
+		A95A92CB23D5242400777342 /* populationFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = populationFunctions.swift; sourceTree = "<group>"; };
 		A967A3CC23CB0826007A1468 /* GoesImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoesImageView.swift; sourceTree = "<group>"; };
 		A976E5A82320BE40006AA2F5 /* HurricaneTrackerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HurricaneTrackerViewController.swift; sourceTree = "<group>"; };
 		A976E5AA2320D5B4006AA2F5 /* StormListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StormListTableViewController.swift; sourceTree = "<group>"; };
@@ -259,6 +263,8 @@
 				81BA814C1A49DA1800E65899 /* ViewController.swift */,
 				A976E5A82320BE40006AA2F5 /* HurricaneTrackerViewController.swift */,
 				A95A92C123D3CDDF00777342 /* WeatherBrowserViewController.swift */,
+				A95A92CB23D5242400777342 /* populationFunctions.swift */,
+				A95A92C923D51C6A00777342 /* Bookmark.swift */,
 				A95A92C723D3F34A00777342 /* UIColor+ColorConstants.swift */,
 				A95A92C323D3D2E500777342 /* BookmarkTableViewController.swift */,
 				A967A3CC23CB0826007A1468 /* GoesImageView.swift */,
@@ -456,6 +462,7 @@
 				A9AB9DCB20D612A90055A792 /* WeatherTableViewController.swift in Sources */,
 				A91ACE521F9438980082401A /* PandaImage.swift in Sources */,
 				A9174E36202835DA00DB6BCE /* CloudyCVC.swift in Sources */,
+				A95A92CC23D5242400777342 /* populationFunctions.swift in Sources */,
 				A9174E4420283CB100DB6BCE /* lightningCell.swift in Sources */,
 				A9C752C31FC248DD008002C5 /* AdminPasswordViewController.swift in Sources */,
 				A946E95F2032D54E00BF49CB /* snowCell.swift in Sources */,
@@ -467,6 +474,7 @@
 				A976E5A92320BE40006AA2F5 /* HurricaneTrackerViewController.swift in Sources */,
 				A977881E2027925700EB125F /* photoFolderTableViewController.swift in Sources */,
 				A93FB3C61FAC204300E4D5B7 /* SwiftyJSON.swift in Sources */,
+				A95A92CA23D51C6A00777342 /* Bookmark.swift in Sources */,
 				A93FB3C41FAC202300E4D5B7 /* PandaImages.swift in Sources */,
 				A967A3CD23CB0826007A1468 /* GoesImageView.swift in Sources */,
 				A93FB3D41FC23E8400E4D5B7 /* ImageCell.swift in Sources */,

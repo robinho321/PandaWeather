@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import WebKit
+import RealmSwift
 
 protocol WeatherBrowserViewControllerDelegate {
     func didCloseOnceMoreAgainAgain(controller: WeatherBrowserViewController)
@@ -17,13 +18,15 @@ protocol WeatherBrowserViewControllerDelegate {
 class WeatherBrowserViewController: UIViewController, WKNavigationDelegate, UISearchBarDelegate {
     
     @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet weak var browserView: UIView!
+    @IBOutlet weak var browserView: WKWebView!
     @IBOutlet weak var backButton: UIBarButtonItem!
     @IBOutlet weak var forwardButton: UIBarButtonItem!
     
     var currentWebView: WKWebView!
     var errorView: UIView = UIView()
     var errorLabel: UILabel = UILabel()
+    var bookmarks = [Bookmark]()
+    var webViews = [WKWebView]()
     
     var delegate: WeatherBrowserViewControllerDelegate? = nil
     
@@ -32,6 +35,8 @@ class WeatherBrowserViewController: UIViewController, WKNavigationDelegate, UISe
         configureWebView()
         configureSearchBar()
         configureWebViewError()
+        loadBookmarks()
+        loadWebSite("https://www.star.nesdis.noaa.gov/GOES/index.php", true)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -72,6 +77,15 @@ class WeatherBrowserViewController: UIViewController, WKNavigationDelegate, UISe
         errorLabel.textAlignment = .center
 //        errorLabel.font = UIFont(name: "System", size: 25)
         errorLabel.numberOfLines = 0
+    }
+    
+    func loadBookmarks() {
+        let realm = try! Realm()
+        let results = realm.objects(Bookmark.self)
+        bookmarks.removeAll()
+        for result in results {
+            bookmarks.append(result)
+        }
     }
     
     // WKWebview functions
@@ -131,7 +145,14 @@ class WeatherBrowserViewController: UIViewController, WKNavigationDelegate, UISe
     
     //UISearchBarDelegate functions
     func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
-        print(searchBar.text!)
+        if let url = currentWebView.url?.absoluteString {
+            let realm = try! Realm()
+            let newBookmark: Bookmark = Bookmark(value: ["url": url, "title": currentWebView.title])
+            try! realm.write {
+                realm.add(newBookmark, update: true)
+            }
+            loadBookmarks()
+        }
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -181,6 +202,14 @@ class WeatherBrowserViewController: UIViewController, WKNavigationDelegate, UISe
             backButton.isEnabled = true
         } else {
             backButton.isEnabled = false
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "Bookmarks") {
+            let bookmarkTVC = segue.destination as! BookmarkTableViewController
+            bookmarkTVC.bookmarks = self.bookmarks
+            bookmarkTVC.delegate = self
         }
     }
     

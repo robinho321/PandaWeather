@@ -12,7 +12,7 @@ import CoreData
 import UserNotifications
 import StoreKit
 import Foundation
-
+import RealmSwift
 import Parse
 
 // If you want to use any of the UI components, uncomment this line
@@ -81,6 +81,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
             incrementAppRuns()
             showReview()
+        
+//        if (!isRealmPopulatedWithDefaultTab()) {
+//            populateRealmWithDefaultTab()
+//        } else {
+//            let realm = try! Realm()
+//            let tab = realm.objects(Tab.self)
+//            for tab in tabs {
+//                print(tab.tabDescription)
+//            }
+//        }
 //            PandaImagesCollect()
             return true
 
