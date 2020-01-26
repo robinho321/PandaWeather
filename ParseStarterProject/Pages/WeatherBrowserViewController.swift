@@ -42,12 +42,7 @@ class WeatherBrowserViewController: UIViewController, WKNavigationDelegate, UISe
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear( animated )
         
-//        let urlString:String = "https://www.star.nesdis.noaa.gov/GOES/index.php"
-//        let url:URL = URL(string: urlString)!
-//        let urlRequest: URLRequest = URLRequest(url: url)
-//        webView.load(urlRequest)
-//
-//        urlTextField.text = urlString
+        self.currentWebView.frame = CGRect(x: 0, y: 0, width: self.browserView.frame.width, height: self.browserView.frame.height)
         
     }
     
@@ -88,6 +83,12 @@ class WeatherBrowserViewController: UIViewController, WKNavigationDelegate, UISe
         }
     }
     
+    func countBookmarks() -> Int {
+        let realm = try! Realm()
+        let results = realm.objects(Bookmark.self)
+        return results.count
+    }
+    
     // WKWebview functions
     func loadWebSite(_ input: String, _ isURLDomain: Bool) {
         var encodedURL: String = input
@@ -123,15 +124,29 @@ class WeatherBrowserViewController: UIViewController, WKNavigationDelegate, UISe
         errorLabel.removeFromSuperview()
     }
     
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        searchBar.text = currentWebView.url?.absoluteString
+    }
+    
     //WKNavigationDelegate functions
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
         print("Committed")
+        updateNavigationToolBarButtons()
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         print("Finished")
         updateNavigationToolBarButtons()
+        searchBar.text = currentWebView.url?.absoluteString
     }
+
+//    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+//        if let urlStr = navigationAction.request.url?.absoluteString {
+//            searchBar.text = urlStr
+//        }
+//
+//        decisionHandler(.allow)
+//    }
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         displayWebViewError(error.localizedDescription)
@@ -146,12 +161,19 @@ class WeatherBrowserViewController: UIViewController, WKNavigationDelegate, UISe
     //UISearchBarDelegate functions
     func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
         if let url = currentWebView.url?.absoluteString {
+            let numberOfBookmarks = countBookmarks()
             let realm = try! Realm()
             let newBookmark: Bookmark = Bookmark(value: ["url": url, "title": currentWebView.title])
             try! realm.write {
-                realm.add(newBookmark, update: true)
+                realm.add(newBookmark, update: .all)
             }
             loadBookmarks()
+            let numberOfBookmarksAfterClicked = countBookmarks()
+            if numberOfBookmarksAfterClicked > numberOfBookmarks {
+                self.showToast(message: "Bookmark added")
+            } else {
+                self.showToast(message: "Bookmark exists")
+            }
         }
     }
     
@@ -171,6 +193,15 @@ class WeatherBrowserViewController: UIViewController, WKNavigationDelegate, UISe
     // Toolbar functions
     @IBAction func closeButton(_ sender: UIBarButtonItem) {
         self.delegate?.didCloseOnceMoreAgainAgain(controller: self)
+    }
+    
+    @IBAction func infoButton(_ sender: UIBarButtonItem) {
+        let alert = UIAlertController(title: "How to Add Bookmarks", message: "Navigate to a weather site by using the search bar and entering the url. /n /n To bookmark the site, tap the book icon on the right of the search bar. If successful, you will see a message confirming the bookmark was added. \n \n To view your bookmarks, tap on the 'Bookmarks' button on the top right of the view. You can delete bookmarks by swiping right.", preferredStyle: UIAlertControllerStyle.alert)
+        
+        let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        
+        alert.addAction(cancelAction)
+        self.present(alert, animated: true, completion: nil)
     }
     
     @IBAction func reloadButton(_ sender: UIBarButtonItem) {
@@ -203,6 +234,25 @@ class WeatherBrowserViewController: UIViewController, WKNavigationDelegate, UISe
         } else {
             backButton.isEnabled = false
         }
+    }
+    
+    func showToast(message : String) {
+
+        let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 75, y: self.view.frame.size.height-100, width: 150, height: -35))
+        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        toastLabel.textColor = UIColor.white
+        toastLabel.textAlignment = .center
+        toastLabel.font = UIFont(name: "Montserrat-Light", size: 12.0)
+        toastLabel.text = message
+        toastLabel.alpha = 0.0
+        toastLabel.layer.cornerRadius = 10;
+        toastLabel.clipsToBounds  =  true
+        self.view.addSubview(toastLabel)
+        UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseOut, animations: {
+            toastLabel.alpha = 1.0
+        }, completion: {(isCompleted) in
+            toastLabel.removeFromSuperview()
+        })
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

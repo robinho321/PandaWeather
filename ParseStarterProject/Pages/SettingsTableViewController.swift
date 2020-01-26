@@ -227,10 +227,15 @@ class SettingsTableViewController: UITableViewController, MFMailComposeViewContr
         let theUrl = URL(string: "https://itunes.apple.com/us/app/panda-puppy-weather/id1281833307?ls=1&mt=8")
         let content = LinkShareContent(url: theUrl!)
         let shareDialog = ShareDialog(content: content)
-        shareDialog.mode = .native
-        shareDialog.failsOnInvalidData = true
-        shareDialog.completion = { result in
-            // Handle share results
+        if  UIApplication.shared.canOpenURL(URL(string: "fbapi://")!){
+            shareDialog.mode = .native
+            shareDialog.failsOnInvalidData = true
+            shareDialog.completion = { result in
+                // Handle share results
+            }
+        }
+        else {
+            shareDialog.mode = .automatic
         }
         
         try! shareDialog.show()

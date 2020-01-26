@@ -7,7 +7,7 @@ target 'PandaWeather' do
 
   # Pods for Panda Weather
   pod 'SwiftSoup'
-  pod 'RealmSwift'
+  pod 'RealmSwift', '~> 3.18.0'
   pod 'FacebookCore', '~> 0.5.0'
   pod 'FacebookLogin', '~> 0.5.0'
   pod 'FacebookShare', '~> 0.5.0'

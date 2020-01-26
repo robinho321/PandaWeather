@@ -28,11 +28,11 @@ PODS:
     - Parse/Core (= 1.17.2)
   - Parse/Core (1.17.2):
     - Bolts/Tasks (~> 1.9)
-  - Realm (3.13.1):
-    - Realm/Headers (= 3.13.1)
-  - Realm/Headers (3.13.1)
-  - RealmSwift (3.13.1):
-    - Realm (= 3.13.1)
+  - Realm (3.18.0):
+    - Realm/Headers (= 3.18.0)
+  - Realm/Headers (3.18.0)
+  - RealmSwift (3.18.0):
+    - Realm (= 3.18.0)
   - SwiftSoup (1.7.4)
 
 DEPENDENCIES:
@@ -43,11 +43,11 @@ DEPENDENCIES:
   - FBSDKLoginKit (~> 4.37)
   - FBSDKShareKit (~> 4.37)
   - Parse
-  - RealmSwift
+  - RealmSwift (~> 3.18.0)
   - SwiftSoup
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - Bolts
     - FacebookCore
     - FacebookLogin
@@ -56,9 +56,10 @@ SPEC REPOS:
     - FBSDKLoginKit
     - FBSDKShareKit
     - Parse
+    - SwiftSoup
+  trunk:
     - Realm
     - RealmSwift
-    - SwiftSoup
 
 SPEC CHECKSUMS:
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
@@ -69,10 +70,10 @@ SPEC CHECKSUMS:
   FBSDKLoginKit: 373830c68aa48c9e8f0bfed93a3e32d2ca8963a0
   FBSDKShareKit: 387749259d79e4070ebb304b3fd256e4b4bc4298
   Parse: 3b31a3dd1777b07ee7f0caee32fafbff544483a5
-  Realm: 50071da38fe079e0735e47c9f2eae738c68c5996
-  RealmSwift: 8a1e6a02b7a08cd17a31e3115143fb69fe5f3fb9
+  Realm: 7b3d04740facf45e958a514b466a32b04f1113d6
+  RealmSwift: c817b5f374668cf08f649afb05f55d92a787649c
   SwiftSoup: 92f5b348c131aed8af04f4326db1579ab19fa08c
 
-PODFILE CHECKSUM: dd04c4d5ced5fdb01254876090dee9a80b2719a7
+PODFILE CHECKSUM: f68097bf6aa1ec1a32373502110ce036e4b9d550
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.8.4

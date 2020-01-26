@@ -39,6 +39,7 @@
 		A945C5881FE5E6730063DFAF /* AdminAddImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A945C5871FE5E6730063DFAF /* AdminAddImage.swift */; };
 		A946E95D2032D50600BF49CB /* SnowCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A946E95C2032D50600BF49CB /* SnowCVC.swift */; };
 		A946E95F2032D54E00BF49CB /* snowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A946E95E2032D54E00BF49CB /* snowCell.swift */; };
+		A94CFFBF23D83A9B0026DCFB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94CFFBE23D83A9B0026DCFB /* SceneDelegate.swift */; };
 		A95A92C223D3CDDF00777342 /* WeatherBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95A92C123D3CDDF00777342 /* WeatherBrowserViewController.swift */; };
 		A95A92C423D3D2E500777342 /* BookmarkTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95A92C323D3D2E500777342 /* BookmarkTableViewController.swift */; };
 		A95A92C623D3D32E00777342 /* BookmarkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95A92C523D3D32E00777342 /* BookmarkTableViewCell.swift */; };
@@ -95,6 +96,7 @@
 		A945C5871FE5E6730063DFAF /* AdminAddImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminAddImage.swift; sourceTree = "<group>"; };
 		A946E95C2032D50600BF49CB /* SnowCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnowCVC.swift; sourceTree = "<group>"; };
 		A946E95E2032D54E00BF49CB /* snowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = snowCell.swift; sourceTree = "<group>"; };
+		A94CFFBE23D83A9B0026DCFB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		A95A92C123D3CDDF00777342 /* WeatherBrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherBrowserViewController.swift; sourceTree = "<group>"; };
 		A95A92C323D3D2E500777342 /* BookmarkTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkTableViewController.swift; sourceTree = "<group>"; };
 		A95A92C523D3D32E00777342 /* BookmarkTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkTableViewCell.swift; sourceTree = "<group>"; };
@@ -238,6 +240,7 @@
 				A9FBC43B207922DE0089B39F /* Main.storyboard */,
 				81BA814A1A49DA1800E65899 /* AppDelegate.swift */,
 				A93FB3C91FAC214500E4D5B7 /* SplashScreen.swift */,
+				A94CFFBE23D83A9B0026DCFB /* SceneDelegate.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -327,7 +330,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1030;
 				ORGANIZATIONNAME = Parse;
 				TargetAttributes = {
 					81BA81441A49DA1800E65899 = {
@@ -344,10 +347,9 @@
 			};
 			buildConfigurationList = 81BA81401A49DA1800E65899 /* Build configuration list for PBXProject "PandaWeather" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 			);
@@ -399,7 +401,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-PandaWeather/Pods-PandaWeather-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-PandaWeather/Pods-PandaWeather-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
@@ -428,7 +430,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PandaWeather/Pods-PandaWeather-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PandaWeather/Pods-PandaWeather-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -474,6 +476,7 @@
 				A976E5A92320BE40006AA2F5 /* HurricaneTrackerViewController.swift in Sources */,
 				A977881E2027925700EB125F /* photoFolderTableViewController.swift in Sources */,
 				A93FB3C61FAC204300E4D5B7 /* SwiftyJSON.swift in Sources */,
+				A94CFFBF23D83A9B0026DCFB /* SceneDelegate.swift in Sources */,
 				A95A92CA23D51C6A00777342 /* Bookmark.swift in Sources */,
 				A93FB3C41FAC202300E4D5B7 /* PandaImages.swift in Sources */,
 				A967A3CD23CB0826007A1468 /* GoesImageView.swift in Sources */,
@@ -499,6 +502,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -554,6 +558,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;

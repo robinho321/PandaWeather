@@ -2090,15 +2090,17 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                 //Setting the condition for input string in func getWeatherIcon and getPandaImage
                 let sevenDayOneCondition = json["data"] as! [String:Any]?
                 let sevenDayConditionDescription: NSArray = sevenDayOneCondition!["weather"] as! NSArray
-                print("\(sevenDayConditionDescription[0])")
+                let conditionCount = sevenDayConditionDescription.count
+                    print("\(sevenDayConditionDescription[0])")
+                    print("Condition count: \(conditionCount)")
                 
                 let sevenDayOneConditionDescriptionZero: String = sevenDayConditionDescription[0] as! String
-                let sevenDayTwoConditionDescriptionOne: String = sevenDayConditionDescription[1] as! String
-                let sevenDayThreeConditionDescriptionTwo: String = sevenDayConditionDescription[2] as! String
-                let sevenDayFourConditionDescriptionThree: String = sevenDayConditionDescription[3] as! String
-                let sevenDayFiveConditionDescriptionFour: String = sevenDayConditionDescription[4] as! String
-                let sevenDaySixConditionDescriptionFive: String = sevenDayConditionDescription[5] as! String
-                let sevenDaySevenConditionDescriptionSix: String = sevenDayConditionDescription[6] as! String
+                let sevenDayTwoConditionDescriptionOne: String = sevenDayConditionDescription[2] as! String
+                let sevenDayThreeConditionDescriptionTwo: String = sevenDayConditionDescription[4] as! String
+                let sevenDayFourConditionDescriptionThree: String = sevenDayConditionDescription[6] as! String
+                let sevenDayFiveConditionDescriptionFour: String = sevenDayConditionDescription[8] as! String
+                let sevenDaySixConditionDescriptionFive: String = sevenDayConditionDescription[10] as! String
+                let sevenDaySevenConditionDescriptionSix: String = sevenDayConditionDescription[12] as! String
                 
 //                self.getPandaImage(temperature: sevenDayOneWeekTempZero, condition: sevenDayOneConditionDescriptionZero)
                 self.getWeatherIcon(theImageView: sevenDayWeatherImageView, theCondition: sevenDayOneConditionDescriptionZero)
@@ -2308,12 +2310,12 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                         print("\(sevenDayConditionDescription[0])")
                         
                         let sevenDayOneConditionDescriptionZero: String = sevenDayConditionDescription[0] as! String
-                        let sevenDayTwoConditionDescriptionOne: String = sevenDayConditionDescription[1] as! String
-                        let sevenDayThreeConditionDescriptionTwo: String = sevenDayConditionDescription[2] as! String
-                        let sevenDayFourConditionDescriptionThree: String = sevenDayConditionDescription[3] as! String
-                        let sevenDayFiveConditionDescriptionFour: String = sevenDayConditionDescription[4] as! String
-                        let sevenDaySixConditionDescriptionFive: String = sevenDayConditionDescription[5] as! String
-                        let sevenDaySevenConditionDescriptionSix: String = sevenDayConditionDescription[6] as! String
+                        let sevenDayTwoConditionDescriptionOne: String = sevenDayConditionDescription[2] as! String
+                        let sevenDayThreeConditionDescriptionTwo: String = sevenDayConditionDescription[4] as! String
+                        let sevenDayFourConditionDescriptionThree: String = sevenDayConditionDescription[6] as! String
+                        let sevenDayFiveConditionDescriptionFour: String = sevenDayConditionDescription[8] as! String
+                        let sevenDaySixConditionDescriptionFive: String = sevenDayConditionDescription[10] as! String
+                        let sevenDaySevenConditionDescriptionSix: String = sevenDayConditionDescription[12] as! String
                         
 //                        self.getPandaImage(temperature: sevenDayOneWeekTempZero, condition: sevenDayOneConditionDescriptionZero)
                         self.getWeatherIcon(theImageView: self.sevenDayWeatherImageView, theCondition: sevenDayOneConditionDescriptionZero)
@@ -2488,15 +2490,16 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                     //Setting the condition for input string in func getWeatherIcon and getUserImage
                     let sevenDayOneCondition = json["data"] as! [String:Any]?
                     let sevenDayConditionDescription: NSArray = sevenDayOneCondition!["weather"] as! NSArray
-                    print("\(sevenDayConditionDescription[0])")
+                    print("The first condition is: \(sevenDayConditionDescription[0])")
+                    print("The second condition is: \(sevenDayConditionDescription[1])")
                     
                     let sevenDayOneConditionDescriptionZero: String = sevenDayConditionDescription[0] as! String
-                    let sevenDayTwoConditionDescriptionOne: String = sevenDayConditionDescription[1] as! String
-                    let sevenDayThreeConditionDescriptionTwo: String = sevenDayConditionDescription[2] as! String
-                    let sevenDayFourConditionDescriptionThree: String = sevenDayConditionDescription[3] as! String
-                    let sevenDayFiveConditionDescriptionFour: String = sevenDayConditionDescription[4] as! String
-                    let sevenDaySixConditionDescriptionFive: String = sevenDayConditionDescription[5] as! String
-                    let sevenDaySevenConditionDescriptionSix: String = sevenDayConditionDescription[6] as! String
+                    let sevenDayTwoConditionDescriptionOne: String = sevenDayConditionDescription[2] as! String
+                    let sevenDayThreeConditionDescriptionTwo: String = sevenDayConditionDescription[4] as! String
+                    let sevenDayFourConditionDescriptionThree: String = sevenDayConditionDescription[6] as! String
+                    let sevenDayFiveConditionDescriptionFour: String = sevenDayConditionDescription[8] as! String
+                    let sevenDaySixConditionDescriptionFive: String = sevenDayConditionDescription[10] as! String
+                    let sevenDaySevenConditionDescriptionSix: String = sevenDayConditionDescription[12] as! String
                     
 //                    self.getUserImage(temperature: sevenDayOneWeekTempZero, condition: sevenDayOneConditionDescriptionZero)
                     self.getWeatherIcon(theImageView: sevenDayWeatherImageView, theCondition: sevenDayOneConditionDescriptionZero)
@@ -2702,12 +2705,12 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                             print("\(sevenDayConditionDescription[0])")
                             
                             let sevenDayOneConditionDescriptionZero: String = sevenDayConditionDescription[0] as! String
-                            let sevenDayTwoConditionDescriptionOne: String = sevenDayConditionDescription[1] as! String
-                            let sevenDayThreeConditionDescriptionTwo: String = sevenDayConditionDescription[2] as! String
-                            let sevenDayFourConditionDescriptionThree: String = sevenDayConditionDescription[3] as! String
-                            let sevenDayFiveConditionDescriptionFour: String = sevenDayConditionDescription[4] as! String
-                            let sevenDaySixConditionDescriptionFive: String = sevenDayConditionDescription[5] as! String
-                            let sevenDaySevenConditionDescriptionSix: String = sevenDayConditionDescription[6] as! String
+                            let sevenDayTwoConditionDescriptionOne: String = sevenDayConditionDescription[2] as! String
+                            let sevenDayThreeConditionDescriptionTwo: String = sevenDayConditionDescription[4] as! String
+                            let sevenDayFourConditionDescriptionThree: String = sevenDayConditionDescription[6] as! String
+                            let sevenDayFiveConditionDescriptionFour: String = sevenDayConditionDescription[8] as! String
+                            let sevenDaySixConditionDescriptionFive: String = sevenDayConditionDescription[10] as! String
+                            let sevenDaySevenConditionDescriptionSix: String = sevenDayConditionDescription[12] as! String
                             
 //                            self.getUserImage(temperature: sevenDayOneWeekTempZero, condition: sevenDayOneConditionDescriptionZero)
                             self.getWeatherIcon(theImageView: self.sevenDayWeatherImageView, theCondition: sevenDayOneConditionDescriptionZero)
