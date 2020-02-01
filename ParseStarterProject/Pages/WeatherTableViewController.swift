@@ -74,73 +74,77 @@ class WeatherTableViewController: UITableViewController {
     func getWeather() {
         let defaults = UserDefaults()
         let recoveredJsonData = defaults.object(forKey: "data")
-        let recoveredJson = NSKeyedUnarchiver.unarchiveObject(with: recoveredJsonData as! Data) as! [String:Any]?
-        print("myData: \(String(describing: recoveredJson))")
+        if recoveredJsonData != nil {
         
-        let recoveredJsonDataDay = defaults.object(forKey: "days")
-        let recoveredJsonDay = NSKeyedUnarchiver.unarchiveObject(with: recoveredJsonDataDay as! Data) as! [String:Any]?
-        print("myDays: \(String(describing: recoveredJsonDay))")
+            let recoveredJson = NSKeyedUnarchiver.unarchiveObject(with: recoveredJsonData as! Data) as! [String:Any]?
+            print("myData: \(String(describing: recoveredJson))")
         
-        //get the days to populate labels from userdefaults
-        if recoveredJsonDay!["startPeriodName"] != nil {
+            let recoveredJsonDataDay = defaults.object(forKey: "days")
+            let recoveredJsonDay = NSKeyedUnarchiver.unarchiveObject(with: recoveredJsonDataDay as! Data) as! [String:Any]?
+            print("myDays: \(String(describing: recoveredJsonDay))")
+        
+            //get the days to populate labels from userdefaults
+            if recoveredJsonDay!["startPeriodName"] != nil {
             
             //day0
-            let day0: NSArray = recoveredJsonDay!["startPeriodName"] as! NSArray
-            print("\(day0[0])")
+                let day0: NSArray = recoveredJsonDay!["startPeriodName"] as! NSArray
+                print("\(day0[0])")
             
             //make the tableview background change if day0 is "nighttime" or "daytime"
-            if [day0[0] as! String].contains("night") || [day0[0] as! String].contains("Tonight") || [day0[0] as! String].contains("Overnight") {
-                tableView.tableFooterView = UIView(frame: CGRect.zero)
-                let backgroundImage = UIImage(named: "nighttime")
-                let imageView = UIImageView(image: backgroundImage)
-                imageView.contentMode = .scaleAspectFill
-                self.tableView.backgroundView = imageView
-                detailsLabel.textColor = UIColor.white
-                detailsLabelOne.textColor = UIColor.white
-                detailsLabelTwo.textColor = UIColor.white
-                detailsLabelThree.textColor = UIColor.white
-                detailsLabelFour.textColor = UIColor.white
-                detailsLabelFive.textColor = UIColor.white
-                detailsLabelSix.textColor = UIColor.white
-                detailsLabelSeven.textColor = UIColor.white
-                detailsLabelEight.textColor = UIColor.white
-                detailsLabelNine.textColor = UIColor.white
-                detailsLabelTen.textColor = UIColor.white
-                detailsLabelEleven.textColor = UIColor.white
-                detailsLabelTwelve.textColor = UIColor.white
+                if [day0[0] as! String].contains("night") || [day0[0] as! String].contains("Tonight") || [day0[0] as! String].contains("Overnight") {
+                    tableView.tableFooterView = UIView(frame: CGRect.zero)
+                    let backgroundImage = UIImage(named: "nighttime")
+                    let imageView = UIImageView(image: backgroundImage)
+                    imageView.contentMode = .scaleAspectFill
+                    self.tableView.backgroundView = imageView
+                    detailsLabel.textColor = UIColor.white
+                    detailsLabelOne.textColor = UIColor.white
+                    detailsLabelTwo.textColor = UIColor.white
+                    detailsLabelThree.textColor = UIColor.white
+                    detailsLabelFour.textColor = UIColor.white
+                    detailsLabelFive.textColor = UIColor.white
+                    detailsLabelSix.textColor = UIColor.white
+                    detailsLabelSeven.textColor = UIColor.white
+                    detailsLabelEight.textColor = UIColor.white
+                    detailsLabelNine.textColor = UIColor.white
+                    detailsLabelTen.textColor = UIColor.white
+                    detailsLabelEleven.textColor = UIColor.white
+                    detailsLabelTwelve.textColor = UIColor.white
                 
             
-            } else {
-                tableView.tableFooterView = UIView(frame: CGRect.zero)
-                let backgroundImage = UIImage(named: "daytime")
-                let imageView = UIImageView(image: backgroundImage)
-                imageView.contentMode = .scaleAspectFill
-                self.tableView.backgroundView = imageView
-            }
-            //continue...
+                } else {
+                    tableView.tableFooterView = UIView(frame: CGRect.zero)
+                    let backgroundImage = UIImage(named: "daytime")
+                    let imageView = UIImageView(image: backgroundImage)
+                    imageView.contentMode = .scaleAspectFill
+                    self.tableView.backgroundView = imageView
+                }
+                //continue...
 
-            dayLabel.text! = day0[0] as! String
-            dayLabelOne.text! = day0[1] as! String
-            dayLabelTwo.text! = day0[2] as! String
-            dayLabelThree.text! = day0[3] as! String
-            dayLabelFour.text! = day0[4] as! String
-            dayLabelFive.text! = day0[5] as! String
-            dayLabelSix.text! = day0[6] as! String
-            dayLabelSeven.text! = day0[7] as! String
-            dayLabelEight.text! = day0[8] as! String
-            dayLabelNine.text! = day0[9] as! String
-            dayLabelTen.text! = day0[10] as! String
-            dayLabelEleven.text! = day0[11] as! String
-            dayLabelTwelve.text! = day0[12] as! String
+                dayLabel.text! = day0[0] as! String
+                dayLabelOne.text! = day0[1] as! String
+                dayLabelTwo.text! = day0[2] as! String
+                dayLabelThree.text! = day0[3] as! String
+                dayLabelFour.text! = day0[4] as! String
+                dayLabelFive.text! = day0[5] as! String
+                dayLabelSix.text! = day0[6] as! String
+                dayLabelSeven.text! = day0[7] as! String
+                dayLabelEight.text! = day0[8] as! String
+                dayLabelNine.text! = day0[9] as! String
+                dayLabelTen.text! = day0[10] as! String
+                dayLabelEleven.text! = day0[11] as! String
+                dayLabelTwelve.text! = day0[12] as! String
             
         } else {
+            DispatchQueue.main.async(execute: {
             let alert = UIAlertController(title: "No Weather Data Found", message: "Our weather service is currently experiencing issues. Please check back later. Thanks!", preferredStyle: UIAlertControllerStyle.alert)
             
             let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
             
             alert.addAction(cancelAction)
             self.present(alert, animated: true, completion: nil)
-        }
+            })
+            }
         
         //get the weather details to populate labels from userdefaults
         if recoveredJson!["text"] != nil {
@@ -163,6 +167,28 @@ class WeatherTableViewController: UITableViewController {
             detailsLabelEleven.text! = weatherDescription0[11] as! String
             detailsLabelTwelve.text! = weatherDescription0[12] as! String
         
+        } else {
+            DispatchQueue.main.async(execute: {
+            let alert = UIAlertController(title: "No Weather Data Found", message: "Our weather service is currently experiencing issues. Please check back later. Thanks!", preferredStyle: UIAlertControllerStyle.alert)
+            
+            let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+            
+            alert.addAction(cancelAction)
+            self.present(alert, animated: true, completion: nil)
+                
+            })
+            }
+            
+    } else {
+            DispatchQueue.main.async(execute: {
+            let alert = UIAlertController(title: "No Weather Data Found", message: "Our weather service is currently experiencing issues. Please check back later. Thanks!", preferredStyle: UIAlertControllerStyle.alert)
+            
+            let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+            
+            alert.addAction(cancelAction)
+            self.present(alert, animated: true, completion: nil)
+                
+            })
         }
     }
     

@@ -13,6 +13,7 @@ import CoreLocation
 import AddressBookUI
 import CoreData
 import Photos
+import RealmSwift
 
 class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDelegate, SettingsTableViewControllerDelegate, WeatherTableViewControllerDelegate, HurricaneTrackerViewControllerDelegate, GoesImageViewControllerDelegate, WeatherBrowserViewControllerDelegate {
     
@@ -37,6 +38,11 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
     }
     
     func didCloseOnceMoreAgainAgain(controller: WeatherBrowserViewController) {
+        self.dismiss(animated: true, completion: nil)
+        print("\("Will is awesome")")
+    }
+    
+    func didCloseOnceMoreAgainAgainAgain(controller: CityWeatherTableViewController) {
         self.dismiss(animated: true, completion: nil)
         print("\("Will is awesome")")
     }
@@ -74,7 +80,15 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
             browserVC.delegate = self
         }
         
+        if segue.identifier == "Cities" {
+            let navigationController: UINavigationController = segue.destination as! UINavigationController
+            let cityWeatherTVC: CityWeatherTableViewController = navigationController.viewControllers[0] as! CityWeatherTableViewController
+            cityWeatherTVC.delegate = self
+        }
+        
     }
+    
+    var cities = [City]()
     
     var disclaimerHasBeenDisplayed = false
     
@@ -132,10 +146,12 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         }
     }
     
+    //Labels, Views, and ActivityIndicators
     @IBOutlet weak var getTemperatureActivityIndicator: UIActivityIndicatorView!
     
     @IBOutlet weak var switchLabel: UISwitch!
     
+    @IBOutlet weak var moreWeatherButton: UIButton!
     @IBOutlet weak var whiteStartUpView: UIView!
     @IBOutlet weak var whiteBackgroundWeatherView: UIView!
     @IBOutlet weak var temperatureLabel: UILabel!
@@ -175,6 +191,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
     @IBOutlet weak var sevenDaySevenWeatherImageView: UIImageView!
     @IBOutlet weak var sevenDaySevenHighLowTempLabel: UILabel!
     
+    //Weather Buttons
     @IBAction func weatherErrorInfoButton(_ sender: UIButton) {
         let alert = UIAlertController(title: "See a Cloud with a Question Mark?", message: "The weather service weather.gov has outages sometimes. If you see this, please email me at pandapupgram@gmail.com, so I can forward your email to my POC. Thanks!", preferredStyle: UIAlertControllerStyle.alert)
         
@@ -206,36 +223,8 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         }
     }
     
-    @IBOutlet weak var stormButtonView: UIButton!
-    
+//    @IBOutlet weak var stormButtonView: UIButton!
     @IBOutlet weak var searchButtonView: UIButton!
-    @IBAction func searchButton(_ sender: Any) {
-        let searchController = UISearchController(searchResultsController: nil)
-            searchController.searchBar.delegate = self
-        present(searchController, animated: true, completion: nil)
-    }
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        //ignoring user
-//        UIApplication.shared.beginIgnoringInteractionEvents()
-        
-        //Hide search bar
-        searchBar.resignFirstResponder()
-        dismiss(animated: true, completion: nil)
-        
-        //Create the search request
-        let address = searchBar.text
-        if switchLabel.isOn {
-            self.forwardGeocodingUser(address: "\(address!)")
-        } else {
-            self.forwardGeocodingPanda(address: "\(address!)")
-        }
-
-//        UIApplication.shared.endIgnoringInteractionEvents()
-        
-        //stop activity indicator -- spinner never shows up... fix later
-//        activityIndicator.stopAnimating()
-    }
     
     
     override func viewDidLoad() {
@@ -243,30 +232,30 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         // Do any additional setup after loading the view, typically from a nib.
         
         getTemperatureActivityIndicator.startAnimating()
-        
         // Save Switch state in UserDefaults
         switchLabel.isOn = UserDefaults.standard.bool(forKey: "switchIsOn")
-        
         whiteBackgroundWeatherView.isHidden = true
 
 //        self.showSpinnerOverlay()
         
         self.walkMeLabel.alpha = 0
-        
         self.walkMeLabel.layer.masksToBounds = true
-        self.walkMeLabel.layer.cornerRadius = 10
+        self.walkMeLabel.layer.cornerRadius = 8
         
         //Location updated when app is being used
-        self.topBackgroundView.layer.cornerRadius = 5
+        self.topBackgroundView.layer.cornerRadius = 10
         self.topBackgroundView.layer.borderColor = UIColor.white.cgColor
+        self.topBackgroundView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner, .layerMinXMaxYCorner]
         self.topBackgroundView.layer.borderWidth = 1
+        self.getGoesImageView.layer.cornerRadius = 8
+        self.setCurrentLocationView.layer.cornerRadius = 8
         
-        self.getGoesImageView.layer.cornerRadius = 5
-        self.setCurrentLocationView.layer.cornerRadius = 5
+        self.searchButtonView.layer.cornerRadius = 10
         
-        self.searchButtonView.layer.cornerRadius = 5
+        self.moreWeatherButton.layer.cornerRadius = 10
+        self.moreWeatherButton.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         
-        self.stormButtonView.layer.cornerRadius = 5
+//        self.stormButtonView.layer.cornerRadius = 5
         
         locationManager.requestWhenInUseAuthorization()
         
@@ -365,6 +354,15 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         let randomText = textLabel[Int(arc4random_uniform(UInt32(textLabel.count)))]
         self.walkMeLabel.text! = randomText
     }
+    
+//    func loadCities() {
+//        let realm = try! Realm()
+//        let results = realm.objects(City.self)
+//        cities.removeAll()
+//        for result in results {
+//            cities.append(result)
+//        }
+//    }
     
     func updateDropWisdomButton () {
         self.updateWalkMeLabel()
@@ -516,6 +514,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                 let fetchOptions = PHFetchOptions()
                 fetchOptions.predicate = NSPredicate(format: "title = %@", self.albumName)
                 let collection: PHFetchResult = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: fetchOptions)
+                print("Collection is: \(collection)")
                 
                 if let first_Obj:AnyObject = collection.firstObject{
                     print("first object of collection is: \(first_Obj)")
@@ -535,21 +534,43 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                     print("Found \(allPhotos.count) images")
                     
                 } else {
-                    self.albumFound = false
-                    let alert = UIAlertController(title: "No Nice Weather Images Found", message: "Please add an image to your Nice Weather folder, so the background can be populated with your image, instead of Panda's! Thanks :)", preferredStyle: UIAlertControllerStyle.alert)
-                    
-                    let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-                    
-                    alert.addAction(cancelAction)
-                    self.present(alert, animated: true, completion: nil)
-                }
+                let albumName = "Panda - Nice Weather"
+                    //Album placeholder for the asset collection, used to reference collection in completion handler
+                    var albumPlaceholder: PHObjectPlaceholder!
+                    //create the folder
+                    NSLog("\nFolder \"%@\" does not exist\nCreating now...", albumName)
+                    PHPhotoLibrary.shared().performChanges({
+                        let request = PHAssetCollectionChangeRequest.creationRequestForAssetCollection(withTitle: albumName)
+                        albumPlaceholder = request.placeholderForCreatedAssetCollection
+                    },
+                        completionHandler: {(success:Bool, error:Error?) in if(success){
+                            print("Successfully created folder")
+                            self.albumFound = true
+                            let collection = PHAssetCollection.fetchAssetCollections(withLocalIdentifiers: [albumPlaceholder.localIdentifier], options: nil)
+                            
+                            self.assetCollection = collection.firstObject!
+                            
+                            DispatchQueue.main.async(execute: {
+                            let alert = UIAlertController(title: "No Nice Weather Images Found", message: "Please navigate to the custom images folder to add an image to your Nice Weather folder, so the background can be populated with your image, instead of my dog Panda's!", preferredStyle: UIAlertControllerStyle.alert)
+
+                            let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+
+                            alert.addAction(cancelAction)
+                            self.present(alert, animated: true, completion: nil)
+                            })
+                        } else {
+                            print("Error creating folder")
+                            self.albumFound = false
+                            
+                            }
+                        })
+                    }
+
             case .denied, .restricted:
                 print("Not allowed")
             case .notDetermined:
                 print("Not determined yet")
             }
-        
-
         }
     }
     
@@ -583,17 +604,38 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                     print("Found \(allPhotos.count) images")
                     
                 } else {
-                    self.albumFound = false
-                    
-                    let alert = UIAlertController(title: "No Cloudy Weather Images Found", message: "Please add an image to your Cloudy Weather folder, so the background can be populated with your image, instead of Panda's! Thanks :)", preferredStyle: UIAlertControllerStyle.alert)
-                    
-                    let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-                    
-                    alert.addAction(cancelAction)
-                    self.present(alert, animated: true, completion: nil)
-                }
-                
-                
+                let albumName = "Panda - Cloudy Weather"
+                    //Album placeholder for the asset collection, used to reference collection in completion handler
+                    var albumPlaceholder: PHObjectPlaceholder!
+                    //create the folder
+                    NSLog("\nFolder \"%@\" does not exist\nCreating now...", albumName)
+                    PHPhotoLibrary.shared().performChanges({
+                        let request = PHAssetCollectionChangeRequest.creationRequestForAssetCollection(withTitle: albumName)
+                        albumPlaceholder = request.placeholderForCreatedAssetCollection
+                    },
+                        completionHandler: {(success:Bool, error:Error?) in if(success){
+                            print("Successfully created folder")
+                            self.albumFound = true
+                            let collection = PHAssetCollection.fetchAssetCollections(withLocalIdentifiers: [albumPlaceholder.localIdentifier], options: nil)
+                            
+                            self.assetCollection = collection.firstObject!
+                            
+                            DispatchQueue.main.async(execute: {
+                            let alert = UIAlertController(title: "No Cloudy Weather Images Found", message: "Please navigate to the custom images folder to add an image to your Cloudy Weather folder, so the background can be populated with your image, instead of my dog Panda's!", preferredStyle: UIAlertControllerStyle.alert)
+
+                            let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+
+                            alert.addAction(cancelAction)
+                            self.present(alert, animated: true, completion: nil)
+                            })
+                        } else {
+                            print("Error creating folder")
+                            self.albumFound = false
+                            
+                            }
+                        })
+                    }
+        
             case .denied, .restricted:
                 print("Not allowed")
             case .notDetermined:
@@ -632,16 +674,37 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                     print("Found \(allPhotos.count) images")
                     
                 } else {
-                    self.albumFound = false
-                    let alert = UIAlertController(title: "No Cold Weather Images Found", message: "Please add an image to your Cold Weather folder, so the background can be populated with your image, instead of Panda's! Thanks :)", preferredStyle: UIAlertControllerStyle.alert)
-                    
-                    let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-                    
-                    alert.addAction(cancelAction)
-                    self.present(alert, animated: true, completion: nil)
-                    
-//                    self.dogImageView.image = #imageLiteral(resourceName: "smiling")
-                }
+                let albumName = "Panda - Cold Weather"
+                    //Album placeholder for the asset collection, used to reference collection in completion handler
+                    var albumPlaceholder: PHObjectPlaceholder!
+                    //create the folder
+                    NSLog("\nFolder \"%@\" does not exist\nCreating now...", albumName)
+                    PHPhotoLibrary.shared().performChanges({
+                        let request = PHAssetCollectionChangeRequest.creationRequestForAssetCollection(withTitle: albumName)
+                        albumPlaceholder = request.placeholderForCreatedAssetCollection
+                    },
+                        completionHandler: {(success:Bool, error:Error?) in if(success){
+                            print("Successfully created folder")
+                            self.albumFound = true
+                            let collection = PHAssetCollection.fetchAssetCollections(withLocalIdentifiers: [albumPlaceholder.localIdentifier], options: nil)
+                            
+                            self.assetCollection = collection.firstObject!
+                            
+                            DispatchQueue.main.async(execute: {
+                            let alert = UIAlertController(title: "No Cold Weather Images Found", message: "Please navigate to the custom images folder to add an image to your Cold Weather folder, so the background can be populated with your image, instead of my dog Panda's!", preferredStyle: UIAlertControllerStyle.alert)
+
+                            let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+
+                            alert.addAction(cancelAction)
+                            self.present(alert, animated: true, completion: nil)
+                            })
+                        } else {
+                            print("Error creating folder")
+                            self.albumFound = false
+                            
+                            }
+                        })
+                    }
                 
             case .denied, .restricted:
                 print("Not allowed")
@@ -680,14 +743,37 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                     print("Found \(allPhotos.count) images")
                     
                 } else {
-                    self.albumFound = false
-                    let alert = UIAlertController(title: "No Rain Weather Images Found", message: "Please add an image to your Rain Weather folder, so the background can be populated with your image, instead of Panda's! Thanks :)", preferredStyle: UIAlertControllerStyle.alert)
-                    
-                    let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-                    
-                    alert.addAction(cancelAction)
-                    self.present(alert, animated: true, completion: nil)
-                }
+                let albumName = "Panda - Rain Weather"
+                    //Album placeholder for the asset collection, used to reference collection in completion handler
+                    var albumPlaceholder: PHObjectPlaceholder!
+                    //create the folder
+                    NSLog("\nFolder \"%@\" does not exist\nCreating now...", albumName)
+                    PHPhotoLibrary.shared().performChanges({
+                        let request = PHAssetCollectionChangeRequest.creationRequestForAssetCollection(withTitle: albumName)
+                        albumPlaceholder = request.placeholderForCreatedAssetCollection
+                    },
+                        completionHandler: {(success:Bool, error:Error?) in if(success){
+                            print("Successfully created folder")
+                            self.albumFound = true
+                            let collection = PHAssetCollection.fetchAssetCollections(withLocalIdentifiers: [albumPlaceholder.localIdentifier], options: nil)
+                            
+                            self.assetCollection = collection.firstObject!
+                            
+                            DispatchQueue.main.async(execute: {
+                            let alert = UIAlertController(title: "No Rain Weather Images Found", message: "Please navigate to the custom images folder to add an image to your Rain Weather folder, so the background can be populated with your image, instead of my dog Panda's!", preferredStyle: UIAlertControllerStyle.alert)
+
+                            let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+
+                            alert.addAction(cancelAction)
+                            self.present(alert, animated: true, completion: nil)
+                            })
+                        } else {
+                            print("Error creating folder")
+                            self.albumFound = false
+                            
+                            }
+                        })
+                    }
 
             case .denied, .restricted:
                 print("Not allowed")
@@ -726,23 +812,43 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                     print("Found \(allPhotos.count) images")
                     
                 } else {
-                    self.albumFound = false
-                    let alert = UIAlertController(title: "No Lightning Weather Images Found", message: "Please add an image to your Lightning Weather folder, so the background can be populated with your image, instead of Panda's! Thanks :)", preferredStyle: UIAlertControllerStyle.alert)
-                    
-                    let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-                    
-                    alert.addAction(cancelAction)
-                    self.present(alert, animated: true, completion: nil)
-                }
-                
+                let albumName = "Panda - Lightning Weather"
+                    //Album placeholder for the asset collection, used to reference collection in completion handler
+                    var albumPlaceholder: PHObjectPlaceholder!
+                    //create the folder
+                    NSLog("\nFolder \"%@\" does not exist\nCreating now...", albumName)
+                    PHPhotoLibrary.shared().performChanges({
+                        let request = PHAssetCollectionChangeRequest.creationRequestForAssetCollection(withTitle: albumName)
+                        albumPlaceholder = request.placeholderForCreatedAssetCollection
+                    },
+                        completionHandler: {(success:Bool, error:Error?) in if(success){
+                            print("Successfully created folder")
+                            self.albumFound = true
+                            let collection = PHAssetCollection.fetchAssetCollections(withLocalIdentifiers: [albumPlaceholder.localIdentifier], options: nil)
+                            
+                            self.assetCollection = collection.firstObject!
+                            
+                            DispatchQueue.main.async(execute: {
+                            let alert = UIAlertController(title: "No Lightning Weather Images Found", message: "Please navigate to the custom images folder to add an image to your Lightning Weather folder, so the background can be populated with your image, instead of my dog Panda's!", preferredStyle: UIAlertControllerStyle.alert)
+
+                            let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+
+                            alert.addAction(cancelAction)
+                            self.present(alert, animated: true, completion: nil)
+                            })
+                        } else {
+                            print("Error creating folder")
+                            self.albumFound = false
+                            
+                            }
+                        })
+                    }
                 
             case .denied, .restricted:
                 print("Not allowed")
             case .notDetermined:
                 print("Not determined yet")
             }
-            
-            
         }
     }
     
@@ -775,14 +881,37 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                     print("Found \(allPhotos.count) images")
                     
                 } else {
-                    self.albumFound = false
-                    let alert = UIAlertController(title: "No Snow Weather Images Found", message: "Please add an image to your Snow Weather folder, so the background can be populated with your image, instead of Panda's! Thanks :)", preferredStyle: UIAlertControllerStyle.alert)
-                    
-                    let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-                    
-                    alert.addAction(cancelAction)
-                    self.present(alert, animated: true, completion: nil)
-                }
+                let albumName = "Panda - Snow Weather"
+                    //Album placeholder for the asset collection, used to reference collection in completion handler
+                    var albumPlaceholder: PHObjectPlaceholder!
+                    //create the folder
+                    NSLog("\nFolder \"%@\" does not exist\nCreating now...", albumName)
+                    PHPhotoLibrary.shared().performChanges({
+                        let request = PHAssetCollectionChangeRequest.creationRequestForAssetCollection(withTitle: albumName)
+                        albumPlaceholder = request.placeholderForCreatedAssetCollection
+                    },
+                        completionHandler: {(success:Bool, error:Error?) in if(success){
+                            print("Successfully created folder")
+                            self.albumFound = true
+                            let collection = PHAssetCollection.fetchAssetCollections(withLocalIdentifiers: [albumPlaceholder.localIdentifier], options: nil)
+                            
+                            self.assetCollection = collection.firstObject!
+                            
+                            DispatchQueue.main.async(execute: {
+                            let alert = UIAlertController(title: "No Snow Weather Images Found", message: "Please navigate to the custom images folder to add an image to your Snow Weather folder, so the background can be populated with your image, instead of my dog Panda's!", preferredStyle: UIAlertControllerStyle.alert)
+
+                            let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+
+                            alert.addAction(cancelAction)
+                            self.present(alert, animated: true, completion: nil)
+                            })
+                        } else {
+                            print("Error creating folder")
+                            self.albumFound = false
+                            
+                            }
+                        })
+                    }
                 
             case .denied, .restricted:
                 print("Not allowed")
@@ -1957,6 +2086,19 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         let weatherURL = NSURL(string: "http://forecast.weather.gov/MapClick.php?lat=\(lat)&lon=\(long)&unit=0&lg=english&FcstType=json&TextType=1")
         let weatherData = try? Data(contentsOf: weatherURL! as URL)
         
+        if weatherData == nil {
+            print("error bro try again NIL")
+            DispatchQueue.main.async(execute: {
+            let alert = UIAlertController(title: "Error", message: "United States weather only, please try another location in the United States!", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in alert.dismiss(animated: true, completion: nil)
+            }))
+            
+            self.present(alert, animated: true, completion: nil)
+        })
+        } else {
+            print("error bro try again NOT NIL")
+        
         do {
             if let json = try JSONSerialization.jsonObject(with: weatherData!, options:.allowFragments) as? [String:Any] {
                 print(json as Any)
@@ -2077,16 +2219,6 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                     
                 }
                 
-                    //NOT NEEDED, SINCE IMAGE CALLED EARLIER ALREADY
-                //Setting the temperature for input string in func getPandaImage
-//                let sevenDayOneWeekTempZero: String = sevenDayTempDescription[0] as! String
-//                let sevenDayTwoWeekTempOne: String = sevenDayTempDescription[1] as! String
-//                let sevenDayThreeWeekTempTwo: String = sevenDayTempDescription[2] as! String
-//                let sevenDayFourWeekTempThree: String = sevenDayTempDescription[3] as! String
-//                let sevenDayFiveWeekTempFour: String = sevenDayTempDescription[4] as! String
-//                let sevenDaySixWeekTempFive: String = sevenDayTempDescription[5] as! String
-//                let sevenDaySevenWeekTempSix: String = sevenDayTempDescription[6] as! String
-                
                 //Setting the condition for input string in func getWeatherIcon and getPandaImage
                 let sevenDayOneCondition = json["data"] as! [String:Any]?
                 let sevenDayConditionDescription: NSArray = sevenDayOneCondition!["weather"] as! NSArray
@@ -2125,26 +2257,18 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                     
                     print("Last Day condition is: \(sevenDaySevenConditionDescriptionSix)")
             }
-            else{
-                print("error")
-                let alert = UIAlertController(title: "Error", message: "United States weather only, please try another location in the United States!", preferredStyle: .alert)
-                
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in alert.dismiss(animated: true, completion: nil)
-                }))
-                
-                self.present(alert, animated: true, completion: nil)
-            }
         }
         } catch let err{
             print(err.localizedDescription)
         }
+    }
 //        self.getTemperatureActivityIndicator.stopAnimating()
     }
     
     //FOR SEARCH BAR BUTTON
     //forward geocoding function
-    func forwardGeocodingPanda(address: String) {
-        CLGeocoder().geocodeAddressString(address, completionHandler: { (placemarks, error) in
+    func forwardGeocodingPanda(_ input: String) {
+        CLGeocoder().geocodeAddressString(input , completionHandler: { (placemarks, error) in
             if error != nil {
                 //need to add an error message
                 print(error!)
@@ -2158,15 +2282,21 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                 let long = coordinate!.longitude
                 print("\nlat: \(lat), long: \(long)")
                 
-                //                if placemark!.areasOfInterest!.count > 0 {
-                //                    let areaOfInterest = placemark!.areasOfInterest![0]
-                //                    print(areaOfInterest)
-                //                } else {
-                //                    print("No area of interest found.")
-                //                }
-                
                 let weatherURL = NSURL(string: "http://forecast.weather.gov/MapClick.php?lat=\(lat)&lon=\(long)&unit=0&lg=english&FcstType=json&TextType=1")
                 let weatherData = try? Data(contentsOf: weatherURL! as URL)
+                
+                if weatherData == nil {
+                    print("error bro try again NIL")
+                    DispatchQueue.main.async(execute: {
+                    let alert = UIAlertController(title: "Error", message: "United States weather only, please try another location in the United States!", preferredStyle: .alert)
+                    
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in alert.dismiss(animated: true, completion: nil)
+                    }))
+                    
+                    self.present(alert, animated: true, completion: nil)
+                })
+                } else {
+                    print("error bro try again NOT NIL")
                 
                 do {
                     if let json = try JSONSerialization.jsonObject(with: weatherData!, options:.allowFragments) as? [String:Any] {
@@ -2294,16 +2424,6 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                             
                         }
                         
-                            //NOT NEEDED, SINCE IMAGE CALLED EARLIER IN FUNC
-                        //Setting the temperature for input string in func getPandaImage
-//                        let sevenDayOneWeekTempZero: String = sevenDayTempDescription[0] as! String
-//                        let sevenDayTwoWeekTempOne: String = sevenDayTempDescription[1] as! String
-//                        let sevenDayThreeWeekTempTwo: String = sevenDayTempDescription[2] as! String
-//                        let sevenDayFourWeekTempThree: String = sevenDayTempDescription[3] as! String
-//                        let sevenDayFiveWeekTempFour: String = sevenDayTempDescription[4] as! String
-//                        let sevenDaySixWeekTempFive: String = sevenDayTempDescription[5] as! String
-//                        let sevenDaySevenWeekTempSix: String = sevenDayTempDescription[6] as! String
-                        
                         //Setting the condition for input string in func getWeatherIcon and getPandaImage
                         let sevenDayOneCondition = json["data"] as! [String:Any]?
                         let sevenDayConditionDescription: NSArray = sevenDayOneCondition!["weather"] as! NSArray
@@ -2337,22 +2457,12 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                         
 //                        self.getPandaImage(temperature: sevenDaySevenWeekTempSix, condition: sevenDaySevenConditionDescriptionSix)
                         self.getWeatherIcon(theImageView: self.sevenDaySevenWeatherImageView, theCondition: sevenDaySevenConditionDescriptionSix)
-                        
-                    }
-                        else{
-                            print("error")
-                            let alert = UIAlertController(title: "Error", message: "United States weather only, please try another location in the United States!", preferredStyle: .alert)
-                            
-                            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in alert.dismiss(animated: true, completion: nil)
-                            }))
-                            
-                            self.present(alert, animated: true, completion: nil)
-                        }
+                }
                     }
                 } catch let err{
                     print(err.localizedDescription)
                 }
-                
+            }
             }
         })
     }
@@ -2366,6 +2476,20 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         let long = String(location.longitude)
         let weatherURL = NSURL(string: "http://forecast.weather.gov/MapClick.php?lat=\(lat)&lon=\(long)&unit=0&lg=english&FcstType=json&TextType=1")
         let weatherData = try? Data(contentsOf: weatherURL! as URL)
+        
+        if weatherData == nil {
+            print("error bro try again NIL")
+            DispatchQueue.main.async(execute: {
+            let alert = UIAlertController(title: "Error", message: "United States weather only, please try another location in the United States!", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in alert.dismiss(animated: true, completion: nil)
+            }))
+            
+            self.present(alert, animated: true, completion: nil)
+        })
+        }
+        else {
+            print("error bro try again NOT NIL")
         
         do {
             if let json = try JSONSerialization.jsonObject(with: weatherData!, options:.allowFragments) as? [String:Any] {
@@ -2522,26 +2646,19 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
 //                    self.getUserImage(temperature: sevenDaySevenWeekTempSix, condition: sevenDaySevenConditionDescriptionSix)
                     self.getWeatherIcon(theImageView: sevenDaySevenWeatherImageView, theCondition: sevenDaySevenConditionDescriptionSix)
                 }
-                else{
-                    print("error")
-                    let alert = UIAlertController(title: "Error", message: "United States weather only, please try another location in the United States!", preferredStyle: .alert)
-                    
-                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in alert.dismiss(animated: true, completion: nil)
-                    }))
-                    
-                    self.present(alert, animated: true, completion: nil)
-                }
+                
             }
         } catch let err{
             print(err.localizedDescription)
+        }
         }
 //        self.getTemperatureActivityIndicator.stopAnimating()
     }
     
     //FOR SEARCH BAR BUTTON USER IMAGE
     //forward geocoding function
-    func forwardGeocodingUser(address: String) {
-        CLGeocoder().geocodeAddressString(address, completionHandler: { (placemarks, error) in
+    func forwardGeocodingUser(_ input: String) {
+        CLGeocoder().geocodeAddressString(input, completionHandler: { (placemarks, error) in
             if error != nil {
                 //Error message
                 print(error!)
@@ -2555,16 +2672,21 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                 let long = coordinate!.longitude
                 print("\nlat: \(lat), long: \(long)")
                 
-                //                if placemark!.areasOfInterest!.count > 0 {
-                //                    let areaOfInterest = placemark!.areasOfInterest![0]
-                //                    print(areaOfInterest)
-                //                } else {
-                //                    print("No area of interest found.")
-                //                }
-                
                 let weatherURL = NSURL(string: "http://forecast.weather.gov/MapClick.php?lat=\(lat)&lon=\(long)&unit=0&lg=english&FcstType=json&TextType=1")
                 let weatherData = try? Data(contentsOf: weatherURL! as URL)
                 
+                if weatherData == nil {
+                    print("error bro try again NIL")
+                    DispatchQueue.main.async(execute: {
+                    let alert = UIAlertController(title: "Error", message: "United States weather only, please try another location in the United States!", preferredStyle: .alert)
+                    
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in alert.dismiss(animated: true, completion: nil)
+                    }))
+                    
+                    self.present(alert, animated: true, completion: nil)
+                })
+                } else {
+                    print("error bro try again NOT NIL")
                 do {
                     if let json = try JSONSerialization.jsonObject(with: weatherData!, options:.allowFragments) as? [String:Any] {
                         print(json as Any)
@@ -2572,11 +2694,6 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                         let defaults = UserDefaults()
                         
                         if json["currentobservation"] != nil {
-                            
-                            //let currentObservation = json["currentobservation"] as! [String:Any]?
-                            //let state: String = currentObservation?["state"] as! String
-                            //
-                            //if state != nil {
                             
                             let currentObservation = json["currentobservation"] as! [String:Any]?
                             let temp: String = currentObservation?["Temp"] as! String
@@ -2688,16 +2805,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                                 self.sevenDaySevenHighLowTempLabel.text! = "\(sevenDayTempDescription[12])" + " | " + "NA"
                                 
                             }
-                            
-                                                        //NOT NEEDED, SINCE IMAGE CALLED EARLIER IN FUNC
-                            //Setting the temperature for input string in func getWeatherIcon and getUserImage
-//                            let sevenDayOneWeekTempZero: String = sevenDayTempDescription[0] as! String
-//                            let sevenDayTwoWeekTempOne: String = sevenDayTempDescription[1] as! String
-//                            let sevenDayThreeWeekTempTwo: String = sevenDayTempDescription[2] as! String
-//                            let sevenDayFourWeekTempThree: String = sevenDayTempDescription[3] as! String
-//                            let sevenDayFiveWeekTempFour: String = sevenDayTempDescription[4] as! String
-//                            let sevenDaySixWeekTempFive: String = sevenDayTempDescription[5] as! String
-//                            let sevenDaySevenWeekTempSix: String = sevenDayTempDescription[6] as! String
+
                             
                             //Setting the condition for input string in func getWeatherIcon and getUserImage
                             let sevenDayOneCondition = json["data"] as! [String:Any]?
@@ -2734,22 +2842,37 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                             self.getWeatherIcon(theImageView: self.sevenDaySevenWeatherImageView, theCondition: sevenDaySevenConditionDescriptionSix)
                             
                         }
-                        else{
-                            print("error")
-                            let alert = UIAlertController(title: "Error", message: "United States weather only, please try another location in the United States!", preferredStyle: .alert)
-                            
-                            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in alert.dismiss(animated: true, completion: nil)
-                            }))
-                            
-                            self.present(alert, animated: true, completion: nil)
-                        }
+                        
                     }
                 } catch let err{
                     print(err.localizedDescription)
                 }
-                
+                }
             }
         })
+    }
+    
+    func checkPhotoLibraryPermission() {
+        let status = PHPhotoLibrary.authorizationStatus()
+        switch status {
+        case .authorized: break
+            
+        //handle authorized status
+        case .denied, .restricted : break
+        //handle denied status
+        case .notDetermined:
+            // ask for permissions
+            PHPhotoLibrary.requestAuthorization() { status in
+                switch status {
+                case .authorized: break
+                // as above
+                case .denied, .restricted: break
+                // as above
+                case .notDetermined: break
+                    // won't happen but still
+                }
+            }
+        }
     }
     
 }

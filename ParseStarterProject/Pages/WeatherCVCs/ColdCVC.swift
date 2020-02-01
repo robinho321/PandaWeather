@@ -102,14 +102,6 @@ class ColdCVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
         self.navigationController?.hidesBarsOnTap = false   //!! Use optional chaining
         self.photosAsset = PHAsset.fetchAssets(in: self.assetCollection, options: nil)
         
-        
-        //        if let photoCnt = self.photosAsset?.count{
-        //            if(photoCnt == 0){
-        //                self.noPhotosLabel.isHidden = false
-        //            }else{
-        //                self.noPhotosLabel.isHidden = true
-        //            }
-        //        }
         self.collectionView.reloadData()
     }
     
@@ -117,21 +109,6 @@ class ColdCVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
-    
-    //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    //        if(segue.identifier == "viewLargePhoto"){
-    //            if let controller:ViewPhoto = segue.destination as? ViewPhoto{
-    //                if let cell = sender as? UICollectionViewCell{
-    //                    if let indexPath: IndexPath = self.collectionView.indexPath(for: cell){
-    //                        controller.index = indexPath.item
-    //                        controller.photosAsset = self.photosAsset
-    //                        controller.assetCollection = self.assetCollection
-    //                    }
-    //                }
-    //            }
-    //        }
-    //    }
     
     
     //UICollectionViewDataSource Methods (Remove the "!" on variables in the function prototype)
@@ -161,40 +138,43 @@ class ColdCVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
         return cell!
     }
     
-    //UICollectionViewDelegateFlowLayout methods
-    //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat{
-    //        return 4
-    //    }
-    //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat{
-    //        return 1
-    //    }
-    
-    
-    
     //UIImagePickerControllerDelegate Methods
     internal func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]){
         NSLog("in didFinishPickingMediaWithInfo")
-        if let image: UIImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+        if let url: NSURL = info[UIImagePickerControllerImageURL] as? NSURL {
             
             //Implement if allowing user to edit the selected image
-            //let editedImage = info.objectForKey("UIImagePickerControllerEditedImage") as UIImage
             
-            DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async(execute: {
-                PHPhotoLibrary.shared().performChanges({
-                    let createAssetRequest = PHAssetChangeRequest.creationRequestForAsset(from: image)
-                    let assetPlaceholder = createAssetRequest.placeholderForCreatedAsset
-                    if let albumChangeRequest = PHAssetCollectionChangeRequest(for: self.assetCollection, assets: self.photosAsset) {
-                        albumChangeRequest.addAssets([assetPlaceholder!] as NSArray)
-                    }
-                }, completionHandler: {(success, error)in
+            PHPhotoLibrary.shared().performChanges({
+                let createAssetRequest = PHAssetChangeRequest.creationRequestForAssetFromImage(atFileURL: url as URL)
+                let assetPlaceholder = createAssetRequest?.placeholderForCreatedAsset
+                if let albumChangeRequest = PHAssetCollectionChangeRequest(for: self.assetCollection, assets: self.photosAsset) {
+                    albumChangeRequest.addAssets([assetPlaceholder!] as NSArray)
+                }
+            }, completionHandler: {(success: Bool, error: Error?) in
+                if (success) {
+                    // Move to the main thread to execute
                     DispatchQueue.main.async(execute: {
-                        NSLog("Adding Image to Library -> %@", (success ? "Success":"Error!"))
-                        picker.dismiss(animated: true, completion: nil)
+                        self.photosAsset = PHAsset.fetchAssets(in: self.assetCollection, options: nil)
+                        if self.photosAsset.count == 0 {
+                            print("No Images Left!!")
+                            self.collectionView.reloadData()
+                            picker.dismiss(animated: true, completion: nil)
+                        } else {
+                            print("\(self.photosAsset.count) image/s left")
+                            self.collectionView.reloadData()
+                            picker.dismiss(animated: true, completion: nil)
+                        }
                     })
-                })
+                } else {
+                    print("Error: \(String(describing: error))")
+                    picker.dismiss(animated: true, completion: nil)
+                    
+                }
             })
         }
     }
+    
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController){
         picker.dismiss(animated: true, completion: nil)
     }

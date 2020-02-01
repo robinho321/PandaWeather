@@ -76,16 +76,16 @@ class CloudyCVC: UIViewController, UICollectionViewDataSource, UICollectionViewD
                 let request = PHAssetCollectionChangeRequest.creationRequestForAssetCollection(withTitle: albumName2)
                 albumPlaceholder = request.placeholderForCreatedAssetCollection
             },
-                                                   completionHandler: {(success:Bool, error:Error?) in
-                                                    if(success){
-                                                        print("Successfully created folder")
-                                                        self.albumFound = true
-                                                        let collection = PHAssetCollection.fetchAssetCollections(withLocalIdentifiers: [albumPlaceholder.localIdentifier], options: nil)
-                                                        self.assetCollection = collection.firstObject!
-                                                    } else {
-                                                        print("Error creating folder")
-                                                        self.albumFound = false
-                                                    }
+               completionHandler: {(success:Bool, error:Error?) in
+                if(success){
+                    print("Successfully created folder")
+                    self.albumFound = true
+                    let collection = PHAssetCollection.fetchAssetCollections(withLocalIdentifiers: [albumPlaceholder.localIdentifier], options: nil)
+                    self.assetCollection = collection.firstObject!
+                } else {
+                    print("Error creating folder")
+                    self.albumFound = false
+                }
             })
         }
     }
@@ -174,27 +174,40 @@ class CloudyCVC: UIViewController, UICollectionViewDataSource, UICollectionViewD
     //UIImagePickerControllerDelegate Methods
     internal func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]){
         NSLog("in didFinishPickingMediaWithInfo")
-        if let image: UIImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+        if let url: NSURL = info[UIImagePickerControllerImageURL] as? NSURL {
             
             //Implement if allowing user to edit the selected image
-            //let editedImage = info.objectForKey("UIImagePickerControllerEditedImage") as UIImage
             
-            DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async(execute: {
-                PHPhotoLibrary.shared().performChanges({
-                    let createAssetRequest = PHAssetChangeRequest.creationRequestForAsset(from: image)
-                    let assetPlaceholder = createAssetRequest.placeholderForCreatedAsset
-                    if let albumChangeRequest = PHAssetCollectionChangeRequest(for: self.assetCollection, assets: self.photosAsset) {
-                        albumChangeRequest.addAssets([assetPlaceholder!] as NSArray)
-                    }
-                }, completionHandler: {(success, error)in
+            PHPhotoLibrary.shared().performChanges({
+                let createAssetRequest = PHAssetChangeRequest.creationRequestForAssetFromImage(atFileURL: url as URL)
+                let assetPlaceholder = createAssetRequest?.placeholderForCreatedAsset
+                if let albumChangeRequest = PHAssetCollectionChangeRequest(for: self.assetCollection, assets: self.photosAsset) {
+                    albumChangeRequest.addAssets([assetPlaceholder!] as NSArray)
+                }
+            }, completionHandler: {(success: Bool, error: Error?) in
+                if (success) {
+                    // Move to the main thread to execute
                     DispatchQueue.main.async(execute: {
-                        NSLog("Adding Image to Library -> %@", (success ? "Success":"Error!"))
-                        picker.dismiss(animated: true, completion: nil)
+                        self.photosAsset = PHAsset.fetchAssets(in: self.assetCollection, options: nil)
+                        if self.photosAsset.count == 0 {
+                            print("No Images Left!!")
+                            self.collectionView.reloadData()
+                            picker.dismiss(animated: true, completion: nil)
+                        } else {
+                            print("\(self.photosAsset.count) image/s left")
+                            self.collectionView.reloadData()
+                            picker.dismiss(animated: true, completion: nil)
+                        }
                     })
-                })
+                } else {
+                    print("Error: \(String(describing: error))")
+                    picker.dismiss(animated: true, completion: nil)
+                    
+                }
             })
         }
     }
+    
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController){
         picker.dismiss(animated: true, completion: nil)
     }

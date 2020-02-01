@@ -196,7 +196,7 @@ class WeatherBrowserViewController: UIViewController, WKNavigationDelegate, UISe
     }
     
     @IBAction func infoButton(_ sender: UIBarButtonItem) {
-        let alert = UIAlertController(title: "How to Add Bookmarks", message: "Navigate to a weather site by using the search bar and entering the url. /n /n To bookmark the site, tap the book icon on the right of the search bar. If successful, you will see a message confirming the bookmark was added. \n \n To view your bookmarks, tap on the 'Bookmarks' button on the top right of the view. You can delete bookmarks by swiping right.", preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: "How to Add Bookmarks", message: "Navigate to a weather site by using the search bar and entering the url. \n \n To bookmark the site, tap the book icon on the right of the search bar. If successful, you will see a message confirming the bookmark was added. \n \n To view your bookmarks, tap on the 'Bookmarks' button on the top right of the view. You can delete bookmarks by swiping right.", preferredStyle: UIAlertControllerStyle.alert)
         
         let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
         
@@ -248,7 +248,7 @@ class WeatherBrowserViewController: UIViewController, WKNavigationDelegate, UISe
         toastLabel.layer.cornerRadius = 10;
         toastLabel.clipsToBounds  =  true
         self.view.addSubview(toastLabel)
-        UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseOut, animations: {
+        UIView.animate(withDuration: 1.5, delay: 0.0, options: .curveEaseOut, animations: {
             toastLabel.alpha = 1.0
         }, completion: {(isCompleted) in
             toastLabel.removeFromSuperview()
