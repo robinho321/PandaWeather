@@ -51,8 +51,10 @@ class CityWeatherTableViewController: UITableViewController, UISearchBarDelegate
             //delegate loads weather from city indexpath
             if delegate.switchLabel.isOn {
                     delegate.forwardGeocodingUser(cities[indexPath.row].city)
+                    delegate.getTemperatureActivityIndicator.startAnimating()
                 } else {
                     delegate.forwardGeocodingPanda(cities[indexPath.row].city)
+                    delegate.getTemperatureActivityIndicator.startAnimating()
                 }
             
             self.delegate?.didCloseOnceMoreAgainAgainAgain(controller: self)

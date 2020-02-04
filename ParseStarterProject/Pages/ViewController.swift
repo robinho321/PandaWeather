@@ -117,6 +117,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
     var buttonIsSelected = false
     let locationManager = CLLocationManager()
     
+    //Main Page Action Buttons
     @IBAction func customizePhotosSwitch(_ sender: UISwitch) {
         UserDefaults.standard.set(sender.isOn, forKey: "switchIsOn")
         
@@ -146,9 +147,44 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         }
     }
     
+    @IBAction func shareScreenshot(_ sender: UIButton) {
+        self.shareScreenshotButton.isHidden = true
+        self.moreWeatherButton.isHidden = true
+        self.pandaWaterMark.isHidden = false
+        
+        let layer = UIApplication.shared.keyWindow!.layer
+        let scale = UIScreen.main.scale
+        UIGraphicsBeginImageContextWithOptions(layer.frame.size, false, scale);
+
+        layer.render(in: UIGraphicsGetCurrentContext()!)
+        let screenshot = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        if screenshot != nil {
+        //open sharing controller
+        let activityController = UIActivityViewController(activityItems: [screenshot!], applicationActivities: nil)
+        present(activityController, animated: true, completion: nil)
+        } else {
+            DispatchQueue.main.async(execute: {
+            let alert = UIAlertController(title: "Could Not Take Screenshot", message: "Something went wrong when taking the screenshot. Sorry about that! Please email me at pandapupgram@gmail.com", preferredStyle: UIAlertControllerStyle.alert)
+
+            let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+
+            alert.addAction(cancelAction)
+            self.present(alert, animated: true, completion: nil)
+            })
+        }
+        self.pandaWaterMark.isHidden = true
+        self.shareScreenshotButton.isHidden = false
+        self.moreWeatherButton.isHidden = false
+    }
+    
+    
     //Labels, Views, and ActivityIndicators
     @IBOutlet weak var getTemperatureActivityIndicator: UIActivityIndicatorView!
     
+    @IBOutlet weak var shareScreenshotButton: UIButton!
+    @IBOutlet weak var pandaWaterMark: UIImageView!
     @IBOutlet weak var switchLabel: UISwitch!
     
     @IBOutlet weak var moreWeatherButton: UIButton!
@@ -231,6 +267,8 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        self.pandaWaterMark.isHidden = true
+        
         getTemperatureActivityIndicator.startAnimating()
         // Save Switch state in UserDefaults
         switchLabel.isOn = UserDefaults.standard.bool(forKey: "switchIsOn")
@@ -241,6 +279,8 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         self.walkMeLabel.alpha = 0
         self.walkMeLabel.layer.masksToBounds = true
         self.walkMeLabel.layer.cornerRadius = 8
+        
+        self.pandaWaterMark.layer.cornerRadius = 8
         
         //Location updated when app is being used
         self.topBackgroundView.layer.cornerRadius = 10
@@ -264,7 +304,6 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
             locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
             locationManager.startUpdatingLocation()
         }
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -2094,7 +2133,8 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in alert.dismiss(animated: true, completion: nil)
             }))
             
-            self.present(alert, animated: true, completion: nil)
+                self.present(alert, animated: true, completion: nil)
+                self.getTemperatureActivityIndicator.stopAnimating()
         })
         } else {
             print("error bro try again NOT NIL")
@@ -2257,6 +2297,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                     
                     print("Last Day condition is: \(sevenDaySevenConditionDescriptionSix)")
             }
+                self.getTemperatureActivityIndicator.stopAnimating()
         }
         } catch let err{
             print(err.localizedDescription)
@@ -2293,7 +2334,8 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                     alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in alert.dismiss(animated: true, completion: nil)
                     }))
                     
-                    self.present(alert, animated: true, completion: nil)
+                        self.present(alert, animated: true, completion: nil)
+                        self.getTemperatureActivityIndicator.stopAnimating()
                 })
                 } else {
                     print("error bro try again NOT NIL")
@@ -2457,7 +2499,8 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                         
 //                        self.getPandaImage(temperature: sevenDaySevenWeekTempSix, condition: sevenDaySevenConditionDescriptionSix)
                         self.getWeatherIcon(theImageView: self.sevenDaySevenWeatherImageView, theCondition: sevenDaySevenConditionDescriptionSix)
-                }
+                        }
+                        self.getTemperatureActivityIndicator.stopAnimating()
                     }
                 } catch let err{
                     print(err.localizedDescription)
@@ -2485,7 +2528,8 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in alert.dismiss(animated: true, completion: nil)
             }))
             
-            self.present(alert, animated: true, completion: nil)
+                self.present(alert, animated: true, completion: nil)
+                self.getTemperatureActivityIndicator.stopAnimating()
         })
         }
         else {
@@ -2646,7 +2690,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
 //                    self.getUserImage(temperature: sevenDaySevenWeekTempSix, condition: sevenDaySevenConditionDescriptionSix)
                     self.getWeatherIcon(theImageView: sevenDaySevenWeatherImageView, theCondition: sevenDaySevenConditionDescriptionSix)
                 }
-                
+                self.getTemperatureActivityIndicator.stopAnimating()
             }
         } catch let err{
             print(err.localizedDescription)
@@ -2683,7 +2727,8 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                     alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in alert.dismiss(animated: true, completion: nil)
                     }))
                     
-                    self.present(alert, animated: true, completion: nil)
+                        self.present(alert, animated: true, completion: nil)
+                        self.getTemperatureActivityIndicator.stopAnimating()
                 })
                 } else {
                     print("error bro try again NOT NIL")
@@ -2842,7 +2887,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                             self.getWeatherIcon(theImageView: self.sevenDaySevenWeatherImageView, theCondition: sevenDaySevenConditionDescriptionSix)
                             
                         }
-                        
+                        self.getTemperatureActivityIndicator.stopAnimating()
                     }
                 } catch let err{
                     print(err.localizedDescription)

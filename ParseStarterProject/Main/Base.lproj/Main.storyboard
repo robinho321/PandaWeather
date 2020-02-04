@@ -507,7 +507,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Peanut Butter is one of my favorite treats!" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l8P-QA-DpX">
-                                <rect key="frame" x="60" y="620.66666666666663" width="299" height="180"/>
+                                <rect key="frame" x="60" y="620.66666666666663" width="294" height="180"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="180" id="FjP-jO-epD">
                                         <variation key="heightClass=regular-widthClass=regular" constant="170"/>
@@ -570,6 +570,37 @@
                                     <segue destination="KBK-h4-UdD" kind="show" identifier="openWeatherTVC" id="QIe-aQ-yTW"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x1E-wT-Rzn">
+                                <rect key="frame" x="354" y="728" width="45" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="dV0-8k-XW4">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="68"/>
+                                    </constraint>
+                                    <constraint firstAttribute="width" constant="45" id="iqB-SC-0zw">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="65"/>
+                                    </constraint>
+                                </constraints>
+                                <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <state key="normal" backgroundImage="shareImage">
+                                    <color key="titleColor" red="0.11263984990000001" green="0.111756041" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleShadowColor" red="0.11263984990000001" green="0.111756041" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="shareScreenshot:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ceQ-tM-3dS"/>
+                                </connections>
+                            </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pandaDog" translatesAutoresizingMaskIntoConstraints="NO" id="tB7-yB-6Mb">
+                                <rect key="frame" x="357" y="736" width="40" height="40"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="BLw-UY-xiX">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="60"/>
+                                    </constraint>
+                                    <constraint firstAttribute="width" constant="40" id="vYp-Dm-4VZ">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="60"/>
+                                    </constraint>
+                                </constraints>
+                            </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P0W-wQ-76L">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" red="0.99675431370000001" green="1" blue="0.96224927159999996" alpha="0.70788402288732399" colorSpace="custom" customColorSpace="sRGB"/>
@@ -591,6 +622,7 @@
                             <constraint firstItem="UUo-FP-U8a" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="AjJ-bn-e1V"/>
                             <constraint firstItem="kgo-gc-FZS" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Fxt-ru-b0g"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="l8P-QA-DpX" secondAttribute="bottom" constant="61.329999999999998" id="Ji1-Rf-cBj"/>
+                            <constraint firstItem="CKe-dT-p8k" firstAttribute="top" secondItem="tB7-yB-6Mb" secondAttribute="bottom" constant="8" id="OqA-12-eXU"/>
                             <constraint firstItem="l8P-QA-DpX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="60" id="Pfh-gb-Oc0">
                                 <variation key="heightClass=regular-widthClass=regular" constant="90"/>
                             </constraint>
@@ -599,7 +631,7 @@
                             <constraint firstItem="P0W-wQ-76L" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="U67-pF-Apq"/>
                             <constraint firstItem="UUo-FP-U8a" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="VXA-cp-kwh"/>
                             <constraint firstItem="4LR-9d-dGM" firstAttribute="top" secondItem="UUo-FP-U8a" secondAttribute="bottom" constant="14" id="W3C-Eg-ui6"/>
-                            <constraint firstAttribute="trailing" secondItem="l8P-QA-DpX" secondAttribute="trailing" constant="55" id="WPM-4t-cy8">
+                            <constraint firstAttribute="trailing" secondItem="l8P-QA-DpX" secondAttribute="trailing" constant="60" id="WPM-4t-cy8">
                                 <variation key="heightClass=regular-widthClass=regular" constant="90"/>
                             </constraint>
                             <constraint firstAttribute="trailing" secondItem="UUo-FP-U8a" secondAttribute="trailing" constant="20" id="Wkd-KF-O8F"/>
@@ -609,8 +641,11 @@
                             <constraint firstAttribute="bottom" secondItem="E6j-f0-4X7" secondAttribute="bottom" constant="23" id="eNX-mB-6At"/>
                             <constraint firstAttribute="bottom" secondItem="4LR-9d-dGM" secondAttribute="bottom" constant="11" id="hAe-Gd-1fM"/>
                             <constraint firstAttribute="bottom" secondItem="PtC-17-pxS" secondAttribute="bottom" constant="26" id="hOW-tB-olH"/>
+                            <constraint firstAttribute="trailing" secondItem="x1E-wT-Rzn" secondAttribute="trailing" constant="15" id="j54-Je-iHw"/>
+                            <constraint firstItem="CKe-dT-p8k" firstAttribute="top" secondItem="x1E-wT-Rzn" secondAttribute="bottom" constant="8" symbolic="YES" id="jkw-gK-lLF"/>
                             <constraint firstItem="9BP-xj-Ld4" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="ma6-l8-AI6"/>
                             <constraint firstItem="AZ5-1n-22c" firstAttribute="top" secondItem="UUo-FP-U8a" secondAttribute="bottom" id="oFs-xV-oYo"/>
+                            <constraint firstAttribute="trailing" secondItem="tB7-yB-6Mb" secondAttribute="trailing" constant="17" id="oTU-cu-5YV"/>
                             <constraint firstAttribute="trailing" secondItem="PtC-17-pxS" secondAttribute="trailing" constant="15" id="t4l-4N-2GE">
                                 <variation key="heightClass=regular-widthClass=regular" constant="15"/>
                             </constraint>
@@ -632,7 +667,8 @@
                         <outlet property="dogImageView" destination="kgo-gc-FZS" id="kf0-mh-7wc"/>
                         <outlet property="getGoesImageView" destination="E6j-f0-4X7" id="ChS-Pr-qTo"/>
                         <outlet property="getTemperatureActivityIndicator" destination="P6V-DO-lVG" id="vMu-xR-d2G"/>
-                        <outlet property="moreWeatherButton" destination="AZ5-1n-22c" id="CIU-wX-0G1"/>
+                        <outlet property="moreWeatherButton" destination="AZ5-1n-22c" id="t1D-8D-Zig"/>
+                        <outlet property="pandaWaterMark" destination="tB7-yB-6Mb" id="1Nx-5F-3DN"/>
                         <outlet property="searchButtonView" destination="zb3-oC-UbY" id="wO8-zG-cZu"/>
                         <outlet property="setCurrentLocationView" destination="9BP-xj-Ld4" id="kld-W2-2N4"/>
                         <outlet property="sevenDayDateLabel" destination="Wvu-TU-eKf" id="6Xw-7Z-HvP"/>
@@ -656,6 +692,7 @@
                         <outlet property="sevenDayTwoHighLowTempLabel" destination="hex-nG-bfh" id="GNO-mq-SwT"/>
                         <outlet property="sevenDayTwoWeatherImageView" destination="Wbf-Au-g4o" id="cax-iE-K7a"/>
                         <outlet property="sevenDayWeatherImageView" destination="UWb-Gb-jqm" id="nrT-nL-0cV"/>
+                        <outlet property="shareScreenshotButton" destination="x1E-wT-Rzn" id="RGf-cg-CWm"/>
                         <outlet property="switchLabel" destination="PtC-17-pxS" id="XYp-5s-pQX"/>
                         <outlet property="temperatureLabel" destination="JIt-94-NMy" id="n61-Xb-mlZ"/>
                         <outlet property="topBackgroundView" destination="UUo-FP-U8a" id="ap0-Bi-Ith"/>
@@ -831,7 +868,7 @@
         <!--Settings-->
         <scene sceneID="kLK-xG-P3i">
             <objects>
-                <tableViewController modalPresentationStyle="fullScreen" id="fY5-AO-Eza" customClass="SettingsTableViewController" customModule="PandaWeather" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="fY5-AO-Eza" customClass="SettingsTableViewController" customModule="PandaWeather" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="qT6-nU-GCw">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2065,10 +2102,10 @@ If any provision of the Terms of Use is found to be invalid by any court of comp
         <!--Navigation Controller-->
         <scene sceneID="kZd-xa-ZCP">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="ig8-3d-vHt" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ig8-3d-vHt" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="GZt-sd-3EY">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -2812,7 +2849,7 @@ If any provision of the Terms of Use is found to be invalid by any court of comp
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3bD-by-qsX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="418.84057971014494" y="1397.5446428571429"/>
+            <point key="canvasLocation" x="-96" y="1398"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="2J6-h5-iYa">
@@ -3215,7 +3252,7 @@ If any provision of the Terms of Use is found to be invalid by any court of comp
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LLl-hq-r8a" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="420" y="694"/>
+            <point key="canvasLocation" x="-96" y="694"/>
         </scene>
     </scenes>
     <resources>
@@ -3230,6 +3267,7 @@ If any provision of the Terms of Use is found to be invalid by any court of comp
         <image name="raining1" width="507" height="443"/>
         <image name="round_list_black_48pt_1x" width="48" height="48"/>
         <image name="round_search_black_48pt_3x" width="144" height="144"/>
+        <image name="shareImage" width="454" height="492"/>
         <image name="smiling" width="1200" height="1600"/>
     </resources>
 </document>
