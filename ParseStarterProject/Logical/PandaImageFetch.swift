@@ -39,6 +39,7 @@ func PandaImagesCollect(_ imageDate: String) {
         return "Boundary-\(UUID().uuidString)"
     }
     
+    
     let boundary = generateBoundaryString()
     request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
     request.httpBody = createBodyWithParameters(param, boundary: boundary)
@@ -50,6 +51,7 @@ func PandaImagesCollect(_ imageDate: String) {
             return
         }
         
+        DispatchQueue.main.async(execute: {
         // You can print out response object
         print("******* response = \(String(describing: response))")
         
@@ -77,7 +79,6 @@ func PandaImagesCollect(_ imageDate: String) {
                 //Filter the data
                 let request = NSFetchRequest<PandaImage>(entityName: "PandaImage")
                 
-                
                 //let request = NSFetchRequest(entityName: "Leagues") as NSFetchRequest
                 request.returnsObjectsAsFaults = false;
                 let resultPredicate1 = NSPredicate(format: "id = %i", id!)
@@ -96,7 +97,7 @@ func PandaImagesCollect(_ imageDate: String) {
                 
                 panda.setValue(type, forKey: "type")
                 panda.setValue(status, forKey: "active")
-                
+                    
                 let imagew = "http://danslacave.com/PANDA/includes/pages/image_upload/uploads/" + imagefile!
                 #if UNITY_IPHONE
                 UnityEngine.iOS.Device.SetNoBackupFlag(path);
@@ -128,7 +129,7 @@ func PandaImagesCollect(_ imageDate: String) {
                 }
                 do {
                     try managedContext.save()
-                    
+                
                     //Loads the Main View Controller
                     DispatchQueue.main.async(execute: {
                         NotificationCenter.default.post(name: Notification.Name(rawValue: "timesUpdated"), object: nil, userInfo: nil)
@@ -148,7 +149,7 @@ func PandaImagesCollect(_ imageDate: String) {
         } catch {
             print(error)
         }
-        
+        })
     })
     //Anytime perform a fetch, want to add a date to the SyncDate table
     saveImageDate()

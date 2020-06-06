@@ -25,6 +25,8 @@ class WeatherTableViewController: UITableViewController {
         self.delegate?.didCloseAgain(controller: self)
         }
     
+//    @IBOutlet weak var table: UITableView!
+    
     @IBOutlet weak var dayLabel: UILabel!
     @IBOutlet weak var detailsLabel: UILabel!
     
@@ -68,6 +70,11 @@ class WeatherTableViewController: UITableViewController {
         super.viewDidLoad()
         
         self.getWeather()
+        
+//        table.dataSource = self
+//        table.delegate = self
+//        table.rowHeight = UITableViewAutomaticDimension
+//        table.estimatedRowHeight = UITableViewAutomaticDimension
         
     }
     
@@ -191,6 +198,12 @@ class WeatherTableViewController: UITableViewController {
             })
         }
     }
+    
+//    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//
+//        // Swift 4.1 and below
+//        return UITableViewAutomaticDimension
+//    }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell,
                    forRowAt indexPath: IndexPath) {

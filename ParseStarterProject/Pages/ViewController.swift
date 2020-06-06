@@ -151,6 +151,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         self.shareScreenshotButton.isHidden = true
         self.moreWeatherButton.isHidden = true
         self.pandaWaterMark.isHidden = false
+        self.titleWaterMark.isHidden = false
         
         let layer = UIApplication.shared.keyWindow!.layer
         let scale = UIScreen.main.scale
@@ -163,7 +164,25 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         if screenshot != nil {
         //open sharing controller
         let activityController = UIActivityViewController(activityItems: [screenshot!], applicationActivities: nil)
-        present(activityController, animated: true, completion: nil)
+            
+            //Apps to be excluded sharing to
+            activityController.excludedActivityTypes = [
+                UIActivityType.print,
+                UIActivityType.addToReadingList,
+                UIActivityType.assignToContact,
+                UIActivityType.saveToCameraRoll
+            ]
+            // Check if user is on iPad and present popover
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                if activityController.responds(to: #selector(getter: UIViewController.popoverPresentationController)) {
+                    activityController.popoverPresentationController?.sourceView = sender
+                    activityController.popoverPresentationController?.sourceRect = sender.bounds
+                }
+            }
+            
+            activityController.popoverPresentationController?.sourceView = sender
+            
+            present(activityController, animated: true, completion: nil)
         } else {
             DispatchQueue.main.async(execute: {
             let alert = UIAlertController(title: "Could Not Take Screenshot", message: "Something went wrong when taking the screenshot. Sorry about that! Please email me at pandapupgram@gmail.com", preferredStyle: UIAlertControllerStyle.alert)
@@ -174,6 +193,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
             self.present(alert, animated: true, completion: nil)
             })
         }
+        self.titleWaterMark.isHidden = true
         self.pandaWaterMark.isHidden = true
         self.shareScreenshotButton.isHidden = false
         self.moreWeatherButton.isHidden = false
@@ -183,6 +203,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
     //Labels, Views, and ActivityIndicators
     @IBOutlet weak var getTemperatureActivityIndicator: UIActivityIndicatorView!
     
+    @IBOutlet weak var titleWaterMark: UILabel!
     @IBOutlet weak var shareScreenshotButton: UIButton!
     @IBOutlet weak var pandaWaterMark: UIImageView!
     @IBOutlet weak var switchLabel: UISwitch!
@@ -268,6 +289,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         // Do any additional setup after loading the view, typically from a nib.
         
         self.pandaWaterMark.isHidden = true
+        self.titleWaterMark.isHidden = true
         
         getTemperatureActivityIndicator.startAnimating()
         // Save Switch state in UserDefaults
@@ -275,6 +297,9 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         whiteBackgroundWeatherView.isHidden = true
 
 //        self.showSpinnerOverlay()
+        
+        self.titleWaterMark.alpha = 0.75
+        self.titleWaterMark.layer.masksToBounds = true
         
         self.walkMeLabel.alpha = 0
         self.walkMeLabel.layer.masksToBounds = true

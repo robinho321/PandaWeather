@@ -36,7 +36,9 @@ class WeatherBrowserViewController: UIViewController, WKNavigationDelegate, UISe
         configureSearchBar()
         configureWebViewError()
         loadBookmarks()
-        loadWebSite("https://www.star.nesdis.noaa.gov/GOES/index.php", true)
+        loadWebSite("https://www.nhc.noaa.gov/", true)
+        
+        //GOES - "https://www.star.nesdis.noaa.gov/GOES/index.php"
     }
     
     override func viewDidAppear(_ animated: Bool) {

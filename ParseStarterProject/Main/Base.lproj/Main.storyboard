@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="aB5-q4-OS1">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="aB5-q4-OS1">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Super Cute Dog-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="MainView" modalPresentationStyle="fullScreen" id="BYZ-38-t0r" customClass="ViewController" customModule="PandaWeather" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MainView" modalPresentationStyle="fullScreen" id="BYZ-38-t0r" customClass="ViewController" customModule="HurricanePup" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -547,7 +547,7 @@
                                         <variation key="heightClass=regular-widthClass=regular" constant="60"/>
                                     </constraint>
                                 </constraints>
-                                <state key="normal" image="GOES_image">
+                                <state key="normal" image="hurricaneIcon">
                                     <color key="titleColor" red="0.99675431370000001" green="1" blue="0.96224927159999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
@@ -601,6 +601,21 @@
                                     </constraint>
                                 </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.65000000000000002" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NOAA Weather Radar Puppy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B8e-Vj-C6l">
+                                <rect key="frame" x="74.666666666666686" y="851" width="265" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="265" id="7bS-oL-Viy">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="400"/>
+                                    </constraint>
+                                    <constraint firstAttribute="height" constant="30" id="tlx-DU-G47"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
+                                <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="23"/>
+                                </variation>
+                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P0W-wQ-76L">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" red="0.99675431370000001" green="1" blue="0.96224927159999996" alpha="0.70788402288732399" colorSpace="custom" customColorSpace="sRGB"/>
@@ -622,10 +637,14 @@
                             <constraint firstItem="UUo-FP-U8a" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="AjJ-bn-e1V"/>
                             <constraint firstItem="kgo-gc-FZS" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Fxt-ru-b0g"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="l8P-QA-DpX" secondAttribute="bottom" constant="61.329999999999998" id="Ji1-Rf-cBj"/>
+                            <constraint firstAttribute="bottom" secondItem="B8e-Vj-C6l" secondAttribute="bottom" constant="15" id="Ldr-NQ-rWj">
+                                <variation key="heightClass=regular-widthClass=regular" constant="30"/>
+                            </constraint>
                             <constraint firstItem="CKe-dT-p8k" firstAttribute="top" secondItem="tB7-yB-6Mb" secondAttribute="bottom" constant="8" id="OqA-12-eXU"/>
                             <constraint firstItem="l8P-QA-DpX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="60" id="Pfh-gb-Oc0">
                                 <variation key="heightClass=regular-widthClass=regular" constant="90"/>
                             </constraint>
+                            <constraint firstItem="B8e-Vj-C6l" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Q1v-Hy-v9d"/>
                             <constraint firstItem="P0W-wQ-76L" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="S8M-Xd-3tx"/>
                             <constraint firstItem="E6j-f0-4X7" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="Tld-1D-wyr"/>
                             <constraint firstItem="P0W-wQ-76L" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="U67-pF-Apq"/>
@@ -654,7 +673,7 @@
                             <constraint firstItem="P6V-DO-lVG" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="xrJ-1y-eVe"/>
                             <constraint firstAttribute="bottom" secondItem="kgo-gc-FZS" secondAttribute="bottom" id="xyv-ZQ-pAr"/>
                             <constraint firstItem="E6j-f0-4X7" firstAttribute="top" secondItem="9BP-xj-Ld4" secondAttribute="bottom" constant="10" id="yVS-uD-KkU">
-                                <variation key="heightClass=regular-widthClass=regular" constant="22"/>
+                                <variation key="heightClass=regular-widthClass=regular" constant="25"/>
                             </constraint>
                         </constraints>
                     </view>
@@ -695,6 +714,7 @@
                         <outlet property="shareScreenshotButton" destination="x1E-wT-Rzn" id="RGf-cg-CWm"/>
                         <outlet property="switchLabel" destination="PtC-17-pxS" id="XYp-5s-pQX"/>
                         <outlet property="temperatureLabel" destination="JIt-94-NMy" id="n61-Xb-mlZ"/>
+                        <outlet property="titleWaterMark" destination="B8e-Vj-C6l" id="Rp9-rF-TlS"/>
                         <outlet property="topBackgroundView" destination="UUo-FP-U8a" id="ap0-Bi-Ith"/>
                         <outlet property="walkMeLabel" destination="l8P-QA-DpX" id="AA1-wC-3ok"/>
                         <outlet property="weatherImageView" destination="sOV-CI-uaN" id="xjv-Xe-a1v"/>
@@ -709,7 +729,7 @@
         <!--My Photos-->
         <scene sceneID="7AQ-Cj-TvL">
             <objects>
-                <tableViewController modalPresentationStyle="fullScreen" id="hZT-Iz-NSI" customClass="photoFolderTableViewController" customModule="PandaWeather" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController modalPresentationStyle="fullScreen" id="hZT-Iz-NSI" customClass="photoFolderTableViewController" customModule="HurricanePup" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="0C1-sg-I4b">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -752,7 +772,7 @@
         <!--Nice Weather-->
         <scene sceneID="YQg-Zx-ZjR">
             <objects>
-                <viewController title="Nice Weather" modalPresentationStyle="fullScreen" id="ceX-qV-uOP" customClass="NiceCVC" customModule="PandaWeather" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Nice Weather" modalPresentationStyle="fullScreen" id="ceX-qV-uOP" customClass="NiceCVC" customModule="HurricanePup" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ULc-9x-mec"/>
                         <viewControllerLayoutGuide type="bottom" id="GzA-oJ-T52"/>
@@ -771,7 +791,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="4Eg-FO-x4v" customClass="niceCell" customModule="PandaWeather" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="4Eg-FO-x4v" customClass="niceCell" customModule="HurricanePup" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="118" height="120"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -868,7 +888,7 @@
         <!--Settings-->
         <scene sceneID="kLK-xG-P3i">
             <objects>
-                <tableViewController id="fY5-AO-Eza" customClass="SettingsTableViewController" customModule="PandaWeather" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="fY5-AO-Eza" customClass="SettingsTableViewController" customModule="HurricanePup" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="qT6-nU-GCw">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1178,7 +1198,7 @@
         <!--Weather Forecast-->
         <scene sceneID="SKo-wV-u52">
             <objects>
-                <tableViewController id="tGc-Ze-VHO" customClass="WeatherTableViewController" customModule="PandaWeather" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="tGc-Ze-VHO" customClass="WeatherTableViewController" customModule="HurricanePup" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Fr6-PT-s5s">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1194,9 +1214,11 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Day" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BUF-91-C21">
-                                                    <rect key="frame" x="20" y="23.999999999999993" width="96" height="81.333333333333314"/>
+                                                    <rect key="frame" x="20" y="23.999999999999993" width="100" height="81.333333333333314"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="96" id="0xp-at-AnR"/>
+                                                        <constraint firstAttribute="width" constant="100" id="0xp-at-AnR">
+                                                            <variation key="heightClass=regular-widthClass=regular" constant="115"/>
+                                                        </constraint>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1206,12 +1228,12 @@
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Details" lineBreakMode="wordWrap" numberOfLines="7" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tb5-jn-P6O">
-                                                    <rect key="frame" x="124" y="0.0" width="270" height="130"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <rect key="frame" x="130" y="0.0" width="264" height="130"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="heightClass=regular-widthClass=regular">
-                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     </variation>
                                                 </label>
                                             </subviews>
@@ -1219,10 +1241,12 @@
                                                 <constraint firstItem="tb5-jn-P6O" firstAttribute="top" secondItem="fq5-c9-8xN" secondAttribute="top" id="GhY-w6-HoR"/>
                                                 <constraint firstAttribute="bottom" secondItem="BUF-91-C21" secondAttribute="bottom" constant="24.670000000000002" id="RBf-kJ-NEq"/>
                                                 <constraint firstAttribute="trailing" secondItem="tb5-jn-P6O" secondAttribute="trailing" constant="20" id="Yrl-JF-8ad"/>
-                                                <constraint firstItem="BUF-91-C21" firstAttribute="leading" secondItem="fq5-c9-8xN" secondAttribute="leading" constant="20" id="eZn-sf-ex9"/>
+                                                <constraint firstItem="BUF-91-C21" firstAttribute="leading" secondItem="fq5-c9-8xN" secondAttribute="leading" constant="20" id="eZn-sf-ex9">
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="10"/>
+                                                </constraint>
                                                 <constraint firstItem="BUF-91-C21" firstAttribute="top" secondItem="fq5-c9-8xN" secondAttribute="top" constant="24" id="fom-E8-lpX"/>
-                                                <constraint firstItem="tb5-jn-P6O" firstAttribute="leading" secondItem="BUF-91-C21" secondAttribute="trailing" constant="8" id="lKY-fe-uYJ">
-                                                    <variation key="heightClass=regular-widthClass=regular" constant="12"/>
+                                                <constraint firstItem="tb5-jn-P6O" firstAttribute="leading" secondItem="BUF-91-C21" secondAttribute="trailing" constant="10" id="lKY-fe-uYJ">
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="10"/>
                                                 </constraint>
                                                 <constraint firstAttribute="bottom" secondItem="tb5-jn-P6O" secondAttribute="bottom" id="yyS-bf-nOu"/>
                                             </constraints>
@@ -1238,7 +1262,9 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Day" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UOl-kB-Dgi">
                                                     <rect key="frame" x="20" y="23.999999999999993" width="100" height="81.333333333333314"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="100" id="MOI-34-WHC"/>
+                                                        <constraint firstAttribute="width" constant="100" id="MOI-34-WHC">
+                                                            <variation key="heightClass=regular-widthClass=regular" constant="115"/>
+                                                        </constraint>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1248,25 +1274,29 @@
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Details" lineBreakMode="wordWrap" numberOfLines="7" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="958-9j-hFe">
-                                                    <rect key="frame" x="128" y="0.0" width="266" height="130"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <rect key="frame" x="130" y="0.0" width="264" height="130"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="heightClass=regular-widthClass=regular">
-                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     </variation>
                                                 </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="958-9j-hFe" secondAttribute="bottom" id="1FY-Q2-42E"/>
-                                                <constraint firstAttribute="trailing" secondItem="958-9j-hFe" secondAttribute="trailing" constant="20" id="75f-Yz-4dZ"/>
+                                                <constraint firstAttribute="trailing" secondItem="958-9j-hFe" secondAttribute="trailing" constant="20" id="75f-Yz-4dZ">
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="5"/>
+                                                </constraint>
                                                 <constraint firstAttribute="bottom" secondItem="UOl-kB-Dgi" secondAttribute="bottom" constant="24.670000000000002" id="7HA-iA-1M8"/>
                                                 <constraint firstItem="958-9j-hFe" firstAttribute="top" secondItem="cve-yu-Nde" secondAttribute="top" id="CpO-WN-6hK"/>
-                                                <constraint firstItem="958-9j-hFe" firstAttribute="leading" secondItem="UOl-kB-Dgi" secondAttribute="trailing" constant="8" id="cHa-Rc-AOF">
-                                                    <variation key="heightClass=regular-widthClass=regular" constant="12"/>
+                                                <constraint firstItem="958-9j-hFe" firstAttribute="leading" secondItem="UOl-kB-Dgi" secondAttribute="trailing" constant="10" id="cHa-Rc-AOF">
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="10"/>
                                                 </constraint>
                                                 <constraint firstItem="UOl-kB-Dgi" firstAttribute="top" secondItem="cve-yu-Nde" secondAttribute="top" constant="24" id="enW-YK-eu8"/>
-                                                <constraint firstItem="UOl-kB-Dgi" firstAttribute="leading" secondItem="cve-yu-Nde" secondAttribute="leading" constant="20" id="hFe-pZ-Y6L"/>
+                                                <constraint firstItem="UOl-kB-Dgi" firstAttribute="leading" secondItem="cve-yu-Nde" secondAttribute="leading" constant="20" id="hFe-pZ-Y6L">
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="10"/>
+                                                </constraint>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -1280,7 +1310,9 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Day" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="feZ-Ve-7BM">
                                                     <rect key="frame" x="20" y="23.999999999999993" width="100" height="81.333333333333314"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="100" id="hh5-IK-PYH"/>
+                                                        <constraint firstAttribute="width" constant="100" id="hh5-IK-PYH">
+                                                            <variation key="heightClass=regular-widthClass=regular" constant="115"/>
+                                                        </constraint>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1290,21 +1322,25 @@
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Details" lineBreakMode="wordWrap" numberOfLines="7" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="KVK-en-p4A">
-                                                    <rect key="frame" x="128" y="0.0" width="266" height="130"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <rect key="frame" x="130" y="0.0" width="264" height="130"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="heightClass=regular-widthClass=regular">
-                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     </variation>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="feZ-Ve-7BM" firstAttribute="leading" secondItem="1Ba-RL-CtR" secondAttribute="leading" constant="20" id="C8m-Jr-16O"/>
-                                                <constraint firstAttribute="trailing" secondItem="KVK-en-p4A" secondAttribute="trailing" constant="20" id="Fgn-vo-icf"/>
+                                                <constraint firstItem="feZ-Ve-7BM" firstAttribute="leading" secondItem="1Ba-RL-CtR" secondAttribute="leading" constant="20" id="C8m-Jr-16O">
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="10"/>
+                                                </constraint>
+                                                <constraint firstAttribute="trailing" secondItem="KVK-en-p4A" secondAttribute="trailing" constant="20" id="Fgn-vo-icf">
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="5"/>
+                                                </constraint>
                                                 <constraint firstAttribute="bottom" secondItem="feZ-Ve-7BM" secondAttribute="bottom" constant="24.670000000000002" id="IWU-YB-kyp"/>
-                                                <constraint firstItem="KVK-en-p4A" firstAttribute="leading" secondItem="feZ-Ve-7BM" secondAttribute="trailing" constant="8" id="K2t-wH-dk8">
-                                                    <variation key="heightClass=regular-widthClass=regular" constant="12"/>
+                                                <constraint firstItem="KVK-en-p4A" firstAttribute="leading" secondItem="feZ-Ve-7BM" secondAttribute="trailing" constant="10" id="K2t-wH-dk8">
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="10"/>
                                                 </constraint>
                                                 <constraint firstItem="KVK-en-p4A" firstAttribute="top" secondItem="1Ba-RL-CtR" secondAttribute="top" id="TMW-2g-3iA"/>
                                                 <constraint firstItem="feZ-Ve-7BM" firstAttribute="top" secondItem="1Ba-RL-CtR" secondAttribute="top" constant="24" id="XuF-5d-lKY"/>
@@ -1322,7 +1358,9 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Day" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="838-l0-Lm8">
                                                     <rect key="frame" x="20" y="23.999999999999993" width="100" height="81.333333333333314"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="100" id="j4M-TJ-szp"/>
+                                                        <constraint firstAttribute="width" constant="100" id="j4M-TJ-szp">
+                                                            <variation key="heightClass=regular-widthClass=regular" constant="115"/>
+                                                        </constraint>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1332,23 +1370,27 @@
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Details" lineBreakMode="wordWrap" numberOfLines="7" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="tas-na-hTN">
-                                                    <rect key="frame" x="128" y="0.0" width="266" height="130"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <rect key="frame" x="130" y="0.0" width="264" height="130"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="heightClass=regular-widthClass=regular">
-                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     </variation>
                                                 </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="tas-na-hTN" secondAttribute="bottom" id="59e-W1-Kyk"/>
-                                                <constraint firstItem="838-l0-Lm8" firstAttribute="leading" secondItem="dnF-ap-bdB" secondAttribute="leading" constant="20" id="5sf-of-Z7S"/>
-                                                <constraint firstAttribute="bottom" secondItem="838-l0-Lm8" secondAttribute="bottom" constant="24.670000000000002" id="8CX-76-kbz"/>
-                                                <constraint firstItem="tas-na-hTN" firstAttribute="leading" secondItem="838-l0-Lm8" secondAttribute="trailing" constant="8" id="Bsz-xc-kTB">
-                                                    <variation key="heightClass=regular-widthClass=regular" constant="12"/>
+                                                <constraint firstItem="838-l0-Lm8" firstAttribute="leading" secondItem="dnF-ap-bdB" secondAttribute="leading" constant="20" id="5sf-of-Z7S">
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="10"/>
                                                 </constraint>
-                                                <constraint firstAttribute="trailing" secondItem="tas-na-hTN" secondAttribute="trailing" constant="20" id="N3u-Xq-8Id"/>
+                                                <constraint firstAttribute="bottom" secondItem="838-l0-Lm8" secondAttribute="bottom" constant="24.670000000000002" id="8CX-76-kbz"/>
+                                                <constraint firstItem="tas-na-hTN" firstAttribute="leading" secondItem="838-l0-Lm8" secondAttribute="trailing" constant="10" id="Bsz-xc-kTB">
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="10"/>
+                                                </constraint>
+                                                <constraint firstAttribute="trailing" secondItem="tas-na-hTN" secondAttribute="trailing" constant="20" id="N3u-Xq-8Id">
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="5"/>
+                                                </constraint>
                                                 <constraint firstItem="tas-na-hTN" firstAttribute="top" secondItem="dnF-ap-bdB" secondAttribute="top" id="YUF-c3-0tX"/>
                                                 <constraint firstItem="838-l0-Lm8" firstAttribute="top" secondItem="dnF-ap-bdB" secondAttribute="top" constant="24" id="rPs-no-KTp"/>
                                             </constraints>
@@ -1364,7 +1406,9 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Day" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tel-pY-Dsk">
                                                     <rect key="frame" x="20" y="23.999999999999993" width="100" height="81.333333333333314"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="100" id="cr1-UK-1OR"/>
+                                                        <constraint firstAttribute="width" constant="100" id="cr1-UK-1OR">
+                                                            <variation key="heightClass=regular-widthClass=regular" constant="115"/>
+                                                        </constraint>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1374,25 +1418,29 @@
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Details" lineBreakMode="wordWrap" numberOfLines="7" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="TYN-ul-rYC">
-                                                    <rect key="frame" x="128" y="0.0" width="266" height="130"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <rect key="frame" x="130" y="0.0" width="264" height="130"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="heightClass=regular-widthClass=regular">
-                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     </variation>
                                                 </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="TYN-ul-rYC" firstAttribute="top" secondItem="aw1-vY-oLx" secondAttribute="top" id="UPn-B5-sMS"/>
                                                 <constraint firstAttribute="bottom" secondItem="tel-pY-Dsk" secondAttribute="bottom" constant="24.670000000000002" id="atA-1F-u4T"/>
-                                                <constraint firstItem="TYN-ul-rYC" firstAttribute="leading" secondItem="tel-pY-Dsk" secondAttribute="trailing" constant="8" id="ceU-P3-3p7">
-                                                    <variation key="heightClass=regular-widthClass=regular" constant="12"/>
+                                                <constraint firstItem="TYN-ul-rYC" firstAttribute="leading" secondItem="tel-pY-Dsk" secondAttribute="trailing" constant="10" id="ceU-P3-3p7">
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="10"/>
                                                 </constraint>
-                                                <constraint firstItem="tel-pY-Dsk" firstAttribute="leading" secondItem="aw1-vY-oLx" secondAttribute="leading" constant="20" id="fBC-HR-3qA"/>
+                                                <constraint firstItem="tel-pY-Dsk" firstAttribute="leading" secondItem="aw1-vY-oLx" secondAttribute="leading" constant="20" id="fBC-HR-3qA">
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="10"/>
+                                                </constraint>
                                                 <constraint firstItem="tel-pY-Dsk" firstAttribute="top" secondItem="aw1-vY-oLx" secondAttribute="top" constant="24" id="rgc-yR-9CV"/>
                                                 <constraint firstAttribute="bottom" secondItem="TYN-ul-rYC" secondAttribute="bottom" id="xr0-eM-PXK"/>
-                                                <constraint firstAttribute="trailing" secondItem="TYN-ul-rYC" secondAttribute="trailing" constant="20" id="z6E-hQ-yWY"/>
+                                                <constraint firstAttribute="trailing" secondItem="TYN-ul-rYC" secondAttribute="trailing" constant="20" id="z6E-hQ-yWY">
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="5"/>
+                                                </constraint>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -1406,7 +1454,9 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Day" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v7i-O7-cT4">
                                                     <rect key="frame" x="20" y="23.999999999999993" width="100" height="81.333333333333314"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="100" id="bvO-Ta-pGJ"/>
+                                                        <constraint firstAttribute="width" constant="100" id="bvO-Ta-pGJ">
+                                                            <variation key="heightClass=regular-widthClass=regular" constant="115"/>
+                                                        </constraint>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1416,20 +1466,24 @@
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Details" lineBreakMode="wordWrap" numberOfLines="7" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="Dde-gH-h2m">
-                                                    <rect key="frame" x="128" y="0.0" width="266" height="130"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <rect key="frame" x="130" y="0.0" width="264" height="130"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="heightClass=regular-widthClass=regular">
-                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     </variation>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="v7i-O7-cT4" firstAttribute="leading" secondItem="JHS-rA-bSZ" secondAttribute="leading" constant="20" id="Lch-4a-KTY"/>
-                                                <constraint firstAttribute="trailing" secondItem="Dde-gH-h2m" secondAttribute="trailing" constant="20" id="MJW-PB-gjx"/>
-                                                <constraint firstItem="Dde-gH-h2m" firstAttribute="leading" secondItem="v7i-O7-cT4" secondAttribute="trailing" constant="8" id="PhC-Ym-tkF">
-                                                    <variation key="heightClass=regular-widthClass=regular" constant="12"/>
+                                                <constraint firstItem="v7i-O7-cT4" firstAttribute="leading" secondItem="JHS-rA-bSZ" secondAttribute="leading" constant="20" id="Lch-4a-KTY">
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="10"/>
+                                                </constraint>
+                                                <constraint firstAttribute="trailing" secondItem="Dde-gH-h2m" secondAttribute="trailing" constant="20" id="MJW-PB-gjx">
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="5"/>
+                                                </constraint>
+                                                <constraint firstItem="Dde-gH-h2m" firstAttribute="leading" secondItem="v7i-O7-cT4" secondAttribute="trailing" constant="10" id="PhC-Ym-tkF">
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="10"/>
                                                 </constraint>
                                                 <constraint firstItem="Dde-gH-h2m" firstAttribute="top" secondItem="JHS-rA-bSZ" secondAttribute="top" id="dpY-mh-RdY"/>
                                                 <constraint firstAttribute="bottom" secondItem="Dde-gH-h2m" secondAttribute="bottom" id="otN-9Q-pxM"/>
@@ -1448,7 +1502,9 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Day" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CGQ-RJ-L08">
                                                     <rect key="frame" x="20" y="23.999999999999993" width="100" height="81.333333333333314"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="100" id="px1-0W-HJA"/>
+                                                        <constraint firstAttribute="width" constant="100" id="px1-0W-HJA">
+                                                            <variation key="heightClass=regular-widthClass=regular" constant="115"/>
+                                                        </constraint>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1458,24 +1514,28 @@
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Details" lineBreakMode="wordWrap" numberOfLines="7" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="ep6-mp-d63">
-                                                    <rect key="frame" x="128" y="0.0" width="266" height="130"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <rect key="frame" x="130" y="0.0" width="264" height="130"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="heightClass=regular-widthClass=regular">
-                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     </variation>
                                                 </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="ep6-mp-d63" secondAttribute="bottom" id="Beb-GD-8y8"/>
-                                                <constraint firstItem="CGQ-RJ-L08" firstAttribute="leading" secondItem="f4K-g2-WcC" secondAttribute="leading" constant="20" id="C8I-Pp-0sY"/>
-                                                <constraint firstAttribute="trailing" secondItem="ep6-mp-d63" secondAttribute="trailing" constant="20" id="K7F-Hy-rel"/>
+                                                <constraint firstItem="CGQ-RJ-L08" firstAttribute="leading" secondItem="f4K-g2-WcC" secondAttribute="leading" constant="20" id="C8I-Pp-0sY">
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="10"/>
+                                                </constraint>
+                                                <constraint firstAttribute="trailing" secondItem="ep6-mp-d63" secondAttribute="trailing" constant="20" id="K7F-Hy-rel">
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="5"/>
+                                                </constraint>
                                                 <constraint firstAttribute="bottom" secondItem="CGQ-RJ-L08" secondAttribute="bottom" constant="24.670000000000002" id="X25-bg-J32"/>
                                                 <constraint firstItem="CGQ-RJ-L08" firstAttribute="top" secondItem="f4K-g2-WcC" secondAttribute="top" constant="24" id="h0W-36-alQ"/>
                                                 <constraint firstItem="ep6-mp-d63" firstAttribute="top" secondItem="f4K-g2-WcC" secondAttribute="top" id="qrp-Xe-IkZ"/>
-                                                <constraint firstItem="ep6-mp-d63" firstAttribute="leading" secondItem="CGQ-RJ-L08" secondAttribute="trailing" constant="8" id="wip-Rw-qmq">
-                                                    <variation key="heightClass=regular-widthClass=regular" constant="12"/>
+                                                <constraint firstItem="ep6-mp-d63" firstAttribute="leading" secondItem="CGQ-RJ-L08" secondAttribute="trailing" constant="10" id="wip-Rw-qmq">
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="10"/>
                                                 </constraint>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -1490,7 +1550,9 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Day" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lqo-t1-BNu">
                                                     <rect key="frame" x="20" y="23.999999999999993" width="100" height="81.333333333333314"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="100" id="tWT-e4-NJH"/>
+                                                        <constraint firstAttribute="width" constant="100" id="tWT-e4-NJH">
+                                                            <variation key="heightClass=regular-widthClass=regular" constant="115"/>
+                                                        </constraint>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1500,23 +1562,27 @@
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Details" lineBreakMode="wordWrap" numberOfLines="7" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="C22-tc-bYf">
-                                                    <rect key="frame" x="128" y="0.0" width="266" height="130"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <rect key="frame" x="130" y="0.0" width="264" height="130"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="heightClass=regular-widthClass=regular">
-                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     </variation>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="C22-tc-bYf" secondAttribute="trailing" constant="20" id="LjP-h9-vSW"/>
+                                                <constraint firstAttribute="trailing" secondItem="C22-tc-bYf" secondAttribute="trailing" constant="20" id="LjP-h9-vSW">
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="5"/>
+                                                </constraint>
                                                 <constraint firstItem="lqo-t1-BNu" firstAttribute="top" secondItem="lhZ-EG-x9A" secondAttribute="top" constant="24" id="NLI-z4-IU1"/>
                                                 <constraint firstItem="C22-tc-bYf" firstAttribute="top" secondItem="lhZ-EG-x9A" secondAttribute="top" id="PnJ-Xq-Yo0"/>
-                                                <constraint firstItem="C22-tc-bYf" firstAttribute="leading" secondItem="lqo-t1-BNu" secondAttribute="trailing" constant="8" id="fwk-xN-n0J">
-                                                    <variation key="heightClass=regular-widthClass=regular" constant="12"/>
+                                                <constraint firstItem="C22-tc-bYf" firstAttribute="leading" secondItem="lqo-t1-BNu" secondAttribute="trailing" constant="10" id="fwk-xN-n0J">
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="10"/>
                                                 </constraint>
-                                                <constraint firstItem="lqo-t1-BNu" firstAttribute="leading" secondItem="lhZ-EG-x9A" secondAttribute="leading" constant="20" id="gCt-73-JKN"/>
+                                                <constraint firstItem="lqo-t1-BNu" firstAttribute="leading" secondItem="lhZ-EG-x9A" secondAttribute="leading" constant="20" id="gCt-73-JKN">
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="10"/>
+                                                </constraint>
                                                 <constraint firstAttribute="bottom" secondItem="lqo-t1-BNu" secondAttribute="bottom" constant="24.670000000000002" id="od9-3L-u4k"/>
                                                 <constraint firstAttribute="bottom" secondItem="C22-tc-bYf" secondAttribute="bottom" id="xSo-k6-cfs"/>
                                             </constraints>
@@ -1532,7 +1598,9 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Day" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RYh-2e-zY6">
                                                     <rect key="frame" x="20" y="23.999999999999993" width="100" height="81.333333333333314"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="100" id="hN2-Oo-mVo"/>
+                                                        <constraint firstAttribute="width" constant="100" id="hN2-Oo-mVo">
+                                                            <variation key="heightClass=regular-widthClass=regular" constant="115"/>
+                                                        </constraint>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1542,22 +1610,26 @@
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Details" lineBreakMode="wordWrap" numberOfLines="7" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="Dr3-3X-o5R">
-                                                    <rect key="frame" x="128" y="0.0" width="266" height="130"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <rect key="frame" x="130" y="0.0" width="264" height="130"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="heightClass=regular-widthClass=regular">
-                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     </variation>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="Dr3-3X-o5R" secondAttribute="trailing" constant="20" id="0lg-LQ-5ct"/>
-                                                <constraint firstItem="Dr3-3X-o5R" firstAttribute="top" secondItem="t3H-fn-usG" secondAttribute="top" id="7YL-eL-mSm"/>
-                                                <constraint firstItem="Dr3-3X-o5R" firstAttribute="leading" secondItem="RYh-2e-zY6" secondAttribute="trailing" constant="8" id="UGE-8x-y9b">
-                                                    <variation key="heightClass=regular-widthClass=regular" constant="12"/>
+                                                <constraint firstAttribute="trailing" secondItem="Dr3-3X-o5R" secondAttribute="trailing" constant="20" id="0lg-LQ-5ct">
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="5"/>
                                                 </constraint>
-                                                <constraint firstItem="RYh-2e-zY6" firstAttribute="leading" secondItem="t3H-fn-usG" secondAttribute="leading" constant="20" id="Vpy-eK-hJ1"/>
+                                                <constraint firstItem="Dr3-3X-o5R" firstAttribute="top" secondItem="t3H-fn-usG" secondAttribute="top" id="7YL-eL-mSm"/>
+                                                <constraint firstItem="Dr3-3X-o5R" firstAttribute="leading" secondItem="RYh-2e-zY6" secondAttribute="trailing" constant="10" id="UGE-8x-y9b">
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="10"/>
+                                                </constraint>
+                                                <constraint firstItem="RYh-2e-zY6" firstAttribute="leading" secondItem="t3H-fn-usG" secondAttribute="leading" constant="20" id="Vpy-eK-hJ1">
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="10"/>
+                                                </constraint>
                                                 <constraint firstItem="RYh-2e-zY6" firstAttribute="top" secondItem="t3H-fn-usG" secondAttribute="top" constant="24" id="j88-7M-bkk"/>
                                                 <constraint firstAttribute="bottom" secondItem="Dr3-3X-o5R" secondAttribute="bottom" id="x8R-uJ-GAG"/>
                                                 <constraint firstAttribute="bottom" secondItem="RYh-2e-zY6" secondAttribute="bottom" constant="24.670000000000002" id="xRV-Yg-odl"/>
@@ -1574,7 +1646,9 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Day" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sSj-a9-JQC">
                                                     <rect key="frame" x="20" y="23.999999999999993" width="100" height="81.333333333333314"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="100" id="4Oe-jx-OyO"/>
+                                                        <constraint firstAttribute="width" constant="100" id="4Oe-jx-OyO">
+                                                            <variation key="heightClass=regular-widthClass=regular" constant="115"/>
+                                                        </constraint>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1584,24 +1658,28 @@
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Details" lineBreakMode="wordWrap" numberOfLines="7" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="ECg-Hd-3Mb">
-                                                    <rect key="frame" x="128" y="0.0" width="266" height="130"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <rect key="frame" x="130" y="0.0" width="264" height="130"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="heightClass=regular-widthClass=regular">
-                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     </variation>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="sSj-a9-JQC" firstAttribute="leading" secondItem="koP-lI-4OI" secondAttribute="leading" constant="20" id="3u0-BT-po0"/>
+                                                <constraint firstItem="sSj-a9-JQC" firstAttribute="leading" secondItem="koP-lI-4OI" secondAttribute="leading" constant="20" id="3u0-BT-po0">
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="10"/>
+                                                </constraint>
                                                 <constraint firstAttribute="bottom" secondItem="sSj-a9-JQC" secondAttribute="bottom" constant="24.670000000000002" id="Hgu-vh-QxA"/>
                                                 <constraint firstAttribute="bottom" secondItem="ECg-Hd-3Mb" secondAttribute="bottom" id="R9c-T5-Xcs"/>
                                                 <constraint firstItem="sSj-a9-JQC" firstAttribute="top" secondItem="koP-lI-4OI" secondAttribute="top" constant="24" id="aXT-FL-Vra"/>
                                                 <constraint firstItem="ECg-Hd-3Mb" firstAttribute="top" secondItem="koP-lI-4OI" secondAttribute="top" id="gp5-hx-Bep"/>
-                                                <constraint firstAttribute="trailing" secondItem="ECg-Hd-3Mb" secondAttribute="trailing" constant="20" id="u9M-bs-feA"/>
-                                                <constraint firstItem="ECg-Hd-3Mb" firstAttribute="leading" secondItem="sSj-a9-JQC" secondAttribute="trailing" constant="8" id="z5F-qO-z2c">
-                                                    <variation key="heightClass=regular-widthClass=regular" constant="12"/>
+                                                <constraint firstAttribute="trailing" secondItem="ECg-Hd-3Mb" secondAttribute="trailing" constant="20" id="u9M-bs-feA">
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="5"/>
+                                                </constraint>
+                                                <constraint firstItem="ECg-Hd-3Mb" firstAttribute="leading" secondItem="sSj-a9-JQC" secondAttribute="trailing" constant="10" id="z5F-qO-z2c">
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="10"/>
                                                 </constraint>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -1616,7 +1694,9 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Day" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hpo-M7-RIP">
                                                     <rect key="frame" x="20" y="23.999999999999993" width="100" height="81.333333333333314"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="100" id="hsa-Aj-NaX"/>
+                                                        <constraint firstAttribute="width" constant="100" id="hsa-Aj-NaX">
+                                                            <variation key="heightClass=regular-widthClass=regular" constant="115"/>
+                                                        </constraint>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1626,25 +1706,27 @@
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Details" lineBreakMode="wordWrap" numberOfLines="7" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="wWH-Je-nyz">
-                                                    <rect key="frame" x="128" y="0.0" width="266" height="130"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <rect key="frame" x="130" y="0.0" width="264" height="130"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="heightClass=regular-widthClass=regular">
-                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     </variation>
                                                 </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="hpo-M7-RIP" firstAttribute="top" secondItem="tZm-LQ-zjw" secondAttribute="top" constant="24" id="4PY-4R-42I"/>
                                                 <constraint firstAttribute="trailing" secondItem="wWH-Je-nyz" secondAttribute="trailing" constant="20" id="TVx-0V-5do">
-                                                    <variation key="heightClass=regular-widthClass=regular" constant="20"/>
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="5"/>
                                                 </constraint>
                                                 <constraint firstItem="wWH-Je-nyz" firstAttribute="top" secondItem="tZm-LQ-zjw" secondAttribute="top" id="aeq-eC-LZi"/>
-                                                <constraint firstItem="wWH-Je-nyz" firstAttribute="leading" secondItem="hpo-M7-RIP" secondAttribute="trailing" constant="8" id="bqi-U1-Ur1">
-                                                    <variation key="heightClass=regular-widthClass=regular" constant="12"/>
+                                                <constraint firstItem="wWH-Je-nyz" firstAttribute="leading" secondItem="hpo-M7-RIP" secondAttribute="trailing" constant="10" id="bqi-U1-Ur1">
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="10"/>
                                                 </constraint>
-                                                <constraint firstItem="hpo-M7-RIP" firstAttribute="leading" secondItem="tZm-LQ-zjw" secondAttribute="leading" constant="20" id="oyW-bi-gHH"/>
+                                                <constraint firstItem="hpo-M7-RIP" firstAttribute="leading" secondItem="tZm-LQ-zjw" secondAttribute="leading" constant="20" id="oyW-bi-gHH">
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="10"/>
+                                                </constraint>
                                                 <constraint firstAttribute="bottom" secondItem="wWH-Je-nyz" secondAttribute="bottom" id="pdK-Y9-mUM"/>
                                                 <constraint firstAttribute="bottom" secondItem="hpo-M7-RIP" secondAttribute="bottom" constant="24.670000000000002" id="yni-wQ-P7l"/>
                                             </constraints>
@@ -1660,7 +1742,9 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Day" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MRZ-Pz-tIw">
                                                     <rect key="frame" x="20" y="23.999999999999993" width="100" height="81.333333333333314"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="100" id="U3x-nq-Vwv"/>
+                                                        <constraint firstAttribute="width" constant="100" id="U3x-nq-Vwv">
+                                                            <variation key="heightClass=regular-widthClass=regular" constant="115"/>
+                                                        </constraint>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1670,26 +1754,28 @@
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Details" lineBreakMode="wordWrap" numberOfLines="7" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="vCo-BR-GPp">
-                                                    <rect key="frame" x="128" y="0.0" width="266" height="130"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <rect key="frame" x="130" y="0.0" width="264" height="130"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="heightClass=regular-widthClass=regular">
-                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     </variation>
                                                 </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="MRZ-Pz-tIw" firstAttribute="top" secondItem="x6r-Ov-FHh" secondAttribute="top" constant="24" id="4h2-GI-Yzy"/>
-                                                <constraint firstItem="vCo-BR-GPp" firstAttribute="leading" secondItem="MRZ-Pz-tIw" secondAttribute="trailing" constant="8" id="8OE-GW-Cep">
-                                                    <variation key="heightClass=regular-widthClass=regular" constant="12"/>
+                                                <constraint firstItem="vCo-BR-GPp" firstAttribute="leading" secondItem="MRZ-Pz-tIw" secondAttribute="trailing" constant="10" id="8OE-GW-Cep">
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="10"/>
                                                 </constraint>
                                                 <constraint firstItem="vCo-BR-GPp" firstAttribute="top" secondItem="x6r-Ov-FHh" secondAttribute="top" id="B56-jA-OJ0"/>
-                                                <constraint firstItem="MRZ-Pz-tIw" firstAttribute="leading" secondItem="x6r-Ov-FHh" secondAttribute="leading" constant="20" id="PUT-Rd-Z3S"/>
+                                                <constraint firstItem="MRZ-Pz-tIw" firstAttribute="leading" secondItem="x6r-Ov-FHh" secondAttribute="leading" constant="20" id="PUT-Rd-Z3S">
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="10"/>
+                                                </constraint>
                                                 <constraint firstAttribute="bottom" secondItem="MRZ-Pz-tIw" secondAttribute="bottom" constant="24.670000000000002" id="WoC-Qm-dSO"/>
                                                 <constraint firstAttribute="bottom" secondItem="vCo-BR-GPp" secondAttribute="bottom" id="hZX-3z-lNC"/>
                                                 <constraint firstAttribute="trailing" secondItem="vCo-BR-GPp" secondAttribute="trailing" constant="20" id="mrV-0a-fxo">
-                                                    <variation key="heightClass=regular-widthClass=regular" constant="20"/>
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="5"/>
                                                 </constraint>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -1704,7 +1790,9 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Day" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xra-om-dNZ">
                                                     <rect key="frame" x="20" y="23.999999999999993" width="100" height="81.333333333333314"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="100" id="wA7-1n-TbQ"/>
+                                                        <constraint firstAttribute="width" constant="100" id="wA7-1n-TbQ">
+                                                            <variation key="heightClass=regular-widthClass=regular" constant="115"/>
+                                                        </constraint>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1714,22 +1802,28 @@
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Details" lineBreakMode="wordWrap" numberOfLines="7" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="JxB-vP-5rt">
-                                                    <rect key="frame" x="128" y="0.0" width="266" height="130"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <rect key="frame" x="130" y="0.0" width="264" height="130"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="heightClass=regular-widthClass=regular">
-                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     </variation>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="Xra-om-dNZ" firstAttribute="leading" secondItem="AsO-Gu-lJa" secondAttribute="leading" constant="20" id="4eH-BN-2co"/>
+                                                <constraint firstItem="Xra-om-dNZ" firstAttribute="leading" secondItem="AsO-Gu-lJa" secondAttribute="leading" constant="20" id="4eH-BN-2co">
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="10"/>
+                                                </constraint>
                                                 <constraint firstAttribute="bottom" secondItem="JxB-vP-5rt" secondAttribute="bottom" id="Pj6-q3-CcX"/>
-                                                <constraint firstItem="JxB-vP-5rt" firstAttribute="leading" secondItem="Xra-om-dNZ" secondAttribute="trailing" constant="8" id="TBS-9U-dgq"/>
+                                                <constraint firstItem="JxB-vP-5rt" firstAttribute="leading" secondItem="Xra-om-dNZ" secondAttribute="trailing" constant="10" id="TBS-9U-dgq">
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="10"/>
+                                                </constraint>
                                                 <constraint firstItem="Xra-om-dNZ" firstAttribute="top" secondItem="AsO-Gu-lJa" secondAttribute="top" constant="24" id="dpe-Zu-peG"/>
                                                 <constraint firstItem="JxB-vP-5rt" firstAttribute="top" secondItem="AsO-Gu-lJa" secondAttribute="top" id="oWN-zP-OCZ"/>
-                                                <constraint firstAttribute="trailing" secondItem="JxB-vP-5rt" secondAttribute="trailing" constant="20" id="q4k-PS-sB8"/>
+                                                <constraint firstAttribute="trailing" secondItem="JxB-vP-5rt" secondAttribute="trailing" constant="20" id="q4k-PS-sB8">
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="5"/>
+                                                </constraint>
                                                 <constraint firstAttribute="bottom" secondItem="Xra-om-dNZ" secondAttribute="bottom" constant="24.670000000000002" id="vyS-4l-pZL"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -1785,7 +1879,7 @@
         <!--Admin Password View Controller-->
         <scene sceneID="Y2E-c5-9eX">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="6Gy-Qt-kFk" customClass="AdminPasswordViewController" customModule="PandaWeather" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="6Gy-Qt-kFk" customClass="AdminPasswordViewController" customModule="HurricanePup" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="7vW-0g-jpC"/>
                         <viewControllerLayoutGuide type="bottom" id="Iyr-eP-HDs"/>
@@ -1848,13 +1942,13 @@
         <!--Admin Image Table View Controller-->
         <scene sceneID="UQv-fM-3v4">
             <objects>
-                <tableViewController storyboardIdentifier="AdminImageTable" modalPresentationStyle="fullScreen" id="8Qx-d3-pNL" customClass="AdminImageTableViewController" customModule="PandaWeather" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="AdminImageTable" modalPresentationStyle="fullScreen" id="8Qx-d3-pNL" customClass="AdminImageTableViewController" customModule="HurricanePup" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="n6x-qf-Wif">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ImageCell" rowHeight="143" id="WgT-6m-9rd" customClass="ImageCell" customModule="PandaWeather" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ImageCell" rowHeight="143" id="WgT-6m-9rd" customClass="ImageCell" customModule="HurricanePup" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="143"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="WgT-6m-9rd" id="jyr-Tc-X5q">
@@ -1954,7 +2048,7 @@
         <!--Admin Add Image-->
         <scene sceneID="JVU-r2-ePq">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="BHR-s6-X2R" customClass="AdminAddImage" customModule="PandaWeather" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="BHR-s6-X2R" customClass="AdminAddImage" customModule="HurricanePup" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Dcj-h9-v7M"/>
                         <viewControllerLayoutGuide type="bottom" id="g1S-Va-nIZ"/>
@@ -2030,7 +2124,7 @@
         <!--Terms And Conditions View Controller-->
         <scene sceneID="VFW-J7-DZE">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="95n-Cp-6KL" customClass="termsAndConditionsViewController" customModule="PandaWeather" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="95n-Cp-6KL" customClass="termsAndConditionsViewController" customModule="HurricanePup" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="BGs-VS-enU"/>
                         <viewControllerLayoutGuide type="bottom" id="M6M-sO-uMe"/>
@@ -2120,7 +2214,7 @@ If any provision of the Terms of Use is found to be invalid by any court of comp
         <!--Splash Screen View Controller-->
         <scene sceneID="wlB-ug-nRf">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="aB5-q4-OS1" customClass="SplashScreenViewController" customModule="PandaWeather" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="aB5-q4-OS1" customClass="SplashScreenViewController" customModule="HurricanePup" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="vn2-nC-z3b"/>
                         <viewControllerLayoutGuide type="bottom" id="Qri-QE-Eaf"/>
@@ -2143,7 +2237,7 @@ If any provision of the Terms of Use is found to be invalid by any court of comp
                                             </constraint>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NOAA Weather Radar Puppy" textAlignment="center" lineBreakMode="middleTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="6HQ-4V-008">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hurricane Tracker, Weather Pup" textAlignment="center" lineBreakMode="middleTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="6HQ-4V-008">
                                         <rect key="frame" x="61.666666666666657" y="521" width="291" height="84"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="84" id="Gad-uo-lUd">
@@ -2210,7 +2304,7 @@ If any provision of the Terms of Use is found to be invalid by any court of comp
         <!--Cloudy Weather-->
         <scene sceneID="7o5-H5-1OH">
             <objects>
-                <viewController title="Cloudy Weather" modalPresentationStyle="fullScreen" id="zZ2-px-YJM" customClass="CloudyCVC" customModule="PandaWeather" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Cloudy Weather" modalPresentationStyle="fullScreen" id="zZ2-px-YJM" customClass="CloudyCVC" customModule="HurricanePup" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="47w-00-rZk"/>
                         <viewControllerLayoutGuide type="bottom" id="uIa-D6-qpP"/>
@@ -2229,7 +2323,7 @@ If any provision of the Terms of Use is found to be invalid by any court of comp
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="ePB-zK-xaI" customClass="cloudyCell" customModule="PandaWeather" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="ePB-zK-xaI" customClass="cloudyCell" customModule="HurricanePup" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="118" height="118"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -2326,7 +2420,7 @@ If any provision of the Terms of Use is found to be invalid by any court of comp
         <!--Cold Weather-->
         <scene sceneID="m8S-OQ-CHn">
             <objects>
-                <viewController title="Cold Weather" modalPresentationStyle="fullScreen" id="wkX-w4-vdp" customClass="ColdCVC" customModule="PandaWeather" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Cold Weather" modalPresentationStyle="fullScreen" id="wkX-w4-vdp" customClass="ColdCVC" customModule="HurricanePup" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="4dy-ld-eM2"/>
                         <viewControllerLayoutGuide type="bottom" id="idM-Ej-wRK"/>
@@ -2345,7 +2439,7 @@ If any provision of the Terms of Use is found to be invalid by any court of comp
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="Tcc-6d-X9A" customClass="coldCell" customModule="PandaWeather" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="Tcc-6d-X9A" customClass="coldCell" customModule="HurricanePup" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="118" height="118"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -2444,7 +2538,7 @@ If any provision of the Terms of Use is found to be invalid by any court of comp
         <!--Rain Weather-->
         <scene sceneID="qUz-Sh-Gkd">
             <objects>
-                <viewController title="Rain Weather" modalPresentationStyle="fullScreen" id="1rB-eQ-nFd" customClass="RainCVC" customModule="PandaWeather" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Rain Weather" modalPresentationStyle="fullScreen" id="1rB-eQ-nFd" customClass="RainCVC" customModule="HurricanePup" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="tCD-D6-WaA"/>
                         <viewControllerLayoutGuide type="bottom" id="jsv-hD-YPa"/>
@@ -2463,7 +2557,7 @@ If any provision of the Terms of Use is found to be invalid by any court of comp
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="wNd-Xn-XXA" customClass="rainCell" customModule="PandaWeather" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="wNd-Xn-XXA" customClass="rainCell" customModule="HurricanePup" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="118" height="117"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -2560,7 +2654,7 @@ If any provision of the Terms of Use is found to be invalid by any court of comp
         <!--Lightning Weather-->
         <scene sceneID="mPJ-BW-S7o">
             <objects>
-                <viewController title="Lightning Weather" modalPresentationStyle="fullScreen" id="VfE-9A-aKq" customClass="LightningCVC" customModule="PandaWeather" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Lightning Weather" modalPresentationStyle="fullScreen" id="VfE-9A-aKq" customClass="LightningCVC" customModule="HurricanePup" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="nKY-b9-1eJ"/>
                         <viewControllerLayoutGuide type="bottom" id="zlW-NN-eFj"/>
@@ -2579,7 +2673,7 @@ If any provision of the Terms of Use is found to be invalid by any court of comp
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="oIS-QC-jen" customClass="lightningCell" customModule="PandaWeather" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="oIS-QC-jen" customClass="lightningCell" customModule="HurricanePup" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="118" height="119"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -2676,7 +2770,7 @@ If any provision of the Terms of Use is found to be invalid by any court of comp
         <!--Snow Weather-->
         <scene sceneID="GAy-MR-JT0">
             <objects>
-                <viewController title="Snow Weather" modalPresentationStyle="fullScreen" id="AH1-PK-a5Y" customClass="SnowCVC" customModule="PandaWeather" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Snow Weather" modalPresentationStyle="fullScreen" id="AH1-PK-a5Y" customClass="SnowCVC" customModule="HurricanePup" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="wE0-GF-YLC"/>
                         <viewControllerLayoutGuide type="bottom" id="Be3-Hh-Dct"/>
@@ -2695,7 +2789,7 @@ If any provision of the Terms of Use is found to be invalid by any court of comp
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="fk7-1Q-g1e" customClass="snowCell" customModule="PandaWeather" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="fk7-1Q-g1e" customClass="snowCell" customModule="HurricanePup" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="118" height="119"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -2792,13 +2886,13 @@ If any provision of the Terms of Use is found to be invalid by any court of comp
         <!--Favorite City (USA)-->
         <scene sceneID="dpG-C4-Rh8">
             <objects>
-                <tableViewController modalPresentationStyle="fullScreen" id="6oq-P8-1F1" customClass="CityWeatherTableViewController" customModule="PandaWeather" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController modalPresentationStyle="fullScreen" id="6oq-P8-1F1" customClass="CityWeatherTableViewController" customModule="HurricanePup" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="SrV-0k-p7p">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="City" textLabel="OfQ-SY-6mx" rowHeight="65" style="IBUITableViewCellStyleDefault" id="9wV-YW-7II" customClass="CityTableViewCell" customModule="PandaWeather" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="City" textLabel="OfQ-SY-6mx" rowHeight="65" style="IBUITableViewCellStyleDefault" id="9wV-YW-7II" customClass="CityTableViewCell" customModule="HurricanePup" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="65"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9wV-YW-7II" id="9VN-yw-zbp">
@@ -2873,7 +2967,7 @@ If any provision of the Terms of Use is found to be invalid by any court of comp
         <!--NOAA GOES Image Viewer-->
         <scene sceneID="aah-l6-Bhh">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="lCm-QL-gzz" customClass="GoesImageViewController" customModule="PandaWeather" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="lCm-QL-gzz" customClass="GoesImageViewController" customModule="HurricanePup" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="hM9-Bi-XDD"/>
                         <viewControllerLayoutGuide type="bottom" id="3Cj-hA-fR2"/>
@@ -2965,7 +3059,7 @@ If any provision of the Terms of Use is found to be invalid by any court of comp
         <!--NHC Storm Forecast-->
         <scene sceneID="p3e-5f-7gO">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="hCk-Jw-S9W" customClass="HurricaneTrackerViewController" customModule="PandaWeather" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="hCk-Jw-S9W" customClass="HurricaneTrackerViewController" customModule="HurricanePup" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="A7C-9O-wLz"/>
                         <viewControllerLayoutGuide type="bottom" id="sxH-MW-4Ih"/>
@@ -3081,7 +3175,7 @@ If any provision of the Terms of Use is found to be invalid by any court of comp
         <!--Weather Browser-->
         <scene sceneID="aiI-aR-KN5">
             <objects>
-                <viewController extendedLayoutIncludesOpaqueBars="YES" modalPresentationStyle="fullScreen" id="mtt-bv-mi5" customClass="WeatherBrowserViewController" customModule="PandaWeather" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController extendedLayoutIncludesOpaqueBars="YES" modalPresentationStyle="fullScreen" id="mtt-bv-mi5" customClass="WeatherBrowserViewController" customModule="HurricanePup" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Unn-6c-tOR"/>
                         <viewControllerLayoutGuide type="bottom" id="sCN-0G-Y1c"/>
@@ -3167,13 +3261,13 @@ If any provision of the Terms of Use is found to be invalid by any court of comp
         <!--Bookmark Table View Controller-->
         <scene sceneID="nbx-Xr-FeR">
             <objects>
-                <tableViewController modalPresentationStyle="fullScreen" id="DGq-nE-775" customClass="BookmarkTableViewController" customModule="PandaWeather" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController modalPresentationStyle="fullScreen" id="DGq-nE-775" customClass="BookmarkTableViewController" customModule="HurricanePup" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="SW1-kx-Gjm">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="gray" indentationWidth="10" reuseIdentifier="Bookmark" textLabel="PGM-v5-FJ5" detailTextLabel="M1V-pt-5mn" style="IBUITableViewCellStyleSubtitle" id="aib-UT-Ist" customClass="BookmarkTableViewCell" customModule="PandaWeather" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="gray" indentationWidth="10" reuseIdentifier="Bookmark" textLabel="PGM-v5-FJ5" detailTextLabel="M1V-pt-5mn" style="IBUITableViewCellStyleSubtitle" id="aib-UT-Ist" customClass="BookmarkTableViewCell" customModule="HurricanePup" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="55.666667938232422"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="aib-UT-Ist" id="fU9-2E-8i1">
@@ -3257,12 +3351,12 @@ If any provision of the Terms of Use is found to be invalid by any court of comp
     </scenes>
     <resources>
         <image name="002-pictures" width="128" height="128"/>
-        <image name="GOES_image" width="108" height="108"/>
         <image name="appStore" width="128" height="128"/>
         <image name="close_black" width="2048" height="2048"/>
         <image name="cloudSunIcon" width="128" height="128"/>
         <image name="cloudy" width="80" height="56"/>
         <image name="homeIcon" width="512" height="512"/>
+        <image name="hurricaneIcon" width="640" height="603"/>
         <image name="pandaDog" width="1024" height="1024"/>
         <image name="raining1" width="507" height="443"/>
         <image name="round_list_black_48pt_1x" width="48" height="48"/>
