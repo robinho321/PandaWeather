@@ -43,6 +43,7 @@
 		A94CFFC123DD57260026DCFB /* CityWeatherTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94CFFC023DD57260026DCFB /* CityWeatherTableViewController.swift */; };
 		A94CFFC323DD57490026DCFB /* CityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94CFFC223DD57490026DCFB /* CityTableViewCell.swift */; };
 		A94CFFC523DD58D10026DCFB /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94CFFC423DD58D10026DCFB /* City.swift */; };
+		A94EB1AC249DDE7200B1E282 /* IAPConfirmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94EB1AB249DDE7200B1E282 /* IAPConfirmViewController.swift */; };
 		A95A92C223D3CDDF00777342 /* WeatherBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95A92C123D3CDDF00777342 /* WeatherBrowserViewController.swift */; };
 		A95A92C423D3D2E500777342 /* BookmarkTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95A92C323D3D2E500777342 /* BookmarkTableViewController.swift */; };
 		A95A92C623D3D32E00777342 /* BookmarkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95A92C523D3D32E00777342 /* BookmarkTableViewCell.swift */; };
@@ -50,6 +51,10 @@
 		A95A92CA23D51C6A00777342 /* Bookmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95A92C923D51C6A00777342 /* Bookmark.swift */; };
 		A95A92CC23D5242400777342 /* populationFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95A92CB23D5242400777342 /* populationFunctions.swift */; };
 		A967A3CD23CB0826007A1468 /* GoesImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A967A3CC23CB0826007A1468 /* GoesImageView.swift */; };
+		A96D5865248C1B15008B6DA2 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A96D5864248C1B15008B6DA2 /* StoreKit.framework */; };
+		A96D5867248C970F008B6DA2 /* IAPProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96D5866248C970F008B6DA2 /* IAPProduct.swift */; };
+		A96D5869248C99B9008B6DA2 /* IAPService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96D5868248C99B9008B6DA2 /* IAPService.swift */; };
+		A96D586B248CA563008B6DA2 /* IAPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96D586A248CA563008B6DA2 /* IAPViewController.swift */; };
 		A976E5A92320BE40006AA2F5 /* HurricaneTrackerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A976E5A82320BE40006AA2F5 /* HurricaneTrackerViewController.swift */; };
 		A976E5AB2320D5B4006AA2F5 /* StormListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A976E5AA2320D5B4006AA2F5 /* StormListTableViewController.swift */; };
 		A977881E2027925700EB125F /* photoFolderTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A977881D2027925700EB125F /* photoFolderTableViewController.swift */; };
@@ -103,6 +108,7 @@
 		A94CFFC023DD57260026DCFB /* CityWeatherTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityWeatherTableViewController.swift; sourceTree = "<group>"; };
 		A94CFFC223DD57490026DCFB /* CityTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityTableViewCell.swift; sourceTree = "<group>"; };
 		A94CFFC423DD58D10026DCFB /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
+		A94EB1AB249DDE7200B1E282 /* IAPConfirmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPConfirmViewController.swift; sourceTree = "<group>"; };
 		A95A92C123D3CDDF00777342 /* WeatherBrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherBrowserViewController.swift; sourceTree = "<group>"; };
 		A95A92C323D3D2E500777342 /* BookmarkTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkTableViewController.swift; sourceTree = "<group>"; };
 		A95A92C523D3D32E00777342 /* BookmarkTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkTableViewCell.swift; sourceTree = "<group>"; };
@@ -110,6 +116,10 @@
 		A95A92C923D51C6A00777342 /* Bookmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bookmark.swift; sourceTree = "<group>"; };
 		A95A92CB23D5242400777342 /* populationFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = populationFunctions.swift; sourceTree = "<group>"; };
 		A967A3CC23CB0826007A1468 /* GoesImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoesImageView.swift; sourceTree = "<group>"; };
+		A96D5864248C1B15008B6DA2 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		A96D5866248C970F008B6DA2 /* IAPProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPProduct.swift; sourceTree = "<group>"; };
+		A96D5868248C99B9008B6DA2 /* IAPService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPService.swift; sourceTree = "<group>"; };
+		A96D586A248CA563008B6DA2 /* IAPViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPViewController.swift; sourceTree = "<group>"; };
 		A976E5A82320BE40006AA2F5 /* HurricaneTrackerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HurricaneTrackerViewController.swift; sourceTree = "<group>"; };
 		A976E5AA2320D5B4006AA2F5 /* StormListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StormListTableViewController.swift; sourceTree = "<group>"; };
 		A977881D2027925700EB125F /* photoFolderTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = photoFolderTableViewController.swift; sourceTree = "<group>"; };
@@ -132,6 +142,7 @@
 				8374E1021D9AB18E00E7A0B7 /* libsqlite3.tbd in Frameworks */,
 				81BA817B1A49E0E500E65899 /* SystemConfiguration.framework in Frameworks */,
 				81BA81791A49E0DB00E65899 /* AudioToolbox.framework in Frameworks */,
+				A96D5865248C1B15008B6DA2 /* StoreKit.framework in Frameworks */,
 				A90AAC8F1F3FDC470077243C /* MapKit.framework in Frameworks */,
 				81BA81711A49DB6800E65899 /* Parse.framework in Frameworks */,
 				81BA81701A49DB6800E65899 /* Bolts.framework in Frameworks */,
@@ -174,6 +185,7 @@
 		81BA81471A49DA1800E65899 /* ParseStarterProject */ = {
 			isa = PBXGroup;
 			children = (
+				A96D586C248DFF68008B6DA2 /* OldFiles */,
 				A9FBC43620791F600089B39F /* Pages */,
 				A9FBC43420791F190089B39F /* Logical */,
 				A9FBC43320791F0B0089B39F /* Main */,
@@ -184,6 +196,7 @@
 		81BA816A1A49DB5600E65899 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A96D5864248C1B15008B6DA2 /* StoreKit.framework */,
 				A90AAC8E1F3FDC470077243C /* MapKit.framework */,
 				81BA816B1A49DB6800E65899 /* Bolts.framework */,
 				81BA816C1A49DB6800E65899 /* Parse.framework */,
@@ -241,6 +254,16 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		A96D586C248DFF68008B6DA2 /* OldFiles */ = {
+			isa = PBXGroup;
+			children = (
+				A94EB1AB249DDE7200B1E282 /* IAPConfirmViewController.swift */,
+				A96D5866248C970F008B6DA2 /* IAPProduct.swift */,
+				A96D5868248C99B9008B6DA2 /* IAPService.swift */,
+			);
+			path = OldFiles;
+			sourceTree = "<group>";
+		};
 		A9FBC43320791F0B0089B39F /* Main */ = {
 			isa = PBXGroup;
 			children = (
@@ -282,6 +305,7 @@
 				A967A3CC23CB0826007A1468 /* GoesImageView.swift */,
 				A9AB9DCA20D612A90055A792 /* WeatherTableViewController.swift */,
 				A916C1221F4FDB080057A09C /* SettingsTableViewController.swift */,
+				A96D586A248CA563008B6DA2 /* IAPViewController.swift */,
 				A977881D2027925700EB125F /* photoFolderTableViewController.swift */,
 				A9E357D51F550D1200F9EDA8 /* termsAndConditionsViewController.swift */,
 				A9C752C21FC248DD008002C5 /* AdminPasswordViewController.swift */,
@@ -422,6 +446,7 @@
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftSoup/SwiftSoup.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyStoreKit/SwiftyStoreKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -436,6 +461,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftSoup.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyStoreKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -464,6 +490,7 @@
 				A9174E3E20283B2900DB6BCE /* RainCVC.swift in Sources */,
 				A9FBC43F207934EA0089B39F /* PandaImageFetch.swift in Sources */,
 				A91ACE501F9437A40082401A /* PandaWeather.xcdatamodeld in Sources */,
+				A96D586B248CA563008B6DA2 /* IAPViewController.swift in Sources */,
 				A9174E4020283B3600DB6BCE /* rainCell.swift in Sources */,
 				A916C1231F4FDB080057A09C /* SettingsTableViewController.swift in Sources */,
 				A93FB3C81FAC205900E4D5B7 /* CoreDataStack.swift in Sources */,
@@ -480,17 +507,20 @@
 				A9C752C31FC248DD008002C5 /* AdminPasswordViewController.swift in Sources */,
 				A946E95F2032D54E00BF49CB /* snowCell.swift in Sources */,
 				A9174E3420280BF700DB6BCE /* niceCell.swift in Sources */,
+				A94EB1AC249DDE7200B1E282 /* IAPConfirmViewController.swift in Sources */,
 				A945C5881FE5E6730063DFAF /* AdminAddImage.swift in Sources */,
 				A976E5AB2320D5B4006AA2F5 /* StormListTableViewController.swift in Sources */,
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,
 				A9E0A20C1FF94C3B00ECD178 /* SyncDate.swift in Sources */,
 				A976E5A92320BE40006AA2F5 /* HurricaneTrackerViewController.swift in Sources */,
+				A96D5869248C99B9008B6DA2 /* IAPService.swift in Sources */,
 				A977881E2027925700EB125F /* photoFolderTableViewController.swift in Sources */,
 				A94CFFC123DD57260026DCFB /* CityWeatherTableViewController.swift in Sources */,
 				A93FB3C61FAC204300E4D5B7 /* SwiftyJSON.swift in Sources */,
 				A94CFFBF23D83A9B0026DCFB /* SceneDelegate.swift in Sources */,
 				A95A92CA23D51C6A00777342 /* Bookmark.swift in Sources */,
 				A93FB3C41FAC202300E4D5B7 /* PandaImages.swift in Sources */,
+				A96D5867248C970F008B6DA2 /* IAPProduct.swift in Sources */,
 				A967A3CD23CB0826007A1468 /* GoesImageView.swift in Sources */,
 				A93FB3D41FC23E8400E4D5B7 /* ImageCell.swift in Sources */,
 			);
@@ -629,7 +659,7 @@
 				INFOPLIST_FILE = Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.3.3;
+				MARKETING_VERSION = 1.3.4;
 				PRODUCT_BUNDLE_IDENTIFIER = robin.snowapp;
 				PRODUCT_NAME = HurricanePup;
 				SWIFT_REFLECTION_METADATA_LEVEL = all;
@@ -653,7 +683,7 @@
 				INFOPLIST_FILE = Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.3.3;
+				MARKETING_VERSION = 1.3.4;
 				PRODUCT_BUNDLE_IDENTIFIER = robin.snowapp;
 				PRODUCT_NAME = HurricanePup;
 				SWIFT_REFLECTION_METADATA_LEVEL = all;

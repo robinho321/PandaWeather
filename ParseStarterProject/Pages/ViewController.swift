@@ -88,6 +88,8 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         
     }
     
+    let runIncrementerSetting = "numberOfRuns" // UserDefaults dictionary key of Old Users Runs
+    
     var cities = [City]()
     
     var disclaimerHasBeenDisplayed = false
@@ -125,7 +127,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
             let AlertOnce = UserDefaults.standard
             if(!AlertOnce.bool(forKey: "oneTimeAlert")){
                 
-                let alert = UIAlertController(title: "Custom Photos", message: "\n Hello! You've just switched to custom photos! Here is how it works: \n \n ON position: loads only your custom photos. \n \n OFF position: loads only Panda images. \n \n Now press the search or the arrow to update your weather background!", preferredStyle: .alert)
+                let alert = UIAlertController(title: "Custom Photos", message: "\n Hello! You've just switched to custom photos! Here is how it works: \n \n ON position (Pro Feature Only): this loads your custom photos only. If you've subscribed, you can add custom images. If not, it will show Panda images only. To subscribe to Pro for $0.99, click the photo album on bottom right. \n \n OFF position: loads Panda images only, which is free. \n \n Press the arrow icon on the bottom left to update your weather background!", preferredStyle: .alert)
                 
                 let DoNotShowAgainAction = UIAlertAction(title: "Do Not Show Again", style: UIAlertActionStyle.default) { (action:UIAlertAction) in
                     
@@ -219,6 +221,7 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
     @IBOutlet weak var setCurrentLocationView: UIButton!
     @IBOutlet weak var getGoesImageView: UIButton!
     @IBOutlet weak var weatherImageView: UIImageView!
+    @IBOutlet weak var openSettingsButton: UIButton!
     
     @IBOutlet weak var sevenDayDateLabel: UILabel!
     @IBOutlet weak var sevenDayWeatherImageView: UIImageView!
@@ -273,11 +276,23 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         self.updateDropWisdomButton()
     }
     @IBAction func setCurrentLocation(_ sender: UIButton) {
-        if switchLabel.isOn {
-            self.getUserTemperature()
-        } else {
-            self.getPandaTemperature()
-        }
+        let runs = getOldRunCounts()
+        
+        if !UserDefaults.standard.bool(forKey: "hasSubscription") {
+            if switchLabel.isOn {
+                if (runs > 0) { self.getUserTemperature() } else {
+                    self.getPandaTemperature() }
+            } else {
+                self.getPandaTemperature()
+            }
+       } else {
+            if switchLabel.isOn {
+                self.getUserTemperature()
+            } else {
+                self.getPandaTemperature()
+            }
+       }
+        
     }
     
 //    @IBOutlet weak var stormButtonView: UIButton!
@@ -295,6 +310,12 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         // Save Switch state in UserDefaults
         switchLabel.isOn = UserDefaults.standard.bool(forKey: "switchIsOn")
         whiteBackgroundWeatherView.isHidden = true
+        moreWeatherButton.isHidden = true
+        setCurrentLocationView.isHidden = true
+        getGoesImageView.isHidden = true
+        shareScreenshotButton.isHidden = true
+        switchLabel.isHidden = true
+        openSettingsButton.isHidden = true
 
 //        self.showSpinnerOverlay()
         
@@ -356,6 +377,12 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if locationHasBeenFound == false {
             self.whiteBackgroundWeatherView.isHidden = false
+            self.moreWeatherButton.isHidden = false
+            self.setCurrentLocationView.isHidden = false
+            self.getGoesImageView.isHidden = false
+            self.shareScreenshotButton.isHidden = false
+            self.switchLabel.isHidden = false
+            self.openSettingsButton.isHidden = false
             
             if switchLabel.isOn {
                 self.getUserTemperature()
@@ -417,6 +444,21 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
                          "Care to join me for a walk?"]
         let randomText = textLabel[Int(arc4random_uniform(UInt32(textLabel.count)))]
         self.walkMeLabel.text! = randomText
+    }
+    
+    func getOldRunCounts () -> Int {               // Reads number of runs from UserDefaults and returns it.
+        
+        let usD = UserDefaults()
+        let savedRuns = usD.value(forKey: runIncrementerSetting)
+        
+        var runs = 0
+        if (savedRuns != nil) {
+            
+            runs = savedRuns as! Int
+        }
+        
+        print("Run Counts are \(runs)")
+        return runs
     }
     
 //    func loadCities() {

@@ -13,6 +13,8 @@ import UserNotifications
 import StoreKit
 import Foundation
 import Parse
+import SwiftyStoreKit
+import RealmSwift
 
 // If you want to use any of the UI components, uncomment this line
 // import ParseUI
@@ -42,19 +44,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
     
-    let runIncrementerSetting = "numberOfRuns"  // UserDefauls dictionary key where we store number of runs
+    let runIncrementerSetting = "numberOfRuns" // UserDefauls dictionary key of Old Users Runs
+    let newIncrementerSetting = "numberRunsAfterIAP"  // UserDefauls dictionary key where we store number of runs
     let minimumRunCount = 3                     // Minimum number of runs that we should have until we ask for review
     
     func incrementAppRuns() {                   // counter for number of runs for the app. You can call this from App Delegate
         
         let usD = UserDefaults()
         let runs = getRunCounts() + 1
-        usD.setValuesForKeys([runIncrementerSetting: runs])
+        usD.setValuesForKeys([newIncrementerSetting: runs])
         usD.synchronize()
         
     }
     
     func getRunCounts () -> Int {               // Reads number of runs from UserDefaults and returns it.
+        
+        let usD = UserDefaults()
+        let savedRuns = usD.value(forKey: newIncrementerSetting)
+        
+        var runs = 0
+        if (savedRuns != nil) {
+            
+            runs = savedRuns as! Int
+        }
+        
+        print("Run Counts are \(runs)")
+        return runs
+        
+    }
+    
+    func getOldRunCounts () -> Int {               // Reads number of runs from UserDefaults and returns it.
         
         let usD = UserDefaults()
         let savedRuns = usD.value(forKey: runIncrementerSetting)
@@ -96,6 +115,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
             incrementAppRuns()
             showReview()
+        
+        if !UserDefaults.standard.bool(forKey: "hasSubscription") {
+            //show purchasable behavior
+        } else {
+            //straight to custom photos
+        }
+            
+            SwiftyStoreKit.completeTransactions(atomically: true) { purchases in
+                for purchase in purchases {
+                    switch purchase.transaction.transactionState {
+                    case .purchased, .restored:
+                        if purchase.needsFinishTransaction {
+                            // Deliver content from server, then:
+                            SwiftyStoreKit.finishTransaction(purchase.transaction)
+                        }
+                        // Unlock content
+                        
+                        UserDefaults.standard.set("true", forKey: "hasSubscription")
+                        
+                        print("purchased dog: \(purchase)")
+                    case .failed, .purchasing, .deferred:
+                        break // do nothing
+                    }
+                }
+            }
+        
+        SwiftyStoreKit.shouldAddStorePaymentHandler = { payment, product in
+            return true //if the content can be delivered by your app
+            // return false otherwise
+        }
+        
+                   return true
         
 //        if (!isRealmPopulatedWithDefaultTab()) {
 //            populateRealmWithDefaultTab()

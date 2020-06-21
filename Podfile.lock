@@ -34,6 +34,7 @@ PODS:
   - RealmSwift (3.18.0):
     - Realm (= 3.18.0)
   - SwiftSoup (1.7.4)
+  - SwiftyStoreKit (0.15.0)
 
 DEPENDENCIES:
   - FacebookCore (~> 0.5.0)
@@ -45,6 +46,7 @@ DEPENDENCIES:
   - Parse
   - RealmSwift (~> 3.18.0)
   - SwiftSoup
+  - SwiftyStoreKit
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -60,6 +62,7 @@ SPEC REPOS:
   trunk:
     - Realm
     - RealmSwift
+    - SwiftyStoreKit
 
 SPEC CHECKSUMS:
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
@@ -73,7 +76,8 @@ SPEC CHECKSUMS:
   Realm: 7b3d04740facf45e958a514b466a32b04f1113d6
   RealmSwift: c817b5f374668cf08f649afb05f55d92a787649c
   SwiftSoup: 92f5b348c131aed8af04f4326db1579ab19fa08c
+  SwiftyStoreKit: 033d06b6f87955405d3f844a18a7687c2438592a
 
-PODFILE CHECKSUM: f68097bf6aa1ec1a32373502110ce036e4b9d550
+PODFILE CHECKSUM: 578af1de60ab581b0077bd0b49e2f17e21d83365
 
 COCOAPODS: 1.8.4

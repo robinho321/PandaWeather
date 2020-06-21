@@ -16,8 +16,26 @@ protocol SettingsTableViewControllerDelegate {
     func didClose(controller: SettingsTableViewController)
 }
 
-class SettingsTableViewController: UITableViewController, MFMailComposeViewControllerDelegate {
+class SettingsTableViewController: UITableViewController, MFMailComposeViewControllerDelegate, IAPViewControllerDelegate {
+    
+    let runIncrementerSetting = "numberOfRuns" // UserDefauls dictionary key of Old Users Runs
+    
     var delegate: SettingsTableViewControllerDelegate? = nil
+    
+    func didCloseIAP(controller: IAPViewController) {
+        self.dismiss(animated: true, completion: nil)
+        print("\("Will is awesome")")
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    // Get the new view controller using segue.destinationViewController.
+    // Pass the selected object to the new view controller.
+    if segue.identifier == "showIAP" {
+        let navigationController: UINavigationController = segue.destination as! UINavigationController
+        let iAPViewController: IAPViewController = navigationController.viewControllers[0] as! IAPViewController
+        iAPViewController.delegate = self
+        }
+    }
     
     @IBOutlet weak var customizePhotosLabel: UILabel!
     @IBOutlet weak var customizePhotosImageView: UIImageView!
@@ -40,7 +58,19 @@ class SettingsTableViewController: UITableViewController, MFMailComposeViewContr
         super.viewDidLoad()
         
         customizePhotosLabel.text! = "Customize Your Photos"
-        customizePhotosImageView.image! = #imageLiteral(resourceName: "002-pictures")
+        
+        let runs = getOldRunCounts()
+        print("Old Run Counts: \(runs)")
+        
+        if (runs > 0) {
+            self.customizePhotosImageView.image! = #imageLiteral(resourceName: "002-pictures") } else
+        {
+            if !UserDefaults.standard.bool(forKey: "hasSubscription") {
+                customizePhotosImageView.image! = #imageLiteral(resourceName: "orangedot")
+            } else {
+                customizePhotosImageView.image! = #imageLiteral(resourceName: "002-pictures")
+            }
+        }
         
         rateOnAppStoreLabel.text! = "Rate on the App Store"
         rateAppStoreIconImageView.image! = #imageLiteral(resourceName: "appStore")
@@ -64,6 +94,21 @@ class SettingsTableViewController: UITableViewController, MFMailComposeViewContr
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        let runs = getOldRunCounts()
+        print("Old Run Counts: \(runs)")
+        
+        if (runs > 0) {
+            self.customizePhotosImageView.image! = #imageLiteral(resourceName: "002-pictures") }
+        else {
+            if !UserDefaults.standard.bool(forKey: "hasSubscription") {
+                self.customizePhotosImageView.image! = #imageLiteral(resourceName: "orangedot")
+            } else {
+                self.customizePhotosImageView.image! = #imageLiteral(resourceName: "002-pictures")
+            }
+        }
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -81,7 +126,17 @@ class SettingsTableViewController: UITableViewController, MFMailComposeViewContr
     
     if indexPath.section == 0 && indexPath.row == 0 {
         self.customizeYourPhotos()
-        self.checkPhotoLibraryPermission()
+        
+        let runs = getOldRunCounts()
+        
+        if (runs > 0) {
+            self.checkPhotoLibraryPermission()
+            } else {
+            if !UserDefaults.standard.bool(forKey: "hasSubscription") {
+            } else {
+                self.checkPhotoLibraryPermission()
+            }
+        }
     }
 
     else if indexPath.section == 1 && indexPath.row == 0 {
@@ -187,6 +242,21 @@ class SettingsTableViewController: UITableViewController, MFMailComposeViewContr
 //    }
     // }
     
+    func getOldRunCounts () -> Int {               // Reads number of runs from UserDefaults and returns it.
+        
+        let usD = UserDefaults()
+        let savedRuns = usD.value(forKey: runIncrementerSetting)
+        
+        var runs = 0
+        if (savedRuns != nil) {
+            
+            runs = savedRuns as! Int
+        }
+        
+        print("Run Counts are \(runs)")
+        return runs
+    }
+    
     func checkPhotoLibraryPermission() {
         let status = PHPhotoLibrary.authorizationStatus()
         switch status {
@@ -211,7 +281,19 @@ class SettingsTableViewController: UITableViewController, MFMailComposeViewContr
     }
 
     func customizeYourPhotos() {
-        self.performSegue(withIdentifier: "openPhotoFolderTVC", sender: nil)
+        
+        let runs = getOldRunCounts()
+        print("Old Run Counts: \(runs)")
+        
+        if (runs > 0) {
+            self.performSegue(withIdentifier: "openPhotoFolderTVC", sender: nil)
+        } else {
+            if !UserDefaults.standard.bool(forKey: "hasSubscription") {
+                self.performSegue(withIdentifier: "showIAP", sender: nil)
+            } else {
+                self.performSegue(withIdentifier: "openPhotoFolderTVC", sender: nil)
+            }
+        }
     }
     
     func rateOnTheAppStore() {
